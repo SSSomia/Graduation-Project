@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/constant.dart';
+import 'package:graduation_project/pages/login/login_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -162,6 +163,21 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('You have an account?'),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginPage()),
+                                  );
+                                },
+                                child: const Text('Login'))
+                          ],
+                        )
                       ],
                     ),
                   ),
