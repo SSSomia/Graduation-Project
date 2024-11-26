@@ -84,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                           obscuringCharacter: '*',
                           decoration: InputDecoration(
                             labelText: 'enter your password',
+                            prefix: const Icon(Icons.lock_outline_rounded),
                             suffix: const Icon(Icons.remove_red_eye),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
