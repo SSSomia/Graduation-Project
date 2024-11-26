@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/choose/choose_page.dart';
+import 'package:graduation_project/pages/constant.dart';
 import 'package:graduation_project/pages/signup/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,31 +28,30 @@ class _LoginPageState extends State<LoginPage> {
                 width: 350,
                 height: 450,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color.fromARGB(255, 109, 109, 109)
-                          .withOpacity(0.5), // shadow color with opacity
-                      spreadRadius: 5, // extent of shadow spreading
-                      blurRadius: 10, // blurring amount
-                      offset: const Offset(
-                          0, 5), // horizontal and vertical shadow offset
-                    ),
-                  ]
-                ),
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 109, 109, 109)
+                            .withOpacity(0.5), // shadow color with opacity
+                        spreadRadius: 5, // extent of shadow spreading
+                        blurRadius: 10, // blurring amount
+                        offset: const Offset(
+                            0, 5), // horizontal and vertical shadow offset
+                      ),
+                    ]),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const Text(
+                      Text(
                         'LOGIN',
                         style: TextStyle(
                             fontSize: 50,
-                            color: Color.fromARGB(255, 107, 107, 107),
+                            color: headerTextColor,
                             fontWeight: FontWeight.bold),
                       ),
                       Container(
@@ -115,8 +115,10 @@ class _LoginPageState extends State<LoginPage> {
                               // }
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 239, 239, 239), // Background color of the button
-                              foregroundColor: const Color.fromARGB(255, 0, 0, 0), // Text (foreground) color of the button
+                              backgroundColor: const Color.fromARGB(255, 243,
+                                  241, 241), // Background color of the button
+                              foregroundColor: const Color.fromARGB(255, 0, 0,
+                                  0), // Text (foreground) color of the button
                             ),
                             child: const Text(
                               'Login',
@@ -134,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ChoosePage()),
+                                      builder: (context) => SignupPage()),
                                 );
                               },
                               child: const Text('Sign up'))

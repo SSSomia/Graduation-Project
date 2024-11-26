@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/pages/constant.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -7,16 +8,16 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
-enum SingingCharacter { lafayette, jefferson }
+enum ECharacteres { user, seller }
 
 class _SignupPageState extends State<SignupPage> {
-  String? _selectedOption = "Option 1";
+  ECharacteres? _selectedOption = ECharacteres.user;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 205, 252, 232),
+        backgroundColor: backgroundColor,
         body: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -24,13 +25,14 @@ class _SignupPageState extends State<SignupPage> {
               children: [
                 Container(
                   width: 350,
-                  height: 600,
+                  height: 650,
                   decoration: BoxDecoration(
+                    color: Colors.white,
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 246, 254, 249)
+                        color: const Color.fromARGB(255, 123, 123, 123)
                             .withOpacity(0.5), // shadow color with opacity
                         spreadRadius: 5, // extent of shadow spreading
                         blurRadius: 10, // blurring amount
@@ -38,26 +40,17 @@ class _SignupPageState extends State<SignupPage> {
                             0, 5), // horizontal and vertical shadow offset
                       ),
                     ],
-                    gradient: const RadialGradient(
-                      center: Alignment(1, 1),
-                      radius: 0.50,
-                      colors: <Color>[
-                        Color.fromARGB(255, 255, 251, 251),
-                        Color.fromARGB(255, 147, 255, 215),
-                      ],
-                      stops: <double>[0.9, 1.0],
-                    ),
                   ),
                   child: Form(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const Text(
+                        Text(
                           'SIGN UP',
                           style: TextStyle(
                               fontSize: 50,
-                              color: Colors.white,
+                              color: headerTextColor,
                               fontWeight: FontWeight.bold),
                         ),
                         Container(
@@ -82,6 +75,7 @@ class _SignupPageState extends State<SignupPage> {
                             obscuringCharacter: '*',
                             decoration: InputDecoration(
                               labelText: 'password',
+                              prefix: const Icon(Icons.lock_outline_rounded),
                               suffix: const Icon(Icons.remove_red_eye),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
@@ -108,32 +102,39 @@ class _SignupPageState extends State<SignupPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        // SizedBox(
-                        //   height: 50,
-                        //   width: 50,
-                        //   child: Row(children: [
-                        //     RadioListTile<String>(
-                        //       title: const Text("Option 1"),
-                        //       value: "Option 1",
-                        //       groupValue: _selectedOption,
-                        //       onChanged: (value) {
-                        //         setState(() {
-                        //           _selectedOption = value;
-                        //         });
-                        //       },
-                        //     ),
-                        //     RadioListTile<String>(
-                        //       title: const Text("Option 2"),
-                        //       value: "Option 2",
-                        //       groupValue: _selectedOption,
-                        //       onChanged: (value) {
-                        //         setState(() {
-                        //           _selectedOption = value;
-                        //         });
-                        //       },
-                        //     ),
-                        //   ]),
-                        // ),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ListTile(
+                                  title: const Text(
+                                    "User",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  leading: Radio<ECharacteres>(
+                                    value: ECharacteres.user,
+                                    groupValue: _selectedOption,
+                                    onChanged: (ECharacteres? value) {
+                                      setState(() {
+                                        _selectedOption = value;
+                                      });
+                                    },
+                                  )),
+                              ListTile(
+                                title: const Text(
+                                  "Seller",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                leading: Radio<ECharacteres>(
+                                  value: ECharacteres.seller,
+                                  groupValue: _selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedOption = value;
+                                    });
+                                  },
+                                ),
+                              )
+                            ]),
                         const SizedBox(
                           height: 20,
                         ),
@@ -149,13 +150,10 @@ class _SignupPageState extends State<SignupPage> {
                                 // }
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromARGB(255, 255,
-                                    255, 255), // Background color of the button
-                                foregroundColor: const Color.fromARGB(
-                                    255,
-                                    84,
-                                    180,
-                                    154), // Text (foreground) color of the button
+                                backgroundColor:
+                                    buttonColor, // Background color of the button
+                                foregroundColor: const Color.fromARGB(255, 0, 0,
+                                    0), // Text (foreground) color of the button
                               ),
                               child: const Text(
                                 'Sign Up',
