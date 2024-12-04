@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/constant.dart';
 import 'package:graduation_project/pages/login/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -13,6 +15,14 @@ enum ECharacteres { user, seller }
 
 class _SignupPageState extends State<SignupPage> {
   ECharacteres? _selectedOption = ECharacteres.user;
+
+//   TextEditingController _textEditingController = TextEditingController();
+
+//  @override
+//   void dispose() {
+//     // Dispose the controller when the widget is removed
+//     _textEditingController.dispose();
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +120,7 @@ class _SignupPageState extends State<SignupPage> {
                           padding: const EdgeInsets.only(
                               right: 20, left: 20, top: 10, bottom: 10),
                           child: TextFormField(
+                            // controller: _textEditingController,
                             decoration: InputDecoration(
                               fillColor: Colors.white,
                               labelText: 'username',
@@ -191,10 +202,12 @@ class _SignupPageState extends State<SignupPage> {
                             width: 300,
                             height: 50,
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 // if (_formKey.currentState!.validate()) {
                                 //   Navigator.of(context).pushNamed('homePage');
                                 // }
+                                // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                // sharedPreferences.setString("userName", "")
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:

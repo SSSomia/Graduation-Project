@@ -1,11 +1,11 @@
 flutter_native_splash:
   color: "#D6D6D6" 
-  image: assets\images\logo\2566611_stamps-handmade-transparent-png.png
+  image: assets\images\logo\1024.png
   android: true
   ios: true
 
   android_12:
     color: "#D6D6D6" 
-    image: assets\images\logo\2566611_stamps-handmade-transparent-png.png
+    image: assets\images\logo\1024.png
     android: true
     ios: true

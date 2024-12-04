@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/choose/choose_page.dart';
 import 'package:graduation_project/pages/constant.dart';
-import 'package:graduation_project/pages/home/home_page.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/signup/signup_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,8 +13,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final String _userName = 'somia';
-  final String _password = '1234';
+  bool checkBoxValue = false;
+  TextEditingController _userName = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,11 +58,14 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: FontWeight.bold),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(20),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: TextFormField(
+                          controller: _userName,
+                          // initialValue: userName,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
-                            labelText: 'enter your username',
+                            labelText: 'username',
                             prefixIcon: const Icon(Icons.person_2_outlined),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
@@ -79,8 +83,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, top: 20, bottom: 10),
                         child: TextFormField(
+                          //  initialValue: password,
+                          controller: _password,
                           obscureText: true,
                           obscuringCharacter: '*',
                           decoration: InputDecoration(
@@ -102,8 +109,20 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
+                      Container(
+                        padding: EdgeInsets.only(left: 20, bottom: 5),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                                value: checkBoxValue,
+                                onChanged: (value) async {
+                                  setState(() {
+                                    checkBoxValue = value!;
+                                  });
+                                }),
+                            Text("Remember me")
+                          ],
+                        ),
                       ),
                       MouseRegion(
                         cursor: SystemMouseCursors.click,
@@ -111,15 +130,24 @@ class _LoginPageState extends State<LoginPage> {
                           width: 300,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () {
-                              // if (_formKey.currentState!.validate()) {
-                              //   Navigator.of(context).pushNamed('homePage');
+                            onPressed: () async {
+                              // if (checkBoxValue) {
+                              //   SharedPreferences sharedPreferences =
+                              //       await SharedPreferences.getInstance();
+                              //   sharedPreferences.setString(
+                              //       "name", _userName.text);
+                              //   sharedPreferences.setString(
+                              //       "password", _password.text);
                               // }
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MainHomePage()),
                               );
+                              // if (_formKey.currentState!.validate()) {
+                              //   Navigator.of(context).pushNamed('homePage');
+                              // }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color.fromARGB(255, 243,
@@ -160,3 +188,29 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+  // SharedPreferences? sharedPreferences;
+  // String userName = "", password = "";
+
+  // Future<String?> getName() async {
+  //   String?  name = await sharedPreferences?.getString("name");
+  //   if (name == null) return "";
+
+  //   return name;
+  // }
+
+  // Future<String?> getPassword() async {
+  //   if (sharedPreferences == null) return "";
+
+  //   return sharedPreferences?.getString("password");
+  // }
+
+  // void loadData() async {
+  //   String? fetchUserName = await getName();
+  //   String? fetchPassword = await getPassword();
+
+  //   setState(() {
+  //     userName = fetchUserName!;
+  //     password = fetchPassword!;
+  //   });
+  // }
