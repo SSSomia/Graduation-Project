@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/home/home_page.dart';
-import 'package:graduation_project/pages/login/login_page.dart';
+import 'package:graduation_project/pages/auth/login/login_page.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
 
 void main() {

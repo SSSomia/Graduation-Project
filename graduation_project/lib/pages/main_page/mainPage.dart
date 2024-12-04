@@ -38,14 +38,23 @@ class _NavigationExampleState extends State<MainHomePage> {
               icon: Icon(Icons.library_books_outlined),
               label: 'Orders',
             ),
+            NavigationDestination(
+              icon: Icon(Icons.shopping_bag_outlined),
+              label: 'My Cart',
+            ),
           ],
         ),
         body: <Widget>[
-          // you(),
+          you(),
           HomePage(),
-          // DashBoard(),
+          DashBoard(),
+          MyCart(),
         ][currentPageIndex],
       ),
     );
   }
+
+  you() {}
+
+  DashBoard() {}
 }
