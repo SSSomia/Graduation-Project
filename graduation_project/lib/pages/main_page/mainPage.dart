@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/component/myDrawer.dart';
+import 'package:graduation_project/pages/constant.dart';
 import 'package:graduation_project/pages/home/home_page.dart';
+import 'package:graduation_project/pages/home/my_cart.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({super.key});
@@ -15,6 +18,26 @@ class _NavigationExampleState extends State<MainHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Shoopy',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          leading: const Icon(Icons.shopping_bag_outlined),
+          backgroundColor: backgroundColor,
+          shadowColor: const Color.fromARGB(255, 98, 98, 98),
+          elevation: 10,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20)),
+          ),
+        ),
+        endDrawer: const MyDrawer(),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
             setState(() {
@@ -45,10 +68,10 @@ class _NavigationExampleState extends State<MainHomePage> {
           ],
         ),
         body: <Widget>[
-          you(),
           HomePage(),
-          DashBoard(),
           MyCart(),
+          //you(),
+          //DashBoard(),
         ][currentPageIndex],
       ),
     );
