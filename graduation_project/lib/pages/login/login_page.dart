@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/choose/choose_page.dart';
 import 'package:graduation_project/pages/constant.dart';
+import 'package:graduation_project/pages/home/home_page.dart';
+import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/signup/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -57,7 +59,6 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         padding: const EdgeInsets.all(20),
                         child: TextFormField(
-                          autofocus: true,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             labelText: 'enter your username',
@@ -114,6 +115,11 @@ class _LoginPageState extends State<LoginPage> {
                               // if (_formKey.currentState!.validate()) {
                               //   Navigator.of(context).pushNamed('homePage');
                               // }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MainHomePage()),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color.fromARGB(255, 243,

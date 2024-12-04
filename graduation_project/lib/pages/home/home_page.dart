@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         leading: const Icon(Icons.shopping_bag_outlined),
-        backgroundColor: backgroundColor,
+        backgroundColor:backgroundColor ,
         shadowColor: const Color.fromARGB(255, 98, 98, 98),
         elevation: 10,
         shape: const RoundedRectangleBorder(

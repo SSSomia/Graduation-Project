@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       title: 'Graduation project',
-      home: MainHomePage(),
+      home: LoginPage(),
     );
   }
 }
