@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 class MyCart extends StatelessWidget {
   MyCart({super.key});
 
-  CartList _cartList = CartList();
+ // CartList _cartList = CartList();
   @override
   Widget build(BuildContext context) {
-    // final _cartList = Provider.of<CartList>(context);
+     final _cartList = Provider.of<CartList>(context).cartList;
     return Scaffold(
       body: GridView.builder(
         padding: const EdgeInsets.all(10),
@@ -19,12 +19,12 @@ class MyCart extends StatelessWidget {
           mainAxisSpacing: 10,
           childAspectRatio: 2 / 2,
         ),
-        itemCount: _cartList.cartList.length,
+        itemCount: _cartList.length,
         itemBuilder: (context, index) {
           return ProductCard(
-              productName: _cartList.cartList[index].productName,
-              imageUrl: _cartList.cartList[index].imageUrl,
-              price: _cartList.cartList[index].price);
+              productName: _cartList[index].productName,
+              imageUrl: _cartList[index].imageUrl,
+              price: _cartList[index].price);
         },
       ),
     );

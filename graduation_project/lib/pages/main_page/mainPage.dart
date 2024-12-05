@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/component/myDrawer.dart';
 import 'package:graduation_project/pages/constant.dart';
+import 'package:graduation_project/pages/home/cart_list.dart';
 import 'package:graduation_project/pages/home/home_page.dart';
 import 'package:graduation_project/pages/home/my_cart.dart';
+import 'package:provider/provider.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({super.key});
@@ -16,7 +18,8 @@ class _NavigationExampleState extends State<MainHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return ChangeNotifierProvider(
+      create: (context) => CartList(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text(

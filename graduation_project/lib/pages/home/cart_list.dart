@@ -6,6 +6,6 @@ class CartList extends ChangeNotifier {
 
   addToCartList(ProductCard product){
     cartList.add(product);
-    
+    notifyListeners();
   }
 }
