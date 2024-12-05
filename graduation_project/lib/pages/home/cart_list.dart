@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/home/product_card.dart';
+import 'package:graduation_project/pages/home/product_module.dart';
 
 class CartList extends ChangeNotifier {
-  List<ProductCard> cartList = [];
+  Map<String, Product> cartList = {};
 
-  addToCartList(ProductCard product){
-    cartList.add(product);
+  double _totalPrice = 0;
+  double get totalPrice => _totalPrice;
+
+
+  void addItem(Product product) {
+    if (cartList.containsKey(product.id)) {
+      cartList[product.id]!.quantity++;
+    } else {
+      cartList[product.id] = product;
+    }
+    _totalPrice += product.price;
+    notifyListeners();
+  }
+
+  void removeItem(Product product) {
+    cartList.remove(product.id);
+    _totalPrice -= product.price;
+    notifyListeners();
+  }
+
+  void updateQuantity(Product product, int newQuantity) {
+    if (cartList.containsKey(product.id) && newQuantity > 0) {
+      cartList[product.id]!.quantity = newQuantity;
+    } else {
+      cartList.remove(product.id);
+    }
+    _totalPrice -= product.price;
     notifyListeners();
   }
 }

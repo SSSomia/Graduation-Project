@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/home/cart_list.dart';
+import 'package:graduation_project/pages/home/product_module.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
-  final String productName;
-  final String imageUrl;
-  final double price;
-
-  ProductCard({
-    required this.productName,
-    required this.imageUrl,
-    required this.price,
-    Key? key,
-  }) : super(key: key);
-
+  ProductCard( {required this.product});
+  final Product product;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +24,7 @@ class ProductCard extends StatelessWidget {
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(10)),
                   child: Image.network(
-                    imageUrl,
+                    product.imageUrl,
                     height: 148,
                     fit: BoxFit.cover,
                   ),
@@ -44,15 +36,15 @@ class ProductCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        productName,
+                        product.productName,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                         maxLines: 1,
-                        // overflow: TextOverflow.ellipsis,
+                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        "\$${price.toStringAsFixed(2)}",
+                        "\$${product.price.toStringAsFixed(2)}",
                         style: const TextStyle(
                           fontSize: 14,
                           color: Color.fromARGB(255, 90, 89, 89),
@@ -61,14 +53,8 @@ class ProductCard extends StatelessWidget {
                       // const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          ProductCard product = ProductCard(
-                              productName: productName,
-                              imageUrl: imageUrl,
-                              price: price);
                           Provider.of<CartList>(context, listen: false)
-                              .addToCartList(product);
-                          // _prouduct.addToCartList(product);
-                          // have to handle it in add to card
+                              .addItem(product);
                         },
                         style: ElevatedButton.styleFrom(
                           shadowColor: Colors.blue,
