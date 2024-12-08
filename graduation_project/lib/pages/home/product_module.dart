@@ -5,6 +5,7 @@ class Product {
   final String imageUrl;
   final double price;
   int quantity = 1;
+  bool isAdded = false;
 
   Product({
     required this.id,

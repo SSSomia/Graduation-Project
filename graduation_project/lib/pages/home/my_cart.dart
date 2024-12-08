@@ -30,10 +30,10 @@ class MyCart extends StatelessWidget {
                           ),
                           const Spacer(),
                           Chip(
-                            label:  Text(
-                                  "\$${_cartList.totalPrice.toStringAsFixed(2)}",
-                                  style: const TextStyle(color: Colors.white),
-                                ),
+                            label: Text(
+                              "\$${_cartList.totalPrice.toStringAsFixed(2)}",
+                              style: const TextStyle(color: Colors.white),
+                            ),
                             backgroundColor: Theme.of(context).primaryColor,
                           ),
                           TextButton(
@@ -57,36 +57,44 @@ class MyCart extends StatelessWidget {
                 itemCount: _cartList.cartList.length,
                 itemBuilder: (context, index) {
                   final item = _cartList.cartList.values.toList()[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(item.imageUrl),
-                    ),
-                    title: Text(item.productName),
-                    subtitle: Text("Price: \$${item.price.toStringAsFixed(2)}"),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.remove),
-                          onPressed: () {
-                            if (item.quantity > 1) {
-                              _cartList.updateQuantity(
-                                  item, item.quantity - 1);
-                            } else {
-                              _cartList.removeItem(item);
-                            }
-                          },
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(item.imageUrl),
                         ),
-                        Text("${item.quantity}"),
-                        IconButton(
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-                            _cartList.addItem(item);
-                          },
+                        title: Text(item.productName),
+                        subtitle:
+                            Text("Price: \$${item.price.toStringAsFixed(2)}"),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.remove),
+                              onPressed: () {
+                                if (item.quantity > 1) {
+                                  _cartList.updateQuantity(
+                                      item, item.quantity - 1);
+                                } else {
+                                  _cartList.removeItem(item);
+                                }
+                              },
+                            ),
+                            Text("${item.quantity}"),
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                _cartList.addItem(item);
+                              },
+                            ),
+                          ],
                         ),
-                        Divider( height: 5, color:  Colors.black, thickness: 5,),
-                      ],
-                    ),
+                      ),
+                      const Divider(
+                        height: 1,
+                        color: Color.fromARGB(255, 194, 194, 194),
+                      ),
+                    ],
                   );
                 },
               )),

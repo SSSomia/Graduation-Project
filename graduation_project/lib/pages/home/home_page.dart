@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
             mainAxisSpacing: 10,
             childAspectRatio: .67,
           ),
-          itemCount: 6, 
+          itemCount: 20, 
           itemBuilder: (context, index) {
             return ProductCard(product: Product(id: index.toString(), productName: "Product $index",
               imageUrl:
