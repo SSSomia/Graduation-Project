@@ -4,6 +4,8 @@ import 'package:graduation_project/pages/constant.dart';
 import 'package:graduation_project/pages/home/cart_list.dart';
 import 'package:graduation_project/pages/home/home_page.dart';
 import 'package:graduation_project/pages/home/my_cart.dart';
+import 'package:graduation_project/pages/orders/orders.dart';
+import 'package:graduation_project/pages/you/you.dart';
 import 'package:provider/provider.dart';
 
 class MainHomePage extends StatefulWidget {
@@ -14,7 +16,7 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _NavigationExampleState extends State<MainHomePage> {
-  int currentPageIndex = 0;
+  int currentPageIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -71,16 +73,12 @@ class _NavigationExampleState extends State<MainHomePage> {
           ],
         ),
         body: <Widget>[
+          You(),
           HomePage(),
+          Orders(),
           MyCart(),
-          //you(),
-          //DashBoard(),
         ][currentPageIndex],
       ),
     );
   }
-
-  you() {}
-
-  DashBoard() {}
 }

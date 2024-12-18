@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/home/cart_list.dart';
 import 'package:graduation_project/pages/home/product_module.dart';
+import 'package:graduation_project/product_page/productPage.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatefulWidget {
@@ -12,7 +13,6 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-
   @override
   Widget build(BuildContext context) {
     //final product = Provider.of<CartList>(context).cartList;
@@ -28,36 +28,44 @@ class _ProductCardState extends State<ProductCard> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Image
-                ClipRRect(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(10)),
-                  child: Image.network(
-                    widget.product.imageUrl,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) {
-                        // Image is fully loaded
-                        return child;
-                      } else {
-                        // Show CircularProgressIndicator while loading
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    (loadingProgress.expectedTotalBytes ?? 1)
-                                : null,
-                          ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProductPage(product: Product(id: widget.product.id, productName: widget.product.productName, imageUrl: widget.product.imageUrl, price: widget.product.price),)),
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(10)),
+                    child: Image.network(
+                      widget.product.imageUrl,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          // Image is fully loaded
+                          return child;
+                        } else {
+                          // Show CircularProgressIndicator while loading
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      (loadingProgress.expectedTotalBytes ?? 1)
+                                  : null,
+                            ),
+                          );
+                        }
+                      },
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        return const Center(
+                          child: Icon(Icons.error, color: Colors.red, size: 50),
                         );
-                      }
-                    },
-                    errorBuilder: (BuildContext context, Object error,
-                        StackTrace? stackTrace) {
-                      return const Center(
-                        child: Icon(Icons.error, color: Colors.red, size: 50),
-                      );
-                    },
-                    height: 148,
-                    fit: BoxFit.cover,
+                      },
+                      height: 148,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 // Details
@@ -84,13 +92,15 @@ class _ProductCardState extends State<ProductCard> {
                       // const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                            widget.product.isAdded
-                                ? Provider.of<CartList>(context, listen: false)
-                                    .removeItem(widget.product)
-                                : Provider.of<CartList>(context, listen: false)
-                                    .addItem(widget.product);
+                          widget.product.isAdded
+                              ? Provider.of<CartList>(context, listen: false)
+                                  .removeItem(widget.product)
+                              : Provider.of<CartList>(context, listen: false)
+                                  .addItem(widget.product);
                           setState(() {
-                            widget.product.isAdded ? widget.product.isAdded = false : widget.product.isAdded = true;
+                            widget.product.isAdded
+                                ? widget.product.isAdded = false
+                                : widget.product.isAdded = true;
                           });
                         },
                         style: ElevatedButton.styleFrom(
@@ -99,8 +109,7 @@ class _ProductCardState extends State<ProductCard> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        child: 
-                        widget.product.isAdded
+                        child: widget.product.isAdded
                             ? const Text("Remove from Cart")
                             : const Text("Add To Cart"),
                       ),

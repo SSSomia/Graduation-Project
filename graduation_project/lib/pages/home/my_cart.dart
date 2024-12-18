@@ -40,12 +40,46 @@ class MyCart extends StatelessWidget {
                             onPressed: _cartList.cartList.isEmpty
                                 ? null
                                 : () {
-                                    // Handle checkout
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content:
-                                              Text("Checkout Not Implemented")),
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('Confirm Purchase'),
+                                          content: const Text(
+                                              'Are you sure you want to buy the items in your cart?'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop(); // Close the dialog
+                                              },
+                                              child: const Text('Cancel'),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop();
+                                                    _cartList.clearCart(); // Close the dialog
+                                                // Perform the purchase action here
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                      content: Text(
+                                                          'Purchase Confirmed!')),
+                                                );
+                                              },
+                                              child: const Text('Buy Now'),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
+                                    // Handle checkout
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   const SnackBar(
+                                    //       content:
+                                    //           Text("Checkout Not Implemented")),
+                                    // );
                                   },
                             child: const Text("Checkout"),
                           ),

@@ -25,6 +25,12 @@ class CartList extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearCart()
+  {
+    cartList.clear();
+    notifyListeners();
+  }
+
   void updateQuantity(Product product, int newQuantity) {
     if (cartList.containsKey(product.id) && newQuantity > 0) {
       cartList[product.id]!.quantity = newQuantity;
