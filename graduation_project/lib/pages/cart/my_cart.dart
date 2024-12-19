@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/home/cart_list.dart';
-import 'package:graduation_project/pages/home/product_card.dart';
-import 'package:graduation_project/pages/home/product_module.dart';
+import 'package:graduation_project/pages/cart/cart_list.dart';
+import 'package:graduation_project/product_page/product_card.dart';
+import 'package:graduation_project/product_page/product_module.dart';
 import 'package:provider/provider.dart';
 
 class MyCart extends StatelessWidget {

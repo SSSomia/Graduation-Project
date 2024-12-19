@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/component/myDrawer.dart';
+import 'package:graduation_project/utils/component/myDrawer.dart';
 import 'package:graduation_project/pages/constant.dart';
-import 'package:graduation_project/pages/home/product_card.dart';
-import 'package:graduation_project/pages/home/product_module.dart';
+import 'package:graduation_project/product_page/product_card.dart';
+import 'package:graduation_project/product_page/product_module.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

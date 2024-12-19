@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/home/cart_list.dart';
-import 'package:graduation_project/pages/home/product_module.dart';
+import 'package:graduation_project/pages/cart/cart_list.dart';
+import 'package:graduation_project/product_page/product_module.dart';
 import 'package:provider/provider.dart';
 
 class AddToCartButton extends StatefulWidget {
-  const AddToCartButton({required this.product, super.key});
+  AddToCartButton({required this.product, super.key, required this.border});
   final Product product;
+  final double border;
 
   @override
   State<AddToCartButton> createState() => _AddToCartButtonState();
@@ -28,9 +29,9 @@ class _AddToCartButtonState extends State<AddToCartButton> {
         });
       },
       style: ElevatedButton.styleFrom(
-        shadowColor: Colors.blue,
+        shadowColor: const Color.fromARGB(255, 80, 80, 80),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(widget.border),
         ),
       ),
       child: widget.product.isAdded

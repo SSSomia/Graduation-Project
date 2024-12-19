@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/component/myDrawer.dart';
+import 'package:graduation_project/utils/component/myDrawer.dart';
 import 'package:graduation_project/pages/constant.dart';
-import 'package:graduation_project/pages/home/cart_list.dart';
+import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/home/home_page.dart';
-import 'package:graduation_project/pages/home/my_cart.dart';
+import 'package:graduation_project/pages/cart/my_cart.dart';
 import 'package:graduation_project/pages/orders/orders.dart';
 import 'package:graduation_project/pages/you/you.dart';
 import 'package:provider/provider.dart';

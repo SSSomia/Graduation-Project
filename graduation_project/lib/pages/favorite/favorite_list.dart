@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/home/product_card.dart';
-import 'package:graduation_project/pages/home/product_module.dart';
+import 'package:graduation_project/product_page/product_card.dart';
+import 'package:graduation_project/product_page/product_module.dart';
 
 class FavoriteList extends ChangeNotifier {
   Map<String, Product> favoriteList = {};

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/constant.dart';
-import 'package:graduation_project/pages/home/cart_list.dart';
-import 'package:graduation_project/pages/home/product_module.dart';
+import 'package:graduation_project/product_page/product_module.dart';
+import 'package:graduation_project/utils/add_to_cart_button.dart';
 import 'package:graduation_project/utils/favorite_press.dart';
-import 'package:provider/provider.dart';
 
 class ProductPage extends StatelessWidget {
   ProductPage({super.key, required this.product});
@@ -72,24 +70,7 @@ class ProductPage extends StatelessWidget {
               child: SizedBox(
                 height: 50,
                 width: 350,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                          const Color.fromARGB(255, 255, 255, 255))),
-                  onPressed: () {
-                    // have an error with setstate and have to be separated
-                    // product.isAdded
-                    //     ? Provider.of<CartList>(context, listen: false)
-                    //         .removeItem(product)
-                    //     : Provider.of<CartList>(context, listen: false)
-                    //         .addItem(product);
-                    // Add to cart functionality
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   const SnackBar(content: Text('Added to Cart')),
-                    // );
-                  },
-                  child: const Text('Add to Cart'),
-                ),
+                child: AddToCartButton(product: product, border: 50),
               ),
             ),
             const SizedBox(height: 8),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/home/cart_list.dart';
-import 'package:graduation_project/pages/home/product_module.dart';
+import 'package:graduation_project/pages/cart/cart_list.dart';
+import 'package:graduation_project/product_page/product_module.dart';
 import 'package:graduation_project/product_page/productPage.dart';
+import 'package:graduation_project/utils/add_to_cart_button.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatefulWidget {
@@ -21,7 +22,7 @@ class _ProductCardState extends State<ProductCard> {
         width: 200,
         child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(20),
             ),
             elevation: 5,
             child: Column(
@@ -37,7 +38,7 @@ class _ProductCardState extends State<ProductCard> {
                   },
                   child: ClipRRect(
                     borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(10)),
+                        const BorderRadius.vertical(top: Radius.circular(20)),
                     child: Image.network(
                       widget.product.imageUrl,
                       loadingBuilder: (BuildContext context, Widget child,
@@ -89,30 +90,8 @@ class _ProductCardState extends State<ProductCard> {
                           color: Color.fromARGB(255, 90, 89, 89),
                         ),
                       ),
-                      // const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                          widget.product.isAdded
-                              ? Provider.of<CartList>(context, listen: false)
-                                  .removeItem(widget.product)
-                              : Provider.of<CartList>(context, listen: false)
-                                  .addItem(widget.product);
-                          setState(() {
-                            widget.product.isAdded
-                                ? widget.product.isAdded = false
-                                : widget.product.isAdded = true;
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        child: widget.product.isAdded
-                            ? const Text("Remove from Cart")
-                            : const Text("Add To Cart"),
-                      ),
+                      const SizedBox(height: 10),
+                     AddToCartButton(product: widget.product, border: 20,),
                     ],
                   ),
                 ),
