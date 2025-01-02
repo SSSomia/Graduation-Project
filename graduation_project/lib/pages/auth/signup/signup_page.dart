@@ -3,7 +3,6 @@ import 'package:graduation_project/pages/constant.dart';
 import 'package:graduation_project/pages/auth/login/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -28,7 +27,7 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: const Color.fromARGB(255, 93, 146, 152),
         body: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -61,7 +60,7 @@ class _SignupPageState extends State<SignupPage> {
                           'SIGN UP',
                           style: TextStyle(
                               fontSize: 50,
-                              color: headerTextColor,
+                              color: Color.fromARGB(255, 0, 104, 115),
                               fontWeight: FontWeight.bold),
                         ),
                         Row(
@@ -73,9 +72,10 @@ class _SignupPageState extends State<SignupPage> {
                                     height: 90,
                                     width: 175,
                                     padding: const EdgeInsets.only(
-                                        right: 5,
-                                        left: 20,
-                                        top: 20,),
+                                      right: 5,
+                                      left: 20,
+                                      top: 20,
+                                    ),
                                     child: TextFormField(
                                       decoration: InputDecoration(
                                         fillColor: Colors.white,
@@ -97,9 +97,10 @@ class _SignupPageState extends State<SignupPage> {
                                     height: 90,
                                     width: 175,
                                     padding: const EdgeInsets.only(
-                                        right: 20,
-                                        // left: 20,
-                                        top: 20,),
+                                      right: 20,
+                                      // left: 20,
+                                      top: 20,
+                                    ),
                                     child: TextFormField(
                                       decoration: InputDecoration(
                                         fillColor: Colors.white,
@@ -211,9 +212,8 @@ class _SignupPageState extends State<SignupPage> {
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    buttonColor, // Background color of the button
-                                foregroundColor: const Color.fromARGB(255, 0, 0,
-                                    0), // Text (foreground) color of the button
+                                  const Color.fromARGB(255, 3, 88, 98),
+                                foregroundColor: const Color.fromARGB(255, 255, 255, 255), // Text (foreground) color of the button
                               ),
                               child: const Text(
                                 'Sign Up',

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/product_page/product_module.dart';
+import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:graduation_project/utils/add_to_cart_button.dart';
 import 'package:graduation_project/utils/favorite_press.dart';
 
@@ -11,6 +11,7 @@ class ProductPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Text(product.productName),
       ),
       body: Padding(
@@ -70,7 +71,7 @@ class ProductPage extends StatelessWidget {
               child: SizedBox(
                 height: 50,
                 width: 350,
-                child: AddToCartButton(product: product, border: 50),
+                child: AddToCartButton(product: product, border: 50,backgroundButtonColor: const Color.fromARGB(255, 222, 233, 233),foreButtonColor: Colors.black,),
               ),
             ),
             const SizedBox(height: 8),
@@ -81,7 +82,7 @@ class ProductPage extends StatelessWidget {
                 child: FilledButton(
                   style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all<Color>(
-                          const Color.fromARGB(255, 163, 163, 163))),
+                          const Color.fromARGB(255, 50, 116, 138))),
                   onPressed: () {
                     // Navigate to checkout or further actions
                   },

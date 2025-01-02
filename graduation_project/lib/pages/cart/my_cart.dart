@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
-import 'package:graduation_project/product_page/product_card.dart';
-import 'package:graduation_project/product_page/product_module.dart';
+import 'package:graduation_project/pages/cart/list_tile_item.dart';
+import 'package:graduation_project/pages/product_page/product_card.dart';
+import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:provider/provider.dart';
 
 class MyCart extends StatelessWidget {
@@ -29,12 +30,18 @@ class MyCart extends StatelessWidget {
                             style: TextStyle(fontSize: 20),
                           ),
                           const Spacer(),
-                          Chip(
-                            label: Text(
-                              "\$${_cartList.totalPrice.toStringAsFixed(2)}",
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                            backgroundColor: Theme.of(context).primaryColor,
+                          Consumer<CartList>(
+                            builder: (context, cartList, child) {
+                              return Chip(
+                                label: Text(
+                                  "\$${cartList.totalPrice.toStringAsFixed(2)}",
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                ),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 3, 88, 98),
+                              );
+                            },
                           ),
                           TextButton(
                             onPressed: _cartList.cartList.isEmpty
@@ -57,31 +64,45 @@ class MyCart extends StatelessWidget {
                                             ),
                                             ElevatedButton(
                                               onPressed: () {
-                                                Navigator.of(context)
-                                                    .pop();
-                                                    _cartList.clearCart(); // Close the dialog
+                                                Navigator.of(context).pop();
+                                                _cartList
+                                                    .clearCart(); // Close the dialog
                                                 // Perform the purchase action here
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
-                                                  const SnackBar(
-                                                      content: Text(
+                                                  SnackBar(
+                                                      behavior: SnackBarBehavior
+                                                          .floating,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                      ),
+                                                      content: const Text(
                                                           'Purchase Confirmed!')),
                                                 );
                                               },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 3, 88, 98),
+                                                foregroundColor: const Color
+                                                    .fromARGB(255, 255, 255,
+                                                    255), // Text (foreground) color of the button
+                                              ),
                                               child: const Text('Buy Now'),
                                             ),
                                           ],
                                         );
                                       },
                                     );
-                                    // Handle checkout
-                                    // ScaffoldMessenger.of(context).showSnackBar(
-                                    //   const SnackBar(
-                                    //       content:
-                                    //           Text("Checkout Not Implemented")),
-                                    // );
                                   },
-                            child: const Text("Checkout"),
+                            child: const Text(
+                              "Checkout",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
                           ),
                         ])),
               ),
@@ -93,37 +114,7 @@ class MyCart extends StatelessWidget {
                   final item = _cartList.cartList.values.toList()[index];
                   return Column(
                     children: [
-                      ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(item.imageUrl),
-                        ),
-                        title: Text(item.productName),
-                        subtitle:
-                            Text("Price: \$${item.price.toStringAsFixed(2)}"),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.remove),
-                              onPressed: () {
-                                if (item.quantity > 1) {
-                                  _cartList.updateQuantity(
-                                      item, item.quantity - 1);
-                                } else {
-                                  _cartList.removeItem(item);
-                                }
-                              },
-                            ),
-                            Text("${item.quantity}"),
-                            IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: () {
-                                _cartList.addItem(item);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                      ListTileItem(item: item),
                       const Divider(
                         height: 1,
                         color: Color.fromARGB(255, 194, 194, 194),

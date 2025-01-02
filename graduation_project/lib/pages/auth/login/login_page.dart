@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 214, 214, 214),
+        backgroundColor: const Color.fromARGB(255, 93, 146, 152),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -50,11 +50,11 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
+                      const Text(
                         'LOGIN',
                         style: TextStyle(
                             fontSize: 50,
-                            color: headerTextColor,
+                            color: Color.fromARGB(255, 0, 104, 115),
                             fontWeight: FontWeight.bold),
                       ),
                       Container(
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                           obscuringCharacter: '*',
                           decoration: InputDecoration(
                             labelText: 'enter your password',
-                            prefix: const Icon(Icons.lock_outline_rounded),
+                            prefix: const Icon(Icons.password_outlined),
                             suffix: const Icon(Icons.remove_red_eye),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 20, bottom: 5),
+                        padding: const EdgeInsets.only(left: 20, bottom: 5),
                         child: Row(
                           children: [
                             Checkbox(
@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                                     checkBoxValue = value!;
                                   });
                                 }),
-                            Text("Remember me")
+                            const Text("Remember me")
                           ],
                         ),
                       ),
@@ -143,17 +143,16 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MainHomePage()),
+                                    builder: (context) => const MainHomePage()),
                               );
                               // if (_formKey.currentState!.validate()) {
                               //   Navigator.of(context).pushNamed('homePage');
                               // }
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 243,
-                                  241, 241), // Background color of the button
-                              foregroundColor: const Color.fromARGB(255, 0, 0,
-                                  0), // Text (foreground) color of the button
+                              backgroundColor:
+                                  const Color.fromARGB(255, 3, 88, 98),
+                              foregroundColor: const Color.fromARGB(255, 255, 255, 255), // Text (foreground) color of the button
                             ),
                             child: const Text(
                               'Login',
@@ -171,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignupPage()),
+                                      builder: (context) => const SignupPage()),
                                 );
                               },
                               child: const Text('Sign up'))

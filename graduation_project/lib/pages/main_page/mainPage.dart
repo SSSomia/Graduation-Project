@@ -27,14 +27,14 @@ class _NavigationExampleState extends State<MainHomePage> {
           title: const Text(
             'Shoopy',
             style: TextStyle(
-              color: Colors.white,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 25,
               fontWeight: FontWeight.bold,
             ),
           ),
           leading: const Icon(Icons.shopping_bag_outlined),
-          backgroundColor: backgroundColor,
-          shadowColor: const Color.fromARGB(255, 98, 98, 98),
+          backgroundColor:  const Color.fromARGB(255, 255, 255, 255),
+        //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
           elevation: 10,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -49,7 +49,7 @@ class _NavigationExampleState extends State<MainHomePage> {
               currentPageIndex = index;
             });
           },
-          backgroundColor: const Color.fromARGB(255, 188, 188, 188),
+          backgroundColor: const Color.fromARGB(255, 82, 157, 165),
           indicatorColor: const Color.fromARGB(255, 255, 255, 255),
           selectedIndex: currentPageIndex,
           animationDuration: Durations.extralong4,
@@ -72,10 +72,10 @@ class _NavigationExampleState extends State<MainHomePage> {
             ),
           ],
         ),
-        body: <Widget>[
-          You(),
+        body:<Widget>[
+          const You(),
           HomePage(),
-          Orders(),
+          const Orders(),
           MyCart(),
         ][currentPageIndex],
       ),

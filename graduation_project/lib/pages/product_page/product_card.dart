@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
-import 'package:graduation_project/product_page/product_module.dart';
-import 'package:graduation_project/product_page/productPage.dart';
+import 'package:graduation_project/pages/product_page/product_module.dart';
+import 'package:graduation_project/pages/product_page/productPage.dart';
 import 'package:graduation_project/utils/add_to_cart_button.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,7 @@ class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     //final product = Provider.of<CartList>(context).cartList;
-    return SizedBox(
+   return SizedBox(
         height: 400,
         width: 200,
         child: Card(
@@ -91,7 +91,7 @@ class _ProductCardState extends State<ProductCard> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                     AddToCartButton(product: widget.product, border: 20,),
+                     AddToCartButton(product: widget.product, border: 20,backgroundButtonColor:  Color.fromARGB(255, 50, 116, 138), foreButtonColor: Colors.white,),
                     ],
                   ),
                 ),
