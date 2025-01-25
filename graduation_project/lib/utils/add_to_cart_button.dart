@@ -36,7 +36,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/constant.dart';
@@ -44,7 +43,12 @@ import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:provider/provider.dart';
 
 class AddToCartButton extends StatefulWidget {
-  AddToCartButton({required this.product, super.key, required this.border, required this.backgroundButtonColor, required this.foreButtonColor});
+  AddToCartButton(
+      {required this.product,
+      super.key,
+      required this.border,
+      required this.backgroundButtonColor,
+      required this.foreButtonColor});
   final Product product;
   final double border;
   Color backgroundButtonColor = const Color.fromARGB(255, 221, 230, 233);
@@ -57,30 +61,32 @@ class AddToCartButton extends StatefulWidget {
 class _AddToCartButtonState extends State<AddToCartButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        widget.product.isAdded
-            ? Provider.of<CartList>(context, listen: false)
-                .removeItem(widget.product)
-            : Provider.of<CartList>(context, listen: false)
-                .addItem(widget.product);
-        setState(() {
-          widget.product.isAdded
-              ? widget.product.isAdded = false
-              : widget.product.isAdded = true;
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: widget.backgroundButtonColor,
-        shadowColor: const Color.fromARGB(255, 80, 80, 80),
-        foregroundColor:widget.foreButtonColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(widget.border),
+    return Consumer<CartList>(builder: (context, cartList, child) {
+      return ElevatedButton(
+        onPressed: () {
+          if (cartList.isProductExist(widget.product)) {
+            cartList.removeAllItem(widget.product);
+          } else {
+            cartList.addItem(widget.product);
+          }
+          setState(() {
+            widget.product.isAdded = !widget.product.isAdded;
+          });
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: (cartList.isProductExist(widget.product))
+              ? const Color.fromARGB(255, 122, 206, 203)
+              : widget.backgroundButtonColor,
+          shadowColor: const Color.fromARGB(255, 80, 80, 80),
+          foregroundColor: widget.foreButtonColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.border),
+          ),
         ),
-      ),
-      child: widget.product.isAdded
-          ? const Text("Remove from Cart")
-          : const Text("Add To Cart"),
-    );
+        child: (cartList.isProductExist(widget.product))
+            ? const Text("Added To Cart")
+            : const Text("Add To Cart"),
+      );
+    });
   }
 }

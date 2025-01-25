@@ -8,6 +8,14 @@ class CartList extends ChangeNotifier {
   double _totalPrice = 0;
   double get totalPrice => _totalPrice;
 
+  bool isProductExist(Product product)
+  {
+    if (cartList.containsKey(product.id))
+    {
+      return true;
+    }
+    return false;
+  }
 
   void addItem(Product product) {
     if (cartList.containsKey(product.id)) {
@@ -24,6 +32,14 @@ class CartList extends ChangeNotifier {
     cartList.remove(product.id);
      product.isAdded = false;
      _totalPrice -= product.price;
+    notifyListeners();
+  }
+
+  void removeAllItem(Product product)
+  {
+    cartList.remove(product.id);
+     product.isAdded = false;
+     _totalPrice -= product.price * product.quantity;
     notifyListeners();
   }
 
