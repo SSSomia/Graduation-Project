@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class ListTileDrawer extends StatelessWidget {
   late String title;
   late Icon icon;
-  ListTileDrawer({super.key, required this.icon, required this.title});
+  late Route page;
+  ListTileDrawer({super.key, required this.icon, required this.title, required this.page});
 
   @override
   Widget build(BuildContext context) {

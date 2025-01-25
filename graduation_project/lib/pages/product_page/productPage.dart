@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:graduation_project/utils/add_to_cart_button.dart';
-import 'package:graduation_project/utils/favorite_press.dart';
+import 'package:graduation_project/utils/favorite_button.dart';
 
 class ProductPage extends StatelessWidget {
   ProductPage({super.key, required this.product});
@@ -46,7 +46,7 @@ class ProductPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: const FavoritePress(),
+                    child: FavoriteButton(product: product,),
                   ))
             ]),
             const SizedBox(height: 16),

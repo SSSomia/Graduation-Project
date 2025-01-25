@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/constant.dart';
+import 'package:graduation_project/pages/favorite/favorite_page.dart';
 import 'package:graduation_project/utils/listTileDrawer.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -37,20 +38,40 @@ class _MyDrawerState extends State<MyDrawer> {
             color: Colors.white,
           ),
         ),
-        ListTileDrawer(
-            icon: const Icon(Icons.account_circle_outlined),
-            title: 'My Account'),
+        ListTile(
+            leading: Icon(Icons.account_circle_outlined), // Add an icon here
+            title: Text('Account'),
+            
+          ),
         ListTile(
           leading: Badge.count(
               count: 1, child: const Icon(Icons.notifications_active_outlined)),
           title: const Text('Notification'),
         ),
-        ListTileDrawer(icon: const Icon(Icons.favorite_outline_rounded), title: 'Favorites'),
+         ListTile(
+            leading: Icon(Icons.favorite_outline_outlined), // Add an icon here
+            title: Text('Favorites'),
+            onTap: () {
+              Navigator.pop(context); // Close the drawer
+               Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>  MyFavorites()));
+            },
+          ),
         const Divider(
           height: 1,
         ),
-        ListTileDrawer(icon: const Icon(Icons.settings_outlined), title: 'Settings'),
-        ListTileDrawer(icon: const Icon(Icons.logout_rounded), title: 'Logout'),
+         ListTile(
+            leading: Icon(Icons.settings_outlined), // Add an icon here
+            title: Text('Settings'),
+            
+          ),
+        ListTile(
+            leading: Icon(Icons.logout_rounded), // Add an icon here
+            title: Text('Logout'),
+            
+          ),
       ],
     );
   }

@@ -13,6 +13,22 @@ class FavoriteList extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+
+  bool isProductExist(Product product)
+  {
+    if (favoriteList.containsKey(product.id))
+    {
+      return true;
+    }
+    return false;
+  }
+
+    void clearCart()
+  {
+    favoriteList.clear();
+    notifyListeners();
+  }
 }
 
 

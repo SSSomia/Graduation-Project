@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
+import 'package:graduation_project/pages/product_page/productPage.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +13,10 @@ class ListTileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CartList>(
       builder: (context, cartItem, child) {
-        return ListTile(
+        return ListTile(onTap: () =>  Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductPage(product: item,))),
           leading: CircleAvatar(
             backgroundImage: NetworkImage(item.imageUrl),
           ),
