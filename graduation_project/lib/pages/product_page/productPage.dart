@@ -9,9 +9,9 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+      backgroundColor: const Color.fromARGB(255, 247, 253, 255),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 228, 246, 254),
         title: Text(product.productName),
       ),
       body: Padding(
@@ -46,7 +46,9 @@ class ProductPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: FavoriteButton(product: product,),
+                    child: FavoriteButton(
+                      product: product,
+                    ),
                   ))
             ]),
             const SizedBox(height: 16),
@@ -71,7 +73,13 @@ class ProductPage extends StatelessWidget {
               child: SizedBox(
                 height: 50,
                 width: 350,
-                child: AddToCartButton(product: product, border: 50,backgroundButtonColor: const Color.fromARGB(255, 222, 233, 233),foreButtonColor: Colors.black,),
+                child: AddToCartButton(
+                  product: product,
+                  border: 50,
+                  backgroundButtonColor:
+                      const Color.fromARGB(255, 222, 233, 233),
+                  foreButtonColor: Colors.black,
+                ),
               ),
             ),
             const SizedBox(height: 8),
@@ -84,7 +92,47 @@ class ProductPage extends StatelessWidget {
                       backgroundColor: WidgetStateProperty.all<Color>(
                           const Color.fromARGB(255, 50, 116, 138))),
                   onPressed: () {
-                    // Navigate to checkout or further actions
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            title: const Text('Confirm Purchase'),
+                            content: const Text(
+                                'Are you sure you want to buy this item?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          content: const Text(
+                                              'Purchase Confirmed!')),
+                                    );
+                                  },
+                                  child: const Text('Buy Now'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 3, 88, 98),
+                                    foregroundColor: const Color.fromARGB(
+                                        255, 255, 255, 255),
+                                  ))
+                            ]);
+
+                        // Navigate to checkout or further actions
+                      },
+                    );
                   },
                   child: const Text('Buy Now'),
                 ),

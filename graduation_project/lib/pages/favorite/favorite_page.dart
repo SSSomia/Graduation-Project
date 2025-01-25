@@ -20,8 +20,9 @@ class MyFavorites extends StatelessWidget {
         : Scaffold(
             appBar: AppBar(
               title: Text("My Favorites"),
-              backgroundColor: const Color.fromARGB(255, 225, 225, 225),
+              backgroundColor: const Color.fromARGB(255, 255, 213, 213),
             ),
+            backgroundColor: const Color.fromARGB(255, 255, 244, 244),
             body: Column(
               children: [
                 Expanded(
@@ -32,28 +33,31 @@ class MyFavorites extends StatelessWidget {
                     final item = favorite.favoriteList.values.toList()[index];
                     return Column(
                       children: [
-                        ListTile(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProductPage(
-                                        product: item,
-                                      ))),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(item.imageUrl),
+                        Container(
+                          decoration: BoxDecoration(color: const Color.fromARGB(255, 255, 255, 255),
+                          borderRadius: BorderRadius.all(Radius.circular(50))),
+                          child: ListTile(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductPage(
+                                          product: item,
+                                        ))),
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(item.imageUrl),
+                            ),
+                            title: Text(item.productName),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                context.read<FavoriteList>().addRemoveItem(item);
+                              },
+                            ),
+                            
                           ),
-                          title: Text(item.productName),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () {
-                              context.read<FavoriteList>().addRemoveItem(item);
-                            },
-                          ),
+
                         ),
-                        const Divider(
-                          height: 1,
-                          color: Color.fromARGB(255, 194, 194, 194),
-                        ),
+                        SizedBox(height: 10,)
                       ],
                     );
                   },
