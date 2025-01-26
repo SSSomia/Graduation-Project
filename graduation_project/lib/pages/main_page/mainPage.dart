@@ -31,7 +31,7 @@ class _NavigationExampleState extends State<MainHomePage> {
           ),
         ),
         leading: const Icon(Icons.shopping_bag_outlined),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
         //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
         elevation: 10,
         shape: const RoundedRectangleBorder(
@@ -73,7 +73,7 @@ class _NavigationExampleState extends State<MainHomePage> {
       body: <Widget>[
         const You(),
         HomePage(),
-        const Orders(),
+        Orders(),
         MyCart(),
       ][currentPageIndex],
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/product_page/product_card.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
 
 class CartList extends ChangeNotifier {

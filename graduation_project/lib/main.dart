@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/favorite/favorite_list.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
+import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => CartList()),
-    ChangeNotifierProvider(create: (_) => FavoriteList())
+    ChangeNotifierProvider(create: (_) => FavoriteList()),
+    ChangeNotifierProvider(create: (_) => OrderList())
   ], child: const MyApp()));
 }
 

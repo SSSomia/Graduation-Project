@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/constant.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/auth/signup/signup_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,8 +12,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkBoxValue = false;
-  TextEditingController _userName = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

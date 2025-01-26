@@ -1,8 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/cart/list_tile_item.dart';
-import 'package:graduation_project/pages/product_page/product_card.dart';
-import 'package:graduation_project/pages/product_page/product_module.dart';
+import 'package:graduation_project/pages/orders/order_list.dart';
+import 'package:graduation_project/pages/orders/order_module.dart';
 import 'package:provider/provider.dart';
 
 class MyCart extends StatelessWidget {
@@ -36,7 +38,8 @@ class MyCart extends StatelessWidget {
                                 label: Text(
                                   "\$${cartList.totalPrice.toStringAsFixed(2)}",
                                   style: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
                                 ),
                                 backgroundColor:
                                     const Color.fromARGB(255, 3, 88, 98),
@@ -62,37 +65,47 @@ class MyCart extends StatelessWidget {
                                               },
                                               child: const Text('Cancel'),
                                             ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                _cartList
-                                                    .clearCart(); // Close the dialog
-                                                // Perform the purchase action here
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                      behavior: SnackBarBehavior
-                                                          .floating,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      content: const Text(
-                                                          'Purchase Confirmed!')),
-                                                );
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    const Color.fromARGB(
-                                                        255, 3, 88, 98),
-                                                foregroundColor: const Color
-                                                    .fromARGB(255, 255, 255,
-                                                    255), // Text (foreground) color of the button
-                                              ),
-                                              child: const Text('Buy Now'),
-                                            ),
+                                            Consumer<OrderList>(builder:
+                                                (context, order, child) {
+                                              return ElevatedButton(
+                                                onPressed: () {
+                                                  order.newOrder(OrderModule(
+                                                      orderId: Random()
+                                                          .nextInt(100000)
+                                                          .toString(),
+                                                      cartList: _cartList,
+                                                      dateTime: DateTime.now(),
+                                                      status: "new"));
+                                                  Navigator.of(context).pop();
+                                                  _cartList.clearCart();
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                        behavior:
+                                                            SnackBarBehavior
+                                                                .floating,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                        ),
+                                                        content: const Text(
+                                                            'Purchase Confirmed!')),
+                                                  );
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 3, 88, 98),
+                                                  foregroundColor: const Color
+                                                      .fromARGB(255, 255, 255,
+                                                      255), // Text (foreground) color of the button
+                                                ),
+                                                child: const Text('Buy Now'),
+                                              );
+                                            }),
                                           ],
                                         );
                                       },
