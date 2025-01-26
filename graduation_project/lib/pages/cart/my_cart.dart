@@ -6,10 +6,10 @@ import 'package:graduation_project/pages/cart/list_tile_item.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:graduation_project/pages/orders/order_module.dart';
 import 'package:provider/provider.dart';
+  int orderNumer = 0;
 
 class MyCart extends StatelessWidget {
   MyCart({super.key});
-
   // CartList _cartList = CartList();
   @override
   Widget build(BuildContext context) {
@@ -70,12 +70,11 @@ class MyCart extends StatelessWidget {
                                               return ElevatedButton(
                                                 onPressed: () {
                                                   order.newOrder(OrderModule(
-                                                      orderId: Random()
-                                                          .nextInt(100000)
-                                                          .toString(),
-                                                      cartList: _cartList,
+                                                      orderId: orderNumer.toString(),
+                                                      cartList: _cartList.cartList,
                                                       dateTime: DateTime.now(),
-                                                      status: "new"));
+                                                      status: "new", totalPrice: _cartList.totalPrice as double));
+                                                      orderNumer++;
                                                   Navigator.of(context).pop();
                                                   _cartList.clearCart();
                                                   ScaffoldMessenger.of(context)
