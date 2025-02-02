@@ -87,26 +87,24 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           CategoryLine(),
           Expanded(
-            child: Container(
-              child: GridView.builder(
-                physics: CustomScrollPhysics(), 
-                padding: const EdgeInsets.all(10),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: .67,
-                ),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return ProductCard(product: products[index]);
-                },
+            child: GridView.builder(
+              physics: CustomScrollPhysics(), 
+              padding: const EdgeInsets.all(10),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: .67,
               ),
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return ProductCard(product: products[index]);
+              },
             ),
           ),
         ],

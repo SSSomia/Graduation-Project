@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/pages/cart/cart_list.dart';
+import 'package:graduation_project/pages/cart/my_cart.dart';
+import 'package:graduation_project/pages/orders/order_list.dart';
+import 'package:graduation_project/pages/orders/order_module.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:graduation_project/utils/add_to_cart_button.dart';
 import 'package:graduation_project/utils/favorite_button.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatelessWidget {
   ProductPage({super.key, required this.product});
@@ -107,8 +112,17 @@ class ProductPage extends StatelessWidget {
                                 },
                                 child: const Text('Cancel'),
                               ),
-                              ElevatedButton(
+                               Consumer<OrderList>(builder:
+                                                (context, order, child) {
+                                              return ElevatedButton(
                                   onPressed: () {
+                                     order.newOrder(OrderModule(
+                                                      orderId: orderNumer.toString(),
+                                                      cartList: {product.id: product},
+                                                      dateTime: DateTime.now(),
+                                                      status: "new",
+                                                       totalPrice: product.price,));
+                                                      orderNumer++;
                                     Navigator.of(context).pop();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
@@ -127,7 +141,7 @@ class ProductPage extends StatelessWidget {
                                         const Color.fromARGB(255, 3, 88, 98),
                                     foregroundColor: const Color.fromARGB(
                                         255, 255, 255, 255),
-                                  ))
+                                  ));})
                             ]);
 
                         // Navigate to checkout or further actions
