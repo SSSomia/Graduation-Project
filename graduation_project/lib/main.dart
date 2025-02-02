@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/pages/auth/login/login_page.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/favorite/favorite_list.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Graduation project',
-      home: MainHomePage(),
+      home: LoginPage(),
       
     );
   }
