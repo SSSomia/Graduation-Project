@@ -112,36 +112,59 @@ class ProductPage extends StatelessWidget {
                                 },
                                 child: const Text('Cancel'),
                               ),
-                               Consumer<OrderList>(builder:
-                                                (context, order, child) {
-                                              return ElevatedButton(
-                                  onPressed: () {
-                                     order.newOrder(OrderModule(
-                                                      orderId: orderNumer.toString(),
-                                                      cartList: {product.id: product},
-                                                      dateTime: DateTime.now(),
-                                                      status: "new",
-                                                       totalPrice: product.price,));
-                                                      orderNumer++;
-                                    Navigator.of(context).pop();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          content: const Text(
-                                              'Purchase Confirmed!')),
-                                    );
-                                  },
-                                  child: const Text('Buy Now'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 3, 88, 98),
-                                    foregroundColor: const Color.fromARGB(
-                                        255, 255, 255, 255),
-                                  ));})
+                              // Consumer<OrderList>(
+                              //     builder: (context, order, child) {
+                              //   return
+                                 ElevatedButton(
+                                    onPressed: () {
+                                      Provider.of<OrderList>(context,
+                                              listen: false)
+                                          .newOrder(OrderModule(
+                                              orderId: orderNumer.toString(),
+                                              orderItems: {
+                                                product.id: OrderItem(
+                                                    product: product,
+                                                    price: product.price *
+                                                        product.quantity)
+                                              },
+                                              dateTime: DateTime.now(),
+                                              status: "new",
+                                              totalPrice: product.price,
+                                              numberOfItems: 1));
+
+                                      // order.newOrder(OrderModule(
+                                      //     orderId: orderNumer.toString(),
+                                      //     orderItems: {
+                                      //       product.id: OrderItem(
+                                      //           product: product,
+                                      //           price: product.price *
+                                      //               product.quantity)
+                                      //     },
+                                      //     dateTime: DateTime.now(),
+                                      //     status: "new",
+                                      //     totalPrice: product.price,
+                                      //     numberOfItems: 1));
+                                      orderNumer++;
+                                      Navigator.of(context).pop();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            behavior: SnackBarBehavior.floating,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            content: const Text(
+                                                'Purchase Confirmed!')),
+                                      );
+                                    },
+                                    child: const Text('Buy Now'),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 3, 88, 98),
+                                      foregroundColor: const Color.fromARGB(
+                                          255, 255, 255, 255),
+                                    ))
                             ]);
 
                         // Navigate to checkout or further actions

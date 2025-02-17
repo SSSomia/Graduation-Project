@@ -6,16 +6,17 @@ import 'package:graduation_project/pages/cart/list_tile_item.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:graduation_project/pages/orders/order_module.dart';
 import 'package:provider/provider.dart';
-  int orderNumer = 0;
+
+int orderNumer = 0;
 
 class MyCart extends StatelessWidget {
   MyCart({super.key});
   // CartList _cartList = CartList();
   @override
   Widget build(BuildContext context) {
-    final _cartList = Provider.of<CartList>(context);
+    final cartList = Provider.of<CartList>(context);
 
-    return _cartList.cartList.isEmpty
+    return cartList.cartList.isEmpty
         ? const Scaffold(body: Center(child: Text("no items added yet")))
         : Scaffold(
             body: Column(
@@ -47,7 +48,7 @@ class MyCart extends StatelessWidget {
                             },
                           ),
                           TextButton(
-                            onPressed: _cartList.cartList.isEmpty
+                            onPressed: cartList.cartList.isEmpty
                                 ? null
                                 : () {
                                     showDialog(
@@ -70,13 +71,19 @@ class MyCart extends StatelessWidget {
                                               return ElevatedButton(
                                                 onPressed: () {
                                                   order.newOrder(OrderModule(
-                                                      orderId: orderNumer.toString(),
-                                                      cartList: _cartList.cartList,
+                                                      orderId:
+                                                          orderNumer.toString(),
+                                                      orderItems:
+                                                          cartList.cartList,
                                                       dateTime: DateTime.now(),
-                                                      status: "new", totalPrice: _cartList.totalPrice as double));
-                                                      orderNumer++;
+                                                      status: "new",
+                                                      totalPrice:
+                                                          cartList.totalPrice,
+                                                      numberOfItems: cartList
+                                                          .numberOfItems));
+                                                  orderNumer++;
                                                   Navigator.of(context).pop();
-                                                  _cartList.clearCart();
+                                                  cartList.clearCart();
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(
@@ -121,12 +128,12 @@ class MyCart extends StatelessWidget {
               Expanded(
                   child: ListView.builder(
                 padding: const EdgeInsets.all(10),
-                itemCount: _cartList.cartList.length,
+                itemCount: cartList.cartList.length,
                 itemBuilder: (context, index) {
-                  final item = _cartList.cartList.values.toList()[index];
+                  final item = cartList.cartList.values.toList()[index];
                   return Column(
                     children: [
-                      ListTileItem(item: item),
+                      ListTileItem(item: item.product),
                       const Divider(
                         height: 1,
                         color: Color.fromARGB(255, 194, 194, 194),

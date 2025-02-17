@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:graduation_project/pages/profile/person_module.dart';
+
+class PersonProvider extends ChangeNotifier {
+  Map<String, PersonModule> persons = {};
+  int numberOfPersons = 0;
+
+  addPerson(PersonModule person) {
+    persons['$numberOfPersons'] = person;
+    numberOfPersons++;
+    persons.forEach((key, person) {
+      print("Name: ${person.name}, Age: ${person.password}");
+    });
+    notifyListeners();
+  }
+}

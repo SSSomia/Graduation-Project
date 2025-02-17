@@ -1,6 +1,7 @@
 // i will take the card design
 // make a provider for the order list
 // modifiy the card of unused things
+import 'package:graduation_project/pages/orders/order_details.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
@@ -37,7 +38,7 @@ class Orders extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              order!.getOrderId,
+                              order!.orderId,
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -65,7 +66,7 @@ class Orders extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              order.getStatus,
+                              order.status,
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -86,7 +87,7 @@ class Orders extends StatelessWidget {
                                   TextStyle(fontSize: 14, color: Colors.grey),
                             ),
                             Text(
-                              "${order.getTotalPrice.toStringAsFixed(2)}",
+                              order.totalPrice.toStringAsFixed(2),
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -104,6 +105,10 @@ class Orders extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 // View details action
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OrderDetailsPage(orderId: order.orderId,)));
                               },
                               child: const Text(
                                 "View Details",

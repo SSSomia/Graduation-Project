@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/pages/home/home_page.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/auth/signup/signup_page.dart';
+import 'package:graduation_project/pages/profile/person_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -129,6 +132,18 @@ class _LoginPageState extends State<LoginPage> {
                           height: 50,
                           child: ElevatedButton(
                             onPressed: () async {
+                              final persons = Provider.of<PersonProvider>(
+                                  context,
+                                  listen: false);
+                              if (persons.persons.values.any((person) =>
+                                      person.userName == _userName.text) &&
+                                  persons.persons.values.any((person) =>
+                                      person.password == _password.text)) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MainHomePage()));
+                              }
                               // if (checkBoxValue) {
                               //   SharedPreferences sharedPreferences =
                               //       await SharedPreferences.getInstance();
@@ -138,11 +153,6 @@ class _LoginPageState extends State<LoginPage> {
                               //       "password", _password.text);
                               // }
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const MainHomePage()),
-                              );
                               // if (_formKey.currentState!.validate()) {
                               //   Navigator.of(context).pushNamed('homePage');
                               // }
@@ -150,7 +160,11 @@ class _LoginPageState extends State<LoginPage> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   const Color.fromARGB(255, 3, 88, 98),
-                              foregroundColor: const Color.fromARGB(255, 255, 255, 255), // Text (foreground) color of the button
+                              foregroundColor: const Color.fromARGB(
+                                  255,
+                                  255,
+                                  255,
+                                  255), // Text (foreground) color of the button
                             ),
                             child: const Text(
                               'Login',

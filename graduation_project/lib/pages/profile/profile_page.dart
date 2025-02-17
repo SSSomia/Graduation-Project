@@ -86,6 +86,11 @@ class ProfilePage extends StatelessWidget {
                     subtitle: Text("somia@gmial.com"),
                     trailing: Icon(Icons.edit_outlined),
                   ),
+                    ListTile(
+                    title: Text("Password"),
+                    subtitle: Text("*********"),
+                    trailing: Icon(Icons.edit_outlined),
+                  ),
                   ListTile(
                     title: Text("Phone Number"),
                     subtitle: Text("021575744"),
@@ -97,15 +102,11 @@ class ProfilePage extends StatelessWidget {
                     trailing: Icon(Icons.edit_outlined),
                   ),
                   ListTile(
-                    title: Text("Gender"),
-                    subtitle: Text("girl"),
+                    title: Text("Created at"),
+                    subtitle: Text("9. 2022"),
                     trailing: Icon(Icons.edit_outlined),
                   ),
-                  ListTile(
-                    title: Text("Date Of Birth"),
-                    subtitle: Text("9. 2003"),
-                    trailing: Icon(Icons.edit_outlined),
-                  ),
+                
                   Divider()
                 ],
               ),
