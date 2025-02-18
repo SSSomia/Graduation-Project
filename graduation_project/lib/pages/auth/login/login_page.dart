@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/home/home_page.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/auth/signup/signup_page.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
@@ -18,6 +17,60 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
+  String? _errorMessage;
+  String? _userNameError;
+  String? _passwordError;
+
+  void _login() {
+    final persons = Provider.of<PersonProvider>(context, listen: false);
+
+    if (_formKey.currentState!.validate()) {
+      bool userExists = persons.persons.values.any((person) =>
+          person.userName == _userName.text &&
+          person.password == _password.text);
+
+      if (userExists) {
+        setState(() {
+          _errorMessage = null; // Hide error message on successful login
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainHomePage()),
+        );
+      } else {
+        setState(() {
+          _errorMessage = "Incorrect username or password!";
+          _userNameError =
+              _userName.text.isEmpty ? "Please enter your user name" : null;
+          _passwordError =
+              _password.text.isEmpty ? "Please enter your password" : null;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _userName.addListener(_clearError);
+    _password.addListener(_clearError);
+  }
+
+  @override
+  void dispose() {
+    _userName.removeListener(_clearError);
+    _password.removeListener(_clearError);
+    _userName.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  void _clearError() {
+    setState(() {
+      _errorMessage = null; // Clear error message when user starts typing
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,23 +81,20 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                // color: Colors.white,
                 width: 350,
-                height: 450,
+                height: 500,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color.fromARGB(255, 109, 109, 109)
-                            .withOpacity(0.5), // shadow color with opacity
-                        spreadRadius: 5, // extent of shadow spreading
-                        blurRadius: 10, // blurring amount
-                        offset: const Offset(
-                            0, 5), // horizontal and vertical shadow offset
-                      ),
-                    ]),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      spreadRadius: 5,
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -54,57 +104,70 @@ class _LoginPageState extends State<LoginPage> {
                       const Text(
                         'LOGIN',
                         style: TextStyle(
-                            fontSize: 50,
-                            color: Color.fromARGB(255, 0, 104, 115),
-                            fontWeight: FontWeight.bold),
+                          fontSize: 50,
+                          color: Color.fromARGB(255, 0, 104, 115),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      if (_errorMessage != null)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            _errorMessage!,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
                       Container(
-                        padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
                         child: TextFormField(
                           controller: _userName,
-                          // initialValue: userName,
+                          onChanged: (value) {
+                            setState(() {
+                              _userNameError = _userName.text.isEmpty
+                                  ? "Please enter your user name"
+                                  : null;
+                            });
+                          },
                           decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            labelText: 'username',
-                            prefixIcon: const Icon(Icons.person_2_outlined),
+                            labelText: 'Username',
+                            errorText: _userNameError,
+                            prefixIcon: const Icon(Icons.person),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  20.0), // Set the radius for rounded corners
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
-                          validator: (String? value) {
+                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            } else if (value != _userName) {
-                              return 'user name not correct';
+                              return 'Please enter your username';
                             }
                             return null;
                           },
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, top: 20, bottom: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
                         child: TextFormField(
-                          //  initialValue: password,
                           controller: _password,
                           obscureText: true,
                           obscuringCharacter: '*',
+                          onChanged: (value) {
+                            _passwordError = _password.text.isEmpty
+                                ? "Please enter your password"
+                                : null;
+                          },
                           decoration: InputDecoration(
-                            labelText: 'enter your password',
-                            prefix: const Icon(Icons.password_outlined),
-                            suffix: const Icon(Icons.remove_red_eye),
+                            errorText: _passwordError,
+                            labelText: 'Enter your password',
+                            prefixIcon: const Icon(Icons.lock),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  20.0), // Set the radius for rounded corners
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
-                          validator: (String? value) {
+                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            } else if (value != _password) {
-                              return 'password not correct';
+                              return 'Please enter your password';
                             }
                             return null;
                           },
@@ -115,12 +178,13 @@ class _LoginPageState extends State<LoginPage> {
                         child: Row(
                           children: [
                             Checkbox(
-                                value: checkBoxValue,
-                                onChanged: (value) async {
-                                  setState(() {
-                                    checkBoxValue = value!;
-                                  });
-                                }),
+                              value: checkBoxValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  checkBoxValue = value!;
+                                });
+                              },
+                            ),
                             const Text("Remember me")
                           ],
                         ),
@@ -131,40 +195,11 @@ class _LoginPageState extends State<LoginPage> {
                           width: 300,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () async {
-                              final persons = Provider.of<PersonProvider>(
-                                  context,
-                                  listen: false);
-                              if (persons.persons.values.any((person) =>
-                                      person.userName == _userName.text) &&
-                                  persons.persons.values.any((person) =>
-                                      person.password == _password.text)) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MainHomePage()));
-                              }
-                              // if (checkBoxValue) {
-                              //   SharedPreferences sharedPreferences =
-                              //       await SharedPreferences.getInstance();
-                              //   sharedPreferences.setString(
-                              //       "name", _userName.text);
-                              //   sharedPreferences.setString(
-                              //       "password", _password.text);
-                              // }
-
-                              // if (_formKey.currentState!.validate()) {
-                              //   Navigator.of(context).pushNamed('homePage');
-                              // }
-                            },
+                            onPressed: _login,
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   const Color.fromARGB(255, 3, 88, 98),
-                              foregroundColor: const Color.fromARGB(
-                                  255,
-                                  255,
-                                  255,
-                                  255), // Text (foreground) color of the button
+                              foregroundColor: Colors.white,
                             ),
                             child: const Text(
                               'Login',
@@ -178,16 +213,17 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           const Text('Don\'t have an account?'),
                           TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SignupPage()),
-                                );
-                              },
-                              child: const Text('Sign up'))
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignupPage()),
+                              );
+                            },
+                            child: const Text('Sign up'),
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -199,6 +235,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+
 
   // SharedPreferences? sharedPreferences;
   // String userName = "", password = "";
