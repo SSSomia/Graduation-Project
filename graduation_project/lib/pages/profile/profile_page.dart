@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/user_data/globalUserData.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -20,7 +21,7 @@ class ProfilePage extends StatelessWidget {
                   color: Color.fromARGB(255, 3, 117, 138),
                   borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
-                child: const Column(
+                child: Column(
                   children: [
                     CircleAvatar(
                       radius: 60,
@@ -30,7 +31,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'Somia Mohammed',
+                      globalUser.name,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -39,7 +40,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      'Somia',
+                      globalUser.userName,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white70,
@@ -70,44 +71,49 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 15),
 
             // Profile Details
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
-                  Divider(),
+                  const Divider(),
                   const SizedBox(height: 10),
-                  Text(
+                  const Text(
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     "Personal Information",
                     textAlign: TextAlign.start,
                   ),
                   ListTile(
-                    title: Text("Email"),
-                    subtitle: Text("somia@gmial.com"),
-                    trailing: Icon(Icons.edit_outlined),
+                    title: const Text("Email"),
+                    subtitle: globalUser.emial == ""
+                        ? Text("not added yet!")
+                        : Text(globalUser.emial),
+                    trailing: const Icon(Icons.edit_outlined),
                   ),
-                    ListTile(
+                  ListTile(
                     title: Text("Password"),
-                    subtitle: Text("*********"),
+                    subtitle: Text(globalUser.password),
                     trailing: Icon(Icons.edit_outlined),
                   ),
                   ListTile(
                     title: Text("Phone Number"),
-                    subtitle: Text("021575744"),
+                    subtitle:globalUser.phoneNumber == ""
+                        ? Text("not added yet!")
+                        : Text(globalUser.phoneNumber),
                     trailing: Icon(Icons.edit_outlined),
                   ),
                   ListTile(
                     title: Text("Address"),
-                    subtitle: Text("almenofiya"),
+                    subtitle: globalUser.address == ""
+                        ? Text("not added yet!")
+                        :Text(globalUser.address),
                     trailing: Icon(Icons.edit_outlined),
                   ),
                   ListTile(
                     title: Text("Created at"),
-                    subtitle: Text("9. 2022"),
+                    subtitle: Text(globalUser.createdAt.toString().substring(0, 10)),
                     trailing: Icon(Icons.edit_outlined),
                   ),
-                
-                  Divider()
+                  const Divider()
                 ],
               ),
             ),

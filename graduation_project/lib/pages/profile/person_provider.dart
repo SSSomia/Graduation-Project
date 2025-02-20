@@ -8,9 +8,13 @@ class PersonProvider extends ChangeNotifier {
   addPerson(PersonModule person) {
     persons['$numberOfPersons'] = person;
     numberOfPersons++;
-    persons.forEach((key, person) {
-      print("Name: ${person.name}, Age: ${person.password}");
-    });
     notifyListeners();
+  }
+
+  PersonModule getPersonDataUsingUserName(String userName)
+  {
+    PersonModule? foundPerson = persons.values.firstWhere(
+    (person) => person.userName == userName);
+    return foundPerson;
   }
 }

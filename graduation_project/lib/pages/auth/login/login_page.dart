@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/auth/signup/signup_page.dart';
+import 'package:graduation_project/pages/profile/person_module.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
+import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,9 +35,16 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _errorMessage = null; // Hide error message on successful login
         });
+        PersonProvider personProvider =
+            Provider.of<PersonProvider>(context, listen: false);
+        PersonModule globalUserData =
+            personProvider.getPersonDataUsingUserName(_userName.text);
+            globalUser = globalUserData;
+        // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
+        //     globalUser.password, globalUser.createdAt);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MainHomePage()),
+          MaterialPageRoute(builder: (context) => const MainHomePage()),
         );
       } else {
         setState(() {
@@ -86,12 +95,12 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black26,
                       spreadRadius: 5,
                       blurRadius: 10,
-                      offset: const Offset(0, 5),
+                      offset: Offset(0, 5),
                     ),
                   ],
                 ),
