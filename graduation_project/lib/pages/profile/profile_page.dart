@@ -5,6 +5,7 @@ import 'package:graduation_project/pages/auth/login/login_page.dart';
 import 'package:graduation_project/pages/profile/change_user_data.dart';
 import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // have to add the image of the user and defult image
 class ProfilePage extends StatefulWidget {
@@ -27,48 +28,13 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         _selectedImage = File(pickedFile.path);
       });
+      // can't save the image in user data
+      globalUser.image = pickedFile.path;
+      // globalUser.image = _selectedImage;
     }
   }
 
   String _enteredText = "Default Value"; // Store the entered text
-
-  // // Function to show the dialog
-  // void _showInputDialog(String value) {
-  //   TextEditingController textController =
-  //       TextEditingController(); // Controller for TextField
-
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text("Enter Text"),
-  //         content: TextField(
-  //           controller: textController,
-  //           decoration: InputDecoration(
-  //             hintText: value,
-  //           ),
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop(); // Close the dialog
-  //             },
-  //             child: Text("Cancel"),
-  //           ),
-  //           TextButton(
-  //             onPressed: () {
-  //               setState(() {
-  //                 _enteredText = textController.text; // Update the value
-  //               });
-  //               Navigator.of(context).pop(); // Close dialog
-  //             },
-  //             child: Text("OK"),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   void _showInputDialog(
       String title, String initialValue, Function(String) onSubmit) {
@@ -127,13 +93,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     CircleAvatar(
                       radius: 60,
-                      child: _selectedImage != null
-                          ? Image.file(_selectedImage!,
-                              width: 150, height: 150, fit: BoxFit.cover)
-                          : Image.network(_defaultImageUrl,
-                              width: 150, height: 150, fit: BoxFit.cover),
+                      // child: _selectedImage != null
+                      //     ? Image.file(_selectedImage!,
+                      //         width: 150, height: 150, fit: BoxFit.cover)
+                      //     : Image.network(_defaultImageUrl,
+                      //         width: 150, height: 150, fit: BoxFit.cover),
+                      backgroundImage: _selectedImage != null
+                          ? FileImage(_selectedImage!)
+                          : (globalUser.image != null &&
+                                      globalUser.image!.isNotEmpty
+                                  ? FileImage(File(globalUser.image!))
+                                  : NetworkImage(_defaultImageUrl))
+                              as ImageProvider,
                     ),
-                    // backgroundImage: Image.file(_selectedImage!, width: 300, height: 300, fit: BoxFit.cover)),
                     const SizedBox(height: 10),
                     Text(
                       globalUser.name,
@@ -171,9 +143,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.edit_outlined),
-                      onPressed: _pickImage,
-                    ),
+                        icon: const Icon(Icons.edit_outlined),
+                        onPressed: _pickImage),
                   )),
             ]),
             const SizedBox(height: 15),

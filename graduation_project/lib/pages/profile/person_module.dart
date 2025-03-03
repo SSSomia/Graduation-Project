@@ -12,7 +12,7 @@ class PersonModule {
   late String address = '';
   late String emial = '';
   late DateTime createdAt;
-  late File image;
+  late String image = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
 
   PersonModule(
     this.personId,
