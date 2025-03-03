@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:graduation_project/pages/auth/login/login_page.dart';
 import 'package:graduation_project/pages/profile/change_user_data.dart';
 import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:image_picker/image_picker.dart';
@@ -273,6 +274,10 @@ class _ProfilePageState extends State<ProfilePage> {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle logout action
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 204, 45, 45),
