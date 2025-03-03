@@ -13,6 +13,7 @@ class ListTileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CartList>(
       builder: (context, cartItem, child) {
+        final orderItem = cartItem.cartList[item.id];
         return ListTile(onTap: () =>  Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -29,13 +30,13 @@ class ListTileItem extends StatelessWidget {
                 icon: const Icon(Icons.remove),
                 onPressed: () {
                   if (item.quantity > 1) {
-                    cartItem.updateQuantity(item, item.quantity - 1);
+                    cartItem.updateQuantity(item, orderItem!.quantity - 1);
                   } else {
                     cartItem.removeItem(item);
                   }
                 },
               ),
-              Text("${item.quantity}"),
+              Text("${orderItem!.quantity}"),
               IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {

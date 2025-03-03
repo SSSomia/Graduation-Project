@@ -112,7 +112,7 @@ class _SignupPageState extends State<SignupPage> {
                                         padding: const EdgeInsets.only(
                                           right: 5,
                                           left: 20,
-                                          top: 20,
+                                          top: 10,
                                         ),
                                         child: TextFormField(
                                           controller: _conFirstName,
@@ -150,7 +150,7 @@ class _SignupPageState extends State<SignupPage> {
                                     padding: const EdgeInsets.only(
                                       right: 20,
                                       // left: 20,
-                                      top: 20,
+                                      top: 10,
                                     ),
                                     child: TextFormField(
                                       controller: _conLastName,
@@ -183,7 +183,7 @@ class _SignupPageState extends State<SignupPage> {
                               ]),
                           Container(
                             padding: const EdgeInsets.only(
-                                right: 20, left: 20, top: 10, bottom: 10),
+                                right: 20, left: 20, top: 0, bottom: 10),
                             child: TextFormField(
                               controller: _conUserName,
                               validator: (value) {
@@ -211,7 +211,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           Container(
                               padding: const EdgeInsets.only(
-                                  right: 20, left: 20, top: 20, bottom: 10),
+                                  right: 20, left: 20, top: 10, bottom: 10),
                               child: TextFormField(
                                 controller: _conPassword,
                                 validator: (value) {
@@ -243,7 +243,7 @@ class _SignupPageState extends State<SignupPage> {
                               )),
                           Container(
                             padding: const EdgeInsets.only(
-                                right: 20, left: 20, top: 20, bottom: 10),
+                                right: 20, left: 20, top: 10, bottom: 10),
                             child: TextFormField(
                               controller: _conConfirmPassword,
                               validator: (value) {

@@ -1,3 +1,8 @@
+import 'dart:ffi';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+
 class PersonModule {
   late String personId;
   late String userName;
@@ -7,6 +12,7 @@ class PersonModule {
   late String address = '';
   late String emial = '';
   late DateTime createdAt;
+  late File image;
 
   PersonModule(
     this.personId,
