@@ -114,28 +114,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      globalUser.name,
+                      globalUser.userName,
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 5),
-                    Text(
-                      globalUser.userName,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white70,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
                   ],
                 ),
               ),
               Positioned(
-                  top: 20,
-                  right: 20,
+                  top: 10,
+                  right: 10,
                   child: Container(
                     decoration: const BoxDecoration(
                       //color: Colors.white,
@@ -152,6 +143,32 @@ class _ProfilePageState extends State<ProfilePage> {
                         icon: const Icon(Icons.edit_outlined),
                         onPressed: _pickImage),
                   )),
+              Positioned(
+                  bottom: 10,
+                  right: 10,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      //color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(155, 255, 255, 255),
+                          blurRadius: 12,
+                          offset: Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                        icon: const Icon(Icons.edit_outlined),
+                        onPressed: () {
+                          setState(() {
+                            _showInputDialog("User name", globalUser.userName,
+                                (newValue) {
+                              globalUser.userName = newValue;
+                            });
+                          });
+                        }),
+                  )),
             ]),
             const SizedBox(height: 15),
 
@@ -167,6 +184,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     "Personal Information",
                     textAlign: TextAlign.start,
                   ),
+                  ListTile(
+                      title: const Text("Name"),
+                      subtitle: Text(globalUser.name),
+                      trailing: IconButton(
+                          icon: const Icon(Icons.edit_outlined),
+                          onPressed: () {
+                            setState(() {
+                              _showInputDialog("Name", globalUser.emial,
+                                  (newValue) {
+                                globalUser.name = newValue;
+                              });
+                            });
+                          })),
                   ListTile(
                       title: const Text("Email"),
                       subtitle: globalUser.emial == ""
@@ -251,9 +281,10 @@ class _ProfilePageState extends State<ProfilePage> {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle logout action
-                  Navigator.push(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => const LoginPage()),
+                    (route) => false,
                   );
                 },
                 style: ElevatedButton.styleFrom(
