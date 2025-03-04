@@ -17,8 +17,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   File? _selectedImage;
-  final String _defaultImageUrl =
-      "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
+  // final String _defaultImageUrl =
+  //     "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
@@ -33,8 +33,6 @@ class _ProfilePageState extends State<ProfilePage> {
       // globalUser.image = _selectedImage;
     }
   }
-
-  String _enteredText = "Default Value"; // Store the entered text
 
   void _showInputDialog(
       String title, String initialValue, Function(String) onSubmit) {
@@ -93,20 +91,28 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     CircleAvatar(
                       radius: 60,
-                      // child: _selectedImage != null
-                      //     ? Image.file(_selectedImage!,
-                      //         width: 150, height: 150, fit: BoxFit.cover)
-                      //     : Image.network(_defaultImageUrl,
-                      //         width: 150, height: 150, fit: BoxFit.cover),
+                      //   backgroundImage: _selectedImage != null
+                      //       ? FileImage(_selectedImage!) // Show selected image
+                      //       : (globalUser.image != null &&
+                      //                   globalUser.image.isNotEmpty
+                      //               ? FileImage(File(
+                      //                   globalUser.image)) // Show saved image
+                      //               : AssetImage(
+                      //                   "assets/images/profileDefultImage/defultImage.png"))
+                      //           as ImageProvider, // Show default image
+                      // ),
+
                       backgroundImage: _selectedImage != null
-                          ? FileImage(_selectedImage!)
+                          ? FileImage(_selectedImage!) // Show selected image
                           : (globalUser.image != null &&
-                                      globalUser.image!.isNotEmpty
-                                  ? FileImage(File(globalUser.image!))
-                                  : NetworkImage(_defaultImageUrl))
-                              as ImageProvider,
+                                  globalUser.image.isNotEmpty &&
+                                  File(globalUser.image).existsSync()
+                              ? FileImage(
+                                  File(globalUser.image)) // Show saved image
+                              : AssetImage(
+                                  "assets/images/profileDefultImage/defultImage.png")),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Text(
                       globalUser.name,
                       style: const TextStyle(
