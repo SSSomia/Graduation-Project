@@ -8,16 +8,24 @@ import 'package:graduation_project/utils/add_to_cart_button.dart';
 import 'package:graduation_project/utils/favorite_button.dart';
 import 'package:provider/provider.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   ProductPage({super.key, required this.product});
   Product product;
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 247, 253, 255),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 228, 246, 254),
-        title: Text(product.productName),
+        title: Text(widget.product.productName),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -26,15 +34,49 @@ class ProductPage extends StatelessWidget {
           children: [
             // Product Image Section
             Stack(children: [
-              Container(
-                decoration: BoxDecoration(
-                  //color: Colors.blue,
-                  borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                      image: NetworkImage(product.imageUrl), fit: BoxFit.cover),
-                ),
+              SizedBox(
                 height: 300,
-                width: double.infinity,
+                child: Stack(
+                  children: [
+                    PageView.builder(
+                      itemCount: widget.product.imageUrl.length,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return Image.network(
+                          widget.product.imageUrl[index],
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        );
+                      },
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          widget.product.imageUrl.length,
+                          (index) => Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            width: _currentIndex == index ? 12 : 8,
+                            height: _currentIndex == index ? 12 : 8,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _currentIndex == index
+                                  ? Colors.teal
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Positioned(
                   top: 10,
@@ -52,34 +94,48 @@ class ProductPage extends StatelessWidget {
                       ],
                     ),
                     child: FavoriteButton(
-                      product: product,
+                      product: widget.product,
                     ),
                   ))
             ]),
-            const SizedBox(height: 16),
-            // Product Title and Description
+            const SizedBox(height: 25),
             Text(
-              product.productName,
+              '${widget.product.price}\$',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            // Product Title and Description
+            const SizedBox(height: 5),
+            Text(
+              widget.product.productName,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'This is the product description. It gives details about the product features and specifications.',
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 16),
-            // Price and Add to Cart Button
             Text(
-              '${product.price}\$',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              widget.product.discription,
+              style: const TextStyle(fontSize: 16),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
+            // Price and Add to Cart Button
+            Row(
+              children: [
+                const Text(
+                  'In Stock: ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  '${widget.product.stock}',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.normal),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
             Center(
               child: SizedBox(
                 height: 50,
                 width: 350,
                 child: AddToCartButton(
-                  product: product,
+                  product: widget.product,
                   border: 50,
                   backgroundButtonColor:
                       const Color.fromARGB(255, 222, 233, 233),
@@ -115,56 +171,58 @@ class ProductPage extends StatelessWidget {
                               // Consumer<OrderList>(
                               //     builder: (context, order, child) {
                               //   return
-                                 ElevatedButton(
-                                    onPressed: () {
-                                      Provider.of<OrderList>(context,
-                                              listen: false)
-                                          .newOrder(OrderModule(
-                                              orderId: orderNumer.toString(),
-                                              orderItems: {
-                                                product.id: OrderItem(
-                                                    product: product,
-                                                    price: product.price *
-                                                        product.quantity)
-                                              },
-                                              dateTime: DateTime.now(),
-                                              status: "new",
-                                              totalPrice: product.price,
-                                              numberOfItems: 1));
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Provider.of<OrderList>(context,
+                                            listen: false)
+                                        .newOrder(OrderModule(
+                                            orderId: orderNumer.toString(),
+                                            orderItems: {
+                                              widget.product.id: OrderItem(
+                                                  product: widget.product,
+                                                  price: widget.product.price *
+                                                      widget.product.stock)
+                                            },
+                                            dateTime: DateTime.now(),
+                                            status: "new",
+                                            totalPrice: widget.product.price,
+                                            numberOfItems: 1));
 
-                                      // order.newOrder(OrderModule(
-                                      //     orderId: orderNumer.toString(),
-                                      //     orderItems: {
-                                      //       product.id: OrderItem(
-                                      //           product: product,
-                                      //           price: product.price *
-                                      //               product.quantity)
-                                      //     },
-                                      //     dateTime: DateTime.now(),
-                                      //     status: "new",
-                                      //     totalPrice: product.price,
-                                      //     numberOfItems: 1));
-                                      orderNumer++;
-                                      Navigator.of(context).pop();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                            behavior: SnackBarBehavior.floating,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                            content: const Text(
-                                                'Purchase Confirmed!')),
-                                      );
-                                    },
-                                    child: const Text('Buy Now'),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 3, 88, 98),
-                                      foregroundColor: const Color.fromARGB(
-                                          255, 255, 255, 255),
-                                    ))
+                                    // order.newOrder(OrderModule(
+                                    //     orderId: orderNumer.toString(),
+                                    //     orderItems: {
+                                    //       product.id: OrderItem(
+                                    //           product: product,
+                                    //           price: product.price *
+                                    //               product.quantity)
+                                    //     },
+                                    //     dateTime: DateTime.now(),
+                                    //     status: "new",
+                                    //     totalPrice: product.price,
+                                    //     numberOfItems: 1));
+                                    orderNumer++;
+                                    Navigator.of(context).pop();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          content: const Text(
+                                              'Purchase Confirmed!')),
+                                    );
+                                    setState(() {
+                                      widget.product.stock--;
+                                    });
+                                  },
+                                  child: const Text('Buy Now'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 3, 88, 98),
+                                    foregroundColor: const Color.fromARGB(
+                                        255, 255, 255, 255),
+                                  ))
                             ]);
 
                         // Navigate to checkout or further actions

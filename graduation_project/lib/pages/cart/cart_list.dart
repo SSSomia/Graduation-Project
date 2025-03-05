@@ -23,9 +23,9 @@ class CartList extends ChangeNotifier {
       cartList[product.id]!.quantity++;
     } else {
       cartList[product.id] =
-          OrderItem(product: product, price: product.price * product.quantity);
+          OrderItem(product: product, price: product.price * product.stock);
       numberOfItems++;
-      product.quantity = 1;
+      product.stock = 1;
       product.isAdded = true;
     }
     _totalPrice += product.price;
@@ -34,7 +34,7 @@ class CartList extends ChangeNotifier {
 
   void removeItem(Product product) {
     product.isAdded = false;
-    _totalPrice -= product.price * product.quantity;
+    _totalPrice -= product.price * product.stock;
     cartList[product.id]!.quantity = 0;
     cartList.remove(product.id);
     notifyListeners();
@@ -43,7 +43,7 @@ class CartList extends ChangeNotifier {
   void removeAllItem(Product product) {
     cartList.remove(product.id);
     product.isAdded = false;
-    _totalPrice -= product.price * product.quantity;
+    _totalPrice -= product.price * product.stock;
     notifyListeners();
   }
 

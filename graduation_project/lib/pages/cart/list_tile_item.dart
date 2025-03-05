@@ -19,7 +19,7 @@ class ListTileItem extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => ProductPage(product: item,))),
           leading: CircleAvatar(
-            backgroundImage: NetworkImage(item.imageUrl),
+            backgroundImage: NetworkImage(item.imageUrl[0]),
           ),
           title: Text(item.productName),
           subtitle: Text("Price: \$${item.price.toStringAsFixed(2)}"),
@@ -29,7 +29,7 @@ class ListTileItem extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.remove),
                 onPressed: () {
-                  if (item.quantity > 1) {
+                  if (item.stock > 1) {
                     cartItem.updateQuantity(item, orderItem!.quantity - 1);
                   } else {
                     cartItem.removeItem(item);

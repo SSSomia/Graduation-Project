@@ -100,7 +100,7 @@ class OrderDetailsPage extends StatelessWidget {
           return Card(
             margin: const EdgeInsets.all(8.0),
             child: ListTile(
-              leading: Image.network(product!.product.imageUrl,
+              leading: Image.network(product!.product.imageUrl[0],
                   width: 50, height: 50, fit: BoxFit.cover),
               title: Text(product.price as String),
               subtitle: Text(

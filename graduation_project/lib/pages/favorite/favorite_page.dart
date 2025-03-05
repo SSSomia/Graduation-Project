@@ -48,7 +48,7 @@ class MyFavorites extends StatelessWidget {
                                           product: item,
                                         ))),
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage(item.imageUrl),
+                              backgroundImage: NetworkImage(item.imageUrl[0]),
                             ),
                             title: Text(item.productName),
                             trailing: IconButton(

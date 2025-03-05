@@ -33,14 +33,14 @@ class _ProductCardState extends State<ProductCard> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProductPage(product: Product(id: widget.product.id, productName: widget.product.productName, imageUrl: widget.product.imageUrl, price: widget.product.price),)),
+                      MaterialPageRoute(builder: (context) => ProductPage(product: Product(id: widget.product.id, productName: widget.product.productName, imageUrl: widget.product.imageUrl, price: widget.product.price, category: widget.product.category, stock: widget.product.stock, discription: widget.product.discription),)),
                     );
                   },
                   child: ClipRRect(
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(20)),
                     child: Image.network(
-                      widget.product.imageUrl,
+                      widget.product.imageUrl[0],
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) {
