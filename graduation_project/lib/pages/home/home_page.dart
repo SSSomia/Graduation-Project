@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
               ),
               itemCount: products.length,
               itemBuilder: (context, index) {
-                return ProductCard(product: products[index+1]!);
+                return ProductCard(product: products["${index+1}"]!);
               },
             ),
           ),

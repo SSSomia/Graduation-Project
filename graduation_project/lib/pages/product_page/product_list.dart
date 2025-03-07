@@ -4,8 +4,8 @@ import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:intl/number_symbols_data.dart';
 
 class ProductList extends ChangeNotifier {
-Map<int, Product> productMap = {
-  1: Product(
+Map<String, Product> productMap = {
+  "1": Product(
       id: "1",
       productName: "Apple iPhone 14",
       imageUrl: [
@@ -17,7 +17,7 @@ Map<int, Product> productMap = {
       stock: 10,
       discription: "The latest iPhone with A16 Bionic chip and 48MP camera."),
 
-  2: Product(
+  "2": Product(
       id: "2",
       productName: "Samsung Galaxy S23",
       imageUrl: [
@@ -30,7 +30,7 @@ Map<int, Product> productMap = {
       discription:
           "Powerful Snapdragon 8 Gen 2 processor with 120Hz AMOLED display."),
 
-  3: Product(
+  "3": Product(
       id: "3",
       productName: "Nike Air Max 270",
       imageUrl: [
@@ -41,7 +41,7 @@ Map<int, Product> productMap = {
       stock: 25,
       discription: "Comfortable and stylish sneakers with a large air unit."),
 
-  4: Product(
+  "4": Product(
       id: "4",
       productName: "Adidas Ultraboost",
       imageUrl: [
@@ -53,7 +53,7 @@ Map<int, Product> productMap = {
       stock: 20,
       discription: "High-performance running shoes with Boost cushioning."),
 
-  5: Product(
+  "5": Product(
       id: "5",
       productName: "Sony WH-1000XM5",
       imageUrl: [
@@ -65,7 +65,7 @@ Map<int, Product> productMap = {
       stock: 8,
       discription: "Industry-leading noise-canceling wireless headphones."),
 
-  6: Product(
+  "6": Product(
       id: "6",
       productName: "MacBook Pro 16\"",
       imageUrl: [
@@ -77,7 +77,7 @@ Map<int, Product> productMap = {
       stock: 5,
       discription: "Powerful M2 Max chip with a stunning Retina display."),
 
-  7: Product(
+  "7": Product(
       id: "7",
       productName: "Canon EOS R6",
       imageUrl: [
@@ -89,7 +89,7 @@ Map<int, Product> productMap = {
       stock: 12,
       discription: "Full-frame mirrorless camera with 4K video recording."),
 
-  8: Product(
+  "8": Product(
       id: "8",
       productName: "Logitech MX Master 3",
       imageUrl: [
@@ -102,7 +102,7 @@ Map<int, Product> productMap = {
       discription:
           "Advanced ergonomic wireless mouse with customizable buttons."),
 
-  9: Product(
+  "9": Product(
       id: "9",
       productName: "Samsung 4K Smart TV",
       imageUrl: [
@@ -115,7 +115,7 @@ Map<int, Product> productMap = {
       discription:
           "Ultra HD 4K Smart TV with vibrant colors and Dolby Audio."),
 
-  10: Product(
+  "10": Product(
       id: "10",
       productName: "Bose SoundLink Revolve+",
       imageUrl: [
@@ -128,7 +128,8 @@ Map<int, Product> productMap = {
       discription: "Portable Bluetooth speaker with 360-degree sound."),
 };
 
-  void decreaseProductQuantity(int procutID){
+
+  void decreaseProductQuantity(String procutID){
     productMap[procutID]!.stock--;
     notifyListeners();
   }

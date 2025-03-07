@@ -3,6 +3,7 @@ import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/cart/my_cart.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:graduation_project/pages/orders/order_module.dart';
+import 'package:graduation_project/pages/product_page/product_list.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:graduation_project/utils/add_to_cart_button.dart';
 import 'package:graduation_project/utils/favorite_button.dart';
@@ -173,6 +174,9 @@ class _ProductPageState extends State<ProductPage> {
                               //   return
                               ElevatedButton(
                                   onPressed: () {
+                                    Provider.of<ProductList>(context, listen: false)
+                                        .decreaseProductQuantity(
+                                            widget.product.id);
                                     Provider.of<OrderList>(context,
                                             listen: false)
                                         .newOrder(OrderModule(
