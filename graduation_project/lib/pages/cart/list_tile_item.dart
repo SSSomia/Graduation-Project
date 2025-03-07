@@ -5,7 +5,8 @@ import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:provider/provider.dart';
 
 class ListTileItem extends StatelessWidget {
-  final Product item; // Define the type of item as CartItem (or appropriate type)
+  final Product
+      item; // Define the type of item as CartItem (or appropriate type)
 
   const ListTileItem({super.key, required this.item});
 
@@ -14,10 +15,13 @@ class ListTileItem extends StatelessWidget {
     return Consumer<CartList>(
       builder: (context, cartItem, child) {
         final orderItem = cartItem.cartList[item.id];
-        return ListTile(onTap: () =>  Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProductPage(product: item,))),
+        return ListTile(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProductPage(
+                        product: item,
+                      ))),
           leading: CircleAvatar(
             backgroundImage: NetworkImage(item.imageUrl[0]),
           ),
@@ -29,11 +33,7 @@ class ListTileItem extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.remove),
                 onPressed: () {
-                  if (item.stock > 1) {
-                    cartItem.updateQuantity(item, orderItem!.quantity - 1);
-                  } else {
-                    cartItem.removeItem(item);
-                  }
+                  cartItem.removeItem(item);
                 },
               ),
               Text("${orderItem!.quantity}"),

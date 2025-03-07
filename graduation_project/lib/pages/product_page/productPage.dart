@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/cart/my_cart.dart';
+import 'package:graduation_project/pages/orders/order_item.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:graduation_project/pages/orders/order_module.dart';
 import 'package:graduation_project/pages/product_page/product_list.dart';
@@ -184,8 +185,7 @@ class _ProductPageState extends State<ProductPage> {
                                             orderItems: {
                                               widget.product.id: OrderItem(
                                                   product: widget.product,
-                                                  price: widget.product.price *
-                                                      widget.product.stock)
+                                                 )
                                             },
                                             dateTime: DateTime.now(),
                                             status: "new",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/pages/orders/order_item.dart';
 import 'package:graduation_project/pages/orders/order_module.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:intl/number_symbols_data.dart';
@@ -22,10 +23,10 @@ class CartList extends ChangeNotifier {
     if (cartList.containsKey(product.id)) {
       cartList[product.id]!.quantity++;
     } else {
-      cartList[product.id] =
-          OrderItem(product: product, price: product.price * product.stock);
+      cartList[product.id] = OrderItem(
+        product: product,
+      );
       numberOfItems++;
-      product.stock = 1;
       product.isAdded = true;
     }
     _totalPrice += product.price;
@@ -33,17 +34,21 @@ class CartList extends ChangeNotifier {
   }
 
   void removeItem(Product product) {
-    product.isAdded = false;
-    _totalPrice -= product.price * product.stock;
-    cartList[product.id]!.quantity = 0;
-    cartList.remove(product.id);
+    if (cartList[product.id]!.quantity == 1) {
+      _totalPrice -= product.price;
+      cartList.remove(product.id);
+      product.isAdded = false;
+    } else {
+      _totalPrice -= product.price;
+      cartList[product.id]!.quantity--;
+    }
     notifyListeners();
   }
 
   void removeAllItem(Product product) {
+    _totalPrice -= product.price * cartList[product.id]!.quantity;
     cartList.remove(product.id);
     product.isAdded = false;
-    _totalPrice -= product.price * product.stock;
     notifyListeners();
   }
 
@@ -51,12 +56,6 @@ class CartList extends ChangeNotifier {
     cartList.clear();
     _totalPrice = 0;
     numberOfItems = 0;
-    notifyListeners();
-  }
-
-  void updateQuantity(Product product, int newQuantity) {
-    cartList[product.id]!.quantity = newQuantity;
-    _totalPrice -= product.price;
     notifyListeners();
   }
 }
