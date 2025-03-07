@@ -15,7 +15,6 @@ class MyCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartList = Provider.of<CartList>(context);
-
     return cartList.cartList.isEmpty
         ? const Scaffold(body: Center(child: Text("no items added yet")))
         : Scaffold(

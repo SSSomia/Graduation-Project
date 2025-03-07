@@ -6,6 +6,7 @@ import 'package:graduation_project/pages/favorite/favorite_list.dart';
 import 'package:graduation_project/pages/home/home_page.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
+import 'package:graduation_project/pages/product_page/product_list.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => CartList()),
     ChangeNotifierProvider(create: (_) => FavoriteList()),
     ChangeNotifierProvider(create: (_) => OrderList()),
-    ChangeNotifierProvider(create: (_) => PersonProvider())
+    ChangeNotifierProvider(create: (_) => PersonProvider()),
+    ChangeNotifierProvider(create: (_) => ProductList())
   ], child: const MyApp()));
 }
 
