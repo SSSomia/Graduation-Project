@@ -39,6 +39,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/constant.dart';
+import 'package:graduation_project/pages/product_page/product_list.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:provider/provider.dart';
 
@@ -65,9 +66,16 @@ class _AddToCartButtonState extends State<AddToCartButton> {
       return ElevatedButton(
         onPressed: () {
           if (cartList.isProductExist(widget.product)) {
+            widget.product.stock +=
+                cartList.cartList[widget.product.id]!.quantity;
+            Provider.of<ProductList>(context, listen: false)
+                .increaseProductQuantity(widget.product.id,
+                    cartList.cartList[widget.product.id]!.quantity);
             cartList.removeAllItem(widget.product);
           } else {
             cartList.addItem(widget.product);
+            Provider.of<ProductList>(context, listen: false)
+                .decreaseProductQuantityByOne(widget.product.id);
           }
           setState(() {
             widget.product.isAdded = !widget.product.isAdded;

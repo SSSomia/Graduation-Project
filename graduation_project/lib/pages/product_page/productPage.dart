@@ -6,6 +6,7 @@ import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:graduation_project/pages/orders/order_module.dart';
 import 'package:graduation_project/pages/product_page/product_list.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
+import 'package:graduation_project/pages/product_page/stock.dart';
 import 'package:graduation_project/utils/add_to_cart_button.dart';
 import 'package:graduation_project/utils/favorite_button.dart';
 import 'package:provider/provider.dart';
@@ -118,19 +119,7 @@ class _ProductPageState extends State<ProductPage> {
             ),
             const SizedBox(height: 10),
             // Price and Add to Cart Button
-            Row(
-              children: [
-                const Text(
-                  'In Stock: ',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  '${widget.product.stock}',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.normal),
-                )
-              ],
-            ),
+            Stock(productID: widget.product.id),
             const SizedBox(height: 10),
             Center(
               child: SizedBox(
@@ -175,35 +164,23 @@ class _ProductPageState extends State<ProductPage> {
                               //   return
                               ElevatedButton(
                                   onPressed: () {
-                                    Provider.of<ProductList>(context, listen: false)
-                                        .decreaseProductQuantity(
+                                    Provider.of<ProductList>(context,
+                                            listen: false)
+                                        .decreaseProductQuantityByOne(
                                             widget.product.id);
                                     Provider.of<OrderList>(context,
                                             listen: false)
                                         .newOrder(OrderModule(
                                             orderId: orderNumer.toString(),
-                                            orderItems: {
-                                              widget.product.id: OrderItem(
-                                                  product: widget.product,
-                                                 )
-                                            },
+                                            orderItems: [
+                                              OrderItem(
+                                                product: widget.product,
+                                              ),
+                                            ],
                                             dateTime: DateTime.now(),
                                             status: "new",
                                             totalPrice: widget.product.price,
-                                            numberOfItems: 1));
-
-                                    // order.newOrder(OrderModule(
-                                    //     orderId: orderNumer.toString(),
-                                    //     orderItems: {
-                                    //       product.id: OrderItem(
-                                    //           product: product,
-                                    //           price: product.price *
-                                    //               product.quantity)
-                                    //     },
-                                    //     dateTime: DateTime.now(),
-                                    //     status: "new",
-                                    //     totalPrice: product.price,
-                                    //     numberOfItems: 1));
+                                            ));
                                     orderNumer++;
                                     Navigator.of(context).pop();
                                     ScaffoldMessenger.of(context).showSnackBar(

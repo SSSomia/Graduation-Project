@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/product_page/productPage.dart';
+import 'package:graduation_project/pages/product_page/product_list.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,8 @@ class ListTileItem extends StatelessWidget {
                 icon: const Icon(Icons.remove),
                 onPressed: () {
                   cartItem.removeItem(item);
+                  Provider.of<ProductList>(context, listen: false)
+                      .increaseProductQuantityByOne(item.id);
                 },
               ),
               Text("${orderItem!.quantity}"),
@@ -41,6 +44,8 @@ class ListTileItem extends StatelessWidget {
                 icon: const Icon(Icons.add),
                 onPressed: () {
                   cartItem.addItem(item);
+                  Provider.of<ProductList>(context, listen: false)
+                      .decreaseProductQuantityByOne(item.id);
                 },
               ),
             ],

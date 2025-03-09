@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/orders/order_module.dart';
 import 'package:graduation_project/pages/product_page/product_module.dart';
@@ -129,8 +131,20 @@ Map<String, Product> productMap = {
 };
 
 
-  void decreaseProductQuantity(String procutID){
+  void decreaseProductQuantityByOne(String procutID){
     productMap[procutID]!.stock--;
+    notifyListeners();
+  }
+  void increaseProductQuantityByOne(String procutID){
+    productMap[procutID]!.stock++;
+    notifyListeners();
+  }
+  void increaseProductQuantity(String procutID, int quantity){
+    productMap[procutID]!.stock+= quantity;
+    notifyListeners();
+  }
+  void decreaseProductQuantity(String procutID, int quantity){
+    productMap[procutID]!.stock -= quantity;
     notifyListeners();
   }
 }

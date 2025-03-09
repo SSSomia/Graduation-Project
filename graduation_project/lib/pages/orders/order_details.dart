@@ -61,23 +61,22 @@
 //   }
 // }
 
+// void printOrders() {
+//   orderList.forEach((orderId, order) {
+//     print("Order ID: $orderId");
+//     print("Total Price: ${order.totalPrice}");
+//     print("Products in this order:");
 
-  // void printOrders() {
-  //   orderList.forEach((orderId, order) {
-  //     print("Order ID: $orderId");
-  //     print("Total Price: ${order.totalPrice}");
-  //     print("Products in this order:");
-
-  //     for (var item in order.orderItems.values) {
-  //       print(
-  //           "- ${item.product.productName} | Quantity: ${item.quantity} | Price: ${item.price}");
-  //     }
-  //   });
-  // }
-
+//     for (var item in order.orderItems.values) {
+//       print(
+//           "- ${item.product.productName} | Quantity: ${item.quantity} | Price: ${item.price}");
+//     }
+//   });
+// }
 
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
+import 'package:graduation_project/pages/product_page/productPage.dart';
 import 'package:provider/provider.dart';
 
 class OrderDetailsPage extends StatelessWidget {
@@ -92,21 +91,33 @@ class OrderDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Order Details'),
       ),
-      body: 
-      ListView.builder(
-        itemCount: orderList?.numberOfItems,
+      body: ListView.builder(
+        itemCount: orderList?.orderItems.length,
         itemBuilder: (context, index) {
-          final product = orderList?.orderItems.values.toList()[index];
+          final product = orderList?.orderItems[index];
           return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Image.network(product!.product.imageUrl[0],
-                  width: 50, height: 50, fit: BoxFit.cover),
-              title: Text(product.price as String),
-              subtitle: Text(
-                  'Quantity: ${product.quantity}\nPrice: \$${product.price.toStringAsFixed(2)}'),
-            ),
-          );
+              margin: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProductPage(
+                              product: product.product,
+                            ))),
+                // shape: () => Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => ProductPage(
+                //             product: item,
+                //           ))),
+                child: ListTile(
+                  leading: Image.network(product!.product.imageUrl[0],
+                      width: 50, height: 50, fit: BoxFit.cover),
+                  title: Text('${product.price}'),
+                  subtitle: Text(
+                      'Quantity: ${product.quantity}\nPrice: \$${product.price}'),
+                ),
+              ));
         },
       ),
     );

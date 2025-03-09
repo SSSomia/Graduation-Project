@@ -5,6 +5,7 @@ import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/cart/list_tile_item.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:graduation_project/pages/orders/order_module.dart';
+import 'package:graduation_project/pages/product_page/product_list.dart';
 import 'package:provider/provider.dart';
 
 int orderNumer = 0;
@@ -70,16 +71,16 @@ class MyCart extends StatelessWidget {
                                               return ElevatedButton(
                                                 onPressed: () {
                                                   order.newOrder(OrderModule(
-                                                      orderId:
-                                                          orderNumer.toString(),
-                                                      orderItems:
-                                                          cartList.cartList,
-                                                      dateTime: DateTime.now(),
-                                                      status: "new",
-                                                      totalPrice:
-                                                          cartList.totalPrice,
-                                                      numberOfItems: cartList
-                                                          .numberOfItems));
+                                                    orderId:
+                                                        orderNumer.toString(),
+                                                    orderItems: cartList
+                                                        .cartList.values
+                                                        .toList(),
+                                                    dateTime: DateTime.now(),
+                                                    status: "new",
+                                                    totalPrice:
+                                                        cartList.totalPrice,
+                                                  ));
                                                   orderNumer++;
                                                   Navigator.of(context).pop();
                                                   cartList.clearCart();
@@ -104,9 +105,9 @@ class MyCart extends StatelessWidget {
                                                   backgroundColor:
                                                       const Color.fromARGB(
                                                           255, 3, 88, 98),
-                                                  foregroundColor: const Color
-                                                      .fromARGB(255, 255, 255,
-                                                      255), // Text (foreground) color of the button
+                                                  foregroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 255, 255, 255),
                                                 ),
                                                 child: const Text('Buy Now'),
                                               );
