@@ -2,11 +2,11 @@ import 'dart:io';
 
 class Product {
   final String id;
-  final String productName;
-  final String description;
-  final String category;
-  final List<String> imageUrl;
-  final double price;
+  String productName;
+  String description;
+  String category;
+  List<String> imageUrl;
+  double price;
   int stock;
 
   Product(

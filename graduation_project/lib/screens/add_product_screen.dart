@@ -34,7 +34,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         _categoryController.text.isEmpty ||
         _descriptionController.text.isEmpty ||
         _stockController.text.isEmpty ||
-        _images == null) {
+        _images.isEmpty) {
       return;
     }
 

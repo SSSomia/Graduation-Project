@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/edit_product_screen.dart';
 import '../models/product.dart';
 import 'package:provider/provider.dart';
 import '../providers/market_provider.dart';
@@ -24,8 +25,8 @@ class ProductItem extends StatelessWidget {
           height: 50,
           fit: BoxFit.cover,
         ),
-        title:
-            Text(product.productName, style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(product.productName,
+            style: TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,9 +38,14 @@ class ProductItem extends StatelessWidget {
           ],
         ),
         trailing: IconButton(
-          icon: Icon(Icons.delete, color: Colors.red),
+          icon: Icon(Icons.mode_edit_outline_outlined),
           onPressed: () {
-            marketProvider.removeProduct(product.id); // Remove from provider
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditProductScreen(product: product),
+              ),
+            );
           },
         ),
       ),

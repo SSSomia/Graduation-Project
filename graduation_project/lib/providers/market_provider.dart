@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
-import '../models/market.dart';
 import '../models/product.dart';
 
-class MarketProvider with ChangeNotifier {
-  Market _market = Market(id: "1", name: "My Market", products: []);
+class MarketProvider extends ChangeNotifier {
+  final List<Product> _products = []; // List to store products
 
-  Market get market => _market;
+  List<Product> get products => _products; // Getter for products
 
+  /// **🔹 Add a new product**
   void addProduct(Product product) {
-    _market.products.add(product);
-    notifyListeners();
+    _products.add(product);
+    notifyListeners(); // ✅ Notify UI to update
   }
 
-  void removeProduct(String productId) {
-    _market.products.removeWhere((product) => product.id == productId);
-    notifyListeners();
+  /// **🔹 Update an existing product**
+  void updateProduct(Product updatedProduct) {
+    int index = _products.indexWhere((p) => p.id == updatedProduct.id);
+    if (index != -1) {
+      _products[index] = updatedProduct;
+      notifyListeners(); // ✅ Notify UI to update
+    }
+  }
+
+  /// **🔹 Delete a product**
+  void deleteProduct(String productId) {
+    _products.removeWhere((p) => p.id == productId);
+    notifyListeners(); // ✅ Notify UI to update
   }
 }

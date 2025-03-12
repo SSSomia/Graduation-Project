@@ -7,15 +7,17 @@ import 'add_product_screen.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final marketProvider = Provider.of<MarketProvider>(context);
-    final market = marketProvider.market;
-
     return Scaffold(
-      appBar: AppBar(title: Text(market.name)),
-      body: ListView.builder(
-        itemCount: market.products.length,
-        itemBuilder: (ctx, i) => ProductItem(product: market.products[i]),
-      ),
+      appBar: AppBar(title: Text("market")),
+      body: Consumer<MarketProvider>(// ✅ Listen to changes
+          builder: (context, marketProvider, child) {
+        final products = marketProvider.products;
+        return ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (ctx, i) =>
+                    ProductItem(product: products[i]),
+              );
+      }),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
