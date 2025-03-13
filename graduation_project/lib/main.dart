@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/auth/login/login_page.dart';
-import 'package:graduation_project/pages/auth/signup/signup_page.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/favorite/favorite_list.dart';
-import 'package:graduation_project/pages/home/home_page.dart';
-import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:graduation_project/pages/product_page/product_list.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
 import 'package:graduation_project/providers/market_provider.dart';
-import 'package:graduation_project/screens/home_screen.dart';
+import 'package:graduation_project/providers/prodcut_provider.dart';
+import 'package:graduation_project/providers/sales_provider.dart';
+import 'package:graduation_project/screens/seller_home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -19,7 +17,9 @@ void main() {
     ChangeNotifierProvider(create: (_) => OrderList()),
     ChangeNotifierProvider(create: (_) => PersonProvider()),
     ChangeNotifierProvider(create: (_) => ProductList()),
-    ChangeNotifierProvider(create: (_) => MarketProvider())
+    ChangeNotifierProvider(create: (_) => MarketProvider()),
+    ChangeNotifierProvider(create: (_) => ProductProvider()),
+    ChangeNotifierProvider(create: (_) => SalesProvider())
   ], child: const MyApp()));
 }
 
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Seller App',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomeScreen(),
+      home: SellerHomeScreen(),
     );
   }
 }

@@ -4,7 +4,7 @@ import '../providers/market_provider.dart';
 import '../widgets/product_item.dart';
 import 'add_product_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class MarketProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
