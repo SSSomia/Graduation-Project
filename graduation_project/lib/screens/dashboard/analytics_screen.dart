@@ -27,6 +27,14 @@ final salesProvider = context.watch<SalesProvider>();  // ✅ Safe way to access
             const SizedBox(height: 10),
             Row(
               children: [
+                Expanded(child: SalesSummaryCard(title: "Total Profit", value: "\$${salesProvider.totalRevenue}", icon: Icons.monetization_on_outlined, color:const Color.fromARGB(255, 39, 167, 189),iconColor: const Color.fromARGB(255, 48, 119, 125),)),
+                const SizedBox(width: 10),
+                Expanded(child: SalesSummaryCard(title: "Total Cost", value: "\$${salesProvider.totalRevenue}", icon: Icons.monetization_on_outlined, color:const Color.fromARGB(255, 39, 167, 189),iconColor: const Color.fromARGB(255, 48, 119, 125),)),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
                 Expanded(child: SalesSummaryCard(title: "Completed", value: "${salesProvider.completedOrders}", icon: Icons.check_circle_outline_rounded, color:const Color.fromARGB(255, 39, 167, 189),iconColor: const Color.fromARGB(255, 48, 119, 125),)),
                 const SizedBox(width: 10),
                 Expanded(child: SalesSummaryCard(title: "Pending", value: "${salesProvider.pendingOrders}", icon: Icons.pending_outlined, color:const Color.fromARGB(255, 39, 167, 189),iconColor: const Color.fromARGB(255, 48, 119, 125),)),
