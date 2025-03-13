@@ -4,6 +4,7 @@ import 'package:graduation_project/pages/favorite/favorite_list.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
 import 'package:graduation_project/pages/product_page/product_list.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
+import 'package:graduation_project/providers/analytics_provider.dart';
 import 'package:graduation_project/providers/market_provider.dart';
 import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
@@ -19,7 +20,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => ProductList()),
     ChangeNotifierProvider(create: (_) => MarketProvider()),
     ChangeNotifierProvider(create: (_) => ProductProvider()),
-    ChangeNotifierProvider(create: (_) => SalesProvider())
+    ChangeNotifierProvider(create: (_) => SalesProvider()),
+    ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
   ], child: const MyApp()));
 }
 

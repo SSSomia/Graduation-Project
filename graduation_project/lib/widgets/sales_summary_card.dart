@@ -5,8 +5,9 @@ class SalesSummaryCard extends StatelessWidget {
   final String value;
   final IconData icon;
   final Color color;
+  final Color iconColor;
 
-  const SalesSummaryCard({required this.title, required this.value, required this.icon, required this.color});
+  const SalesSummaryCard({required this.title, required this.value, required this.icon, required this.color, required this.iconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +15,11 @@ class SalesSummaryCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 4,
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(icon, size: 40, color: color),
+            Icon(icon, size: 40, color: iconColor),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
