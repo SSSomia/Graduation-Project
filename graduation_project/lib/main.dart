@@ -8,6 +8,7 @@ import 'package:graduation_project/providers/analytics_provider.dart';
 import 'package:graduation_project/providers/market_provider.dart';
 import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
+import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
 import 'package:graduation_project/screens/seller_home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Seller App',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: SellerHomeScreen(),
+      home: OnboardingScreen(),
     );
   }
 }

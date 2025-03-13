@@ -13,6 +13,9 @@ dependencies:
   flutter:
     sdk: flutter
   fl_chart:  ^0.66.0 
+  smooth_page_indicator: ^1.1.0
+  lottie: ^2.6.0
+
 
 
   cupertino_icons: ^1.0.8
@@ -48,5 +51,8 @@ flutter:
   assets:
     - assets\images\logo\appstore.png
     - assets\images\profileDefultImage\defultImage.png
+    - assets\animation\firstImage.json
+    - assets\animation\thirdImage.json
+    - assets\animation\secondImage.json
    # - assets\images\onBoarding\
 
