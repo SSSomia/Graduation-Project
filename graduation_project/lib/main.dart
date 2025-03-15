@@ -8,8 +8,8 @@ import 'package:graduation_project/providers/analytics_provider.dart';
 import 'package:graduation_project/providers/market_provider.dart';
 import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
+import 'package:graduation_project/providers/sellers_provider.dart';
 import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
-import 'package:graduation_project/screens/seller_home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -23,6 +23,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => SalesProvider()),
     ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
+    ChangeNotifierProvider(create: (context) => SellersProvider()),
   ], child: const MyApp()));
 }
 

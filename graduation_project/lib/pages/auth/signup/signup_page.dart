@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/auth/login/login_page.dart';
+import 'package:graduation_project/pages/auth/other_user_data/other_user_data.dart';
 import 'package:graduation_project/pages/profile/person_module.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +12,8 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
-enum ECharacteres { user, seller }
 
 class _SignupPageState extends State<SignupPage> {
-  ECharacteres? _selectedOption = ECharacteres.user;
   final _formKey = GlobalKey<FormState>();
 
   String? _firstNameError;
@@ -72,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
                         children: [
                   Container(
                     width: 350,
-                    height: 630,
+                    height: 600,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.rectangle,
@@ -194,7 +193,7 @@ class _SignupPageState extends State<SignupPage> {
                               },
                               decoration: InputDecoration(
                                 labelText: 'Username',
-                                prefixIcon: const Icon(Icons.person),
+                                prefixIcon: const Icon(Icons.person_2_outlined),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
@@ -225,7 +224,7 @@ class _SignupPageState extends State<SignupPage> {
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   labelText: 'Password',
-                                  prefixIcon: const Icon(Icons.lock_outline),
+                                  prefixIcon: const Icon(Icons.password_outlined),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
@@ -257,7 +256,7 @@ class _SignupPageState extends State<SignupPage> {
                               obscureText: true,
                               decoration: InputDecoration(
                                 labelText: 'Confirm Password',
-                                prefixIcon: const Icon(Icons.lock_outline),
+                                prefixIcon: const Icon(Icons.password_outlined),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
@@ -274,40 +273,7 @@ class _SignupPageState extends State<SignupPage> {
                               },
                             ),
                           ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Radio<ECharacteres>(
-                                      value: ECharacteres.user,
-                                      groupValue: _selectedOption,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedOption = value;
-                                        });
-                                      },
-                                    ),
-                                    const Text('User',
-                                        style: TextStyle(fontSize: 17)),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Radio<ECharacteres>(
-                                      value: ECharacteres.seller,
-                                      groupValue: _selectedOption,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedOption = value;
-                                        });
-                                      },
-                                    ),
-                                    const Text('Seller',
-                                        style: TextStyle(fontSize: 17)),
-                                  ],
-                                ),
-                              ]),
+                          SizedBox(height: 10,),
                           Consumer<PersonProvider>(
                               builder: (context, personList, child) {
                             return MouseRegion(
@@ -320,19 +286,19 @@ class _SignupPageState extends State<SignupPage> {
                                           // _validateForm();
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            personList.addPerson(PersonModule(
-                                                personList.numberOfPersons
-                                                    .toString(),
-                                                _conUserName.text,
-                                                "${_conFirstName.text} ${_conLastName.text}",
-                                                _conPassword.text,
-                                                DateTime.now()));
+                                            // personList.addPerson(PersonModule(
+                                            //     personList.numberOfPersons
+                                            //         .toString(),
+                                            //     _conUserName.text,
+                                            //     "${_conFirstName.text} ${_conLastName.text}",
+                                            //     _conPassword.text,
+                                            //     DateTime.now()));
 
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const LoginPage()));
+                                                         OtherUserData( userName: _conUserName.text, name: '${_conFirstName.text} ${_conLastName.text}', password: _conPassword.text, createdAt:DateTime.now() )));
                                             // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                                             // sharedPreferences.setString("userName", "")
                                           }
@@ -347,7 +313,7 @@ class _SignupPageState extends State<SignupPage> {
                                               255), // Text (foreground) color of the button
                                         ),
                                         child: const Text(
-                                          'Sign Up',
+                                          '------>',
                                           style: TextStyle(fontSize: 20),
                                         ))));
                           }),

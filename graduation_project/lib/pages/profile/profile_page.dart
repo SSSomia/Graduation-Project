@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 });
                 Navigator.of(context).pop();
               },
-              child: Text("OK"),
+              child: const Text("OK"),
             ),
           ],
         );
@@ -109,10 +109,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   File(globalUser.image).existsSync()
                               ? FileImage(
                                   File(globalUser.image)) // Show saved image
-                              : AssetImage(
+                              : const AssetImage(
                                   "assets/images/profileDefultImage/defultImage.png")),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       globalUser.userName,
                       style: const TextStyle(
@@ -191,7 +191,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           icon: const Icon(Icons.edit_outlined),
                           onPressed: () {
                             setState(() {
-                              _showInputDialog("Name", globalUser.emial,
+                              _showInputDialog("Name", globalUser.userEmail,
                                   (newValue) {
                                 globalUser.name = newValue;
                               });
@@ -199,67 +199,67 @@ class _ProfilePageState extends State<ProfilePage> {
                           })),
                   ListTile(
                       title: const Text("Email"),
-                      subtitle: globalUser.emial == ""
+                      subtitle: globalUser.userEmail == ""
                           ? const Text(
                               "not added yet!",
                               style: TextStyle(color: Colors.grey),
                             )
-                          : Text(globalUser.emial),
+                          : Text(globalUser.userEmail),
                       trailing: IconButton(
                           icon: const Icon(Icons.edit_outlined),
                           onPressed: () {
                             setState(() {
-                              _showInputDialog("Email", globalUser.emial,
+                              _showInputDialog("Email", globalUser.userEmail,
                                   (newValue) {
-                                globalUser.emial = newValue;
+                                globalUser.userEmail = newValue;
                               });
                             });
                           })),
                   ListTile(
                     title: const Text("Password"),
-                    subtitle: Text(globalUser.password),
+                    subtitle: Text(globalUser.userPassword),
                     trailing: IconButton(
-                      icon: Icon(Icons.edit_outlined),
+                      icon: const Icon(Icons.edit_outlined),
                       onPressed: () {
-                        _showInputDialog("Password", globalUser.password,
+                        _showInputDialog("Password", globalUser.userPassword,
                             (newValue) {
-                          globalUser.password = newValue;
+                          globalUser.userPassword = newValue;
                         });
                       },
                     ),
                   ),
                   ListTile(
                     title: const Text("Phone Number"),
-                    subtitle: globalUser.phoneNumber == ""
+                    subtitle: globalUser.userPhone == ""
                         ? const Text(
                             "not added yet!",
                             style: TextStyle(color: Colors.grey),
                           )
-                        : Text(globalUser.phoneNumber),
+                        : Text(globalUser.userPhone),
                     trailing: IconButton(
-                      icon: Icon(Icons.edit_outlined),
+                      icon: const Icon(Icons.edit_outlined),
                       onPressed: () {
-                        _showInputDialog("Phone Number", globalUser.phoneNumber,
+                        _showInputDialog("Phone Number", globalUser.userPhone,
                             (newValue) {
-                          globalUser.phoneNumber = newValue;
+                          globalUser.userPhone = newValue;
                         });
                       },
                     ),
                   ),
                   ListTile(
                     title: const Text("Address"),
-                    subtitle: globalUser.address == ""
+                    subtitle: globalUser.userAddress == ""
                         ? const Text(
                             "not added yet!",
                             style: TextStyle(color: Colors.grey),
                           )
-                        : Text(globalUser.address),
+                        : Text(globalUser.userAddress),
                     trailing: IconButton(
-                      icon: Icon(Icons.edit_outlined),
+                      icon: const Icon(Icons.edit_outlined),
                       onPressed: () {
-                        _showInputDialog("Address", globalUser.address,
+                        _showInputDialog("Address", globalUser.userAddress,
                             (newValue) {
-                          globalUser.address = newValue;
+                          globalUser.userAddress = newValue;
                         });
                       },
                     ),

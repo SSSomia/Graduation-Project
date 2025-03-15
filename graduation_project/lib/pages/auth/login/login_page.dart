@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/models/seller_model.dart';
 import 'package:graduation_project/pages/main_page/mainPage.dart';
 import 'package:graduation_project/pages/auth/signup/signup_page.dart';
 import 'package:graduation_project/pages/profile/person_module.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
+import 'package:graduation_project/providers/sellers_provider.dart';
+import 'package:graduation_project/screens/dashboard/analytics_screen.dart';
 import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:provider/provider.dart';
 
@@ -13,11 +16,14 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+enum ECharacteres { user, seller }
+
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkBoxValue = false;
   final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  ECharacteres? _selectedOption = ECharacteres.user;
 
   String? _errorMessage;
   String? _userNameError;
@@ -35,16 +41,78 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _errorMessage = null; // Hide error message on successful login
         });
+
         PersonProvider personProvider =
             Provider.of<PersonProvider>(context, listen: false);
         PersonModule globalUserData =
             personProvider.getPersonDataUsingUserName(_userName.text);
-            globalUser = globalUserData;
+        GlobalUser(
+            globalUserData.personId,
+            globalUserData.name,
+            globalUserData.userName,
+            globalUserData.password,
+            globalUserData.createdAt,
+            globalUserData.address,
+            globalUserData.emial,
+            globalUserData.password,
+            false,
+            '',
+            '',
+            '');
         // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
         //     globalUser.password, globalUser.createdAt);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const MainHomePage()),
+        );
+      } else {
+        setState(() {
+          _errorMessage = "Incorrect username or password!";
+          _userNameError =
+              _userName.text.isEmpty ? "Please enter your user name" : null;
+          _passwordError =
+              _password.text.isEmpty ? "Please enter your password" : null;
+        });
+      }
+    }
+  }
+
+  void _loginSeller() {
+    final seller = Provider.of<SellersProvider>(context, listen: false);
+
+    if (_formKey.currentState!.validate()) {
+      bool userExists = seller.sellers.values.any((person) =>
+          person.person.userName == _userName.text &&
+          person.person.password == _password.text);
+
+      if (userExists) {
+        setState(() {
+          _errorMessage = null; // Hide error message on successful login
+        });
+
+        SellersProvider sellerProvider =
+            Provider.of<SellersProvider>(context, listen: false);
+        Seller globalUserData =
+            sellerProvider.getSellerDataUsingUserName(_userName.text);
+        GlobalUser(
+            globalUserData.sellerID,
+            globalUserData.person.name,
+            globalUserData.person.userName,
+            globalUserData.person.password,
+            globalUserData.person.createdAt,
+            globalUserData.person.address,
+            globalUserData.person.emial,
+            globalUserData.person.password,
+            true,
+            globalUserData.storeName,
+            globalUserData.address,
+            globalUserData.storeDescription);
+
+        // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
+        //     globalUser.password, globalUser.createdAt);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AnalyticsScreen()),
         );
       } else {
         setState(() {
@@ -198,13 +266,49 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                       ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Radio<ECharacteres>(
+                                  value: ECharacteres.user,
+                                  groupValue: _selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedOption = value;
+                                    });
+                                  },
+                                ),
+                                const Text('User',
+                                    style: TextStyle(fontSize: 17)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Radio<ECharacteres>(
+                                  value: ECharacteres.seller,
+                                  groupValue: _selectedOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedOption = value;
+                                    });
+                                  },
+                                ),
+                                const Text('Seller',
+                                    style: TextStyle(fontSize: 17)),
+                              ],
+                            ),
+                          ]),
                       MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: SizedBox(
                           width: 300,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: _login,
+                            onPressed: _selectedOption == ECharacteres.user
+                                ? _login
+                                : _loginSeller,
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   const Color.fromARGB(255, 3, 88, 98),

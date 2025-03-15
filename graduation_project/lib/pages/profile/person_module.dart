@@ -9,8 +9,8 @@ class PersonModule {
   late String name;
   late String password;
   late String phoneNumber = '';
-  late String address = '';
-  late String emial = '';
+  late String address ;
+  late String emial ;
   late DateTime createdAt;
   late String image = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
 
@@ -19,7 +19,10 @@ class PersonModule {
     this.userName,
     this.name,
     this.password,
-    this.createdAt
+    this.createdAt,
+    this.address,
+    this.emial,
+    this.phoneNumber
   );
 
   
