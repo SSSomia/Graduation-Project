@@ -16,12 +16,12 @@ class Seller {
   });
 
   // Update seller details
-  void updateDetails({String? newAddress, String? newStoreName}) {
-    if (newAddress != null) {
-      address = newAddress;
-    }
-    if (newStoreName != null) {
-      storeName = newStoreName;
-    }
-  }
+  // void updateDetails({String? newAddress, String? newStoreName}) {
+  //   if (newAddress != null) {
+  //     address = newAddress;
+  //   }
+  //   if (newStoreName != null) {
+  //     storeName = newStoreName;
+  //   }
+  // }
 }

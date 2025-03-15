@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/auth/login/login_page.dart';
-import 'package:graduation_project/pages/profile/change_user_data.dart';
 import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -269,8 +268,75 @@ class _ProfilePageState extends State<ProfilePage> {
                     subtitle:
                         Text(globalUser.createdAt.toString().substring(0, 10)),
                   ),
-                  const Divider()
-                ],
+                  const Divider(),
+                  globalUser.isSeller? Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      const Text(
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        "Store Information",
+                        textAlign: TextAlign.start,
+                      ),
+                      ListTile(
+                        title: const Text("Name"),
+                        subtitle: globalUser.marketName == ""
+                            ? const Text(
+                                "not added yet!",
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            : Text(globalUser.marketName),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.edit_outlined),
+                          onPressed: () {
+                            _showInputDialog("Store Name", globalUser.marketName,
+                                (newValue) {
+                              globalUser.marketName = newValue;
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text("Address"),
+                        subtitle: globalUser.marketAddress == ""
+                            ? const Text(
+                                "not added yet!",
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            : Text(globalUser.marketAddress),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.edit_outlined),
+                          onPressed: () {
+                            _showInputDialog(
+                                "Store Address", globalUser.marketAddress,
+                                (newValue) {
+                              globalUser.marketAddress = newValue;
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text("Description"),
+                        subtitle: globalUser.marketDescription == ""
+                            ? const Text(
+                                "not added yet!",
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            : Text(globalUser.marketDescription),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.edit_outlined),
+                          onPressed: () {
+                            _showInputDialog(
+                                "Description", globalUser.marketDescription,
+                                (newValue) {
+                              globalUser.marketDescription = newValue;
+                            });
+                          },
+                        ),
+                      ),
+                      const Divider(),
+                    ],
+                  ): SizedBox(height: 0,)
+                ]
               ),
             ),
 

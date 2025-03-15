@@ -16,9 +16,9 @@ class GlobalUser {
   late String image =
       "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
   bool isSeller;
-  String? marketName = '';
-  String? marketAddress = '';
-  String? marketDescription = '';
+  String marketName = '';
+  String marketAddress = '';
+  String marketDescription = '';
 
   GlobalUser(
       this.userID,

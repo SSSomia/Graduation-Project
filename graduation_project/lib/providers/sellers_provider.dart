@@ -14,12 +14,13 @@ class SellersProvider extends ChangeNotifier {
     numberOfSellers++;
     notifyListeners();
   }
-    void updateSeller({String? address, String? storeName}) {
-    if (_seller != null) {
-      _seller!.updateDetails(newAddress: address, newStoreName: storeName);
-      notifyListeners();
-    }
-  }
+  
+  //   void updateSeller({String? address, String? storeName, String? storeDescription}) {
+  //   if (_seller != null) {
+  //     _seller!.updateDetails(newAddress: address, newStoreName: storeName, );
+  //     notifyListeners();
+  //   }
+  // }
 
   Seller getSellerDataUsingUserName(String userName)
   {
