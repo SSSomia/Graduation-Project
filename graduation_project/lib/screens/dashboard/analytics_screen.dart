@@ -12,7 +12,24 @@ class AnalyticsScreen extends StatelessWidget {
 final salesProvider = context.watch<SalesProvider>();  // ✅ Safe way to access provider
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Sales & Analytics")),
+      appBar: AppBar(
+        title: const Text(
+          'Analytics',
+          style: TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
+        elevation: 10,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(

@@ -8,7 +8,24 @@ class MarketProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("market")),
+      appBar: AppBar(
+        title: const Text(
+          'Products',
+          style: TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
+        elevation: 10,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
+        ),
+      ),
       body: Consumer<MarketProvider>(// ✅ Listen to changes
           builder: (context, marketProvider, child) {
         final products = marketProvider.products;
