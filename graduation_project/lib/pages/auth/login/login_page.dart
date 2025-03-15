@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
             Provider.of<PersonProvider>(context, listen: false);
         PersonModule globalUserData =
             personProvider.getPersonDataUsingUserName(_userName.text);
-        GlobalUser(
+        globalUser =  GlobalUser(
             globalUserData.personId,
             globalUserData.name,
             globalUserData.userName,
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
             Provider.of<SellersProvider>(context, listen: false);
         Seller globalUserData =
             sellerProvider.getSellerDataUsingUserName(_userName.text);
-        GlobalUser(
+        globalUser = GlobalUser(
             globalUserData.sellerID,
             globalUserData.person.name,
             globalUserData.person.userName,
