@@ -79,9 +79,9 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           const Text(
-                            'SIGN UP',
+                            'STORE INFO',
                             style: TextStyle(
-                                fontSize: 50,
+                                fontSize: 45,
                                 color: Color.fromARGB(255, 0, 104, 115),
                                 fontWeight: FontWeight.bold),
                           ),
@@ -186,11 +186,14 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                                         if (_formKey.currentState!.validate()) {
                                           sellerProvider.addSeller(
                                             Seller(
-                                              person: widget.person,
-                                              address: _conaddress.text,
-                                              storeName: _conName.text,
-                                              storeDescription: _conDescription.text, sellerID: sellerProvider.numberOfSellers.toString()
-                                            ),
+                                                person: widget.person,
+                                                address: _conaddress.text,
+                                                storeName: _conName.text,
+                                                storeDescription:
+                                                    _conDescription.text,
+                                                sellerID: sellerProvider
+                                                    .numberOfSellers
+                                                    .toString()),
                                           );
                                           Navigator.push(
                                               context,

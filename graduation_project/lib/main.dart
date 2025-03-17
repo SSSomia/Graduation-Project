@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/pages/auth/signup/signup_page.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/favorite/favorite_list.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
@@ -10,6 +11,8 @@ import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
 import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
+import 'package:graduation_project/semiAPIcall/apiHomeScreen.dart';
+import 'package:graduation_project/semiAPIcall/get_request.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -24,6 +27,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => SalesProvider()),
     ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
     ChangeNotifierProvider(create: (context) => SellersProvider()),
+    ChangeNotifierProvider(create: (_) => DataProvider())
   ], child: const MyApp()));
 }
 
@@ -37,10 +41,13 @@ class MyApp extends StatelessWidget {
     //   title: 'Graduation project',
     //   home: SignupPage(),
     // );
+    // return MaterialApp(
+    //   title: 'Seller App',
+    //   theme: ThemeData(primarySwatch: Colors.blue),
+    //   home: OnboardingScreen(),
+    // );
     return MaterialApp(
-      title: 'Seller App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: OnboardingScreen(),
+      home: Apihomescreen(),
     );
   }
 }
