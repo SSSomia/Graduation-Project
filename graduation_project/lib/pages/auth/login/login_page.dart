@@ -5,9 +5,7 @@ import 'package:graduation_project/pages/auth/signup/signup_page.dart';
 import 'package:graduation_project/pages/profile/person_module.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
-import 'package:graduation_project/screens/dashboard/analytics_screen.dart';
 import 'package:graduation_project/screens/seller_home_screen.dart';
-import 'package:graduation_project/screens/seller_main_page.dart';
 import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:provider/provider.dart';
 

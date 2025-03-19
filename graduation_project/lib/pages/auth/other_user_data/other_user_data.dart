@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/pages/auth/login/login_page.dart';
 import 'package:graduation_project/pages/auth/seller_market_data/seller_market_data.dart';
-import 'package:graduation_project/pages/home/home_page.dart';
 import 'package:graduation_project/pages/profile/person_module.dart';
 import 'package:graduation_project/pages/profile/person_provider.dart';
 import 'package:provider/provider.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/auth/signup/signup_page.dart';
 import 'package:graduation_project/pages/cart/cart_list.dart';
 import 'package:graduation_project/pages/favorite/favorite_list.dart';
 import 'package:graduation_project/pages/orders/order_list.dart';
@@ -10,8 +9,7 @@ import 'package:graduation_project/providers/market_provider.dart';
 import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
-import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
-import 'package:graduation_project/semiAPIcall/apiHomeScreen.dart';
+import 'package:graduation_project/screens/seller_requests_screen.dart';
 import 'package:graduation_project/semiAPIcall/get_request.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +45,7 @@ class MyApp extends StatelessWidget {
     //   home: OnboardingScreen(),
     // );
     return MaterialApp(
-      home: Apihomescreen(),
+      home: SellerRequestsPage(),
     );
   }
 }
