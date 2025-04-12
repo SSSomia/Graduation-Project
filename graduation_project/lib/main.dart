@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/cart/cart_list.dart';
-import 'package:graduation_project/pages/favorite/favorite_list.dart';
-import 'package:graduation_project/pages/orders/order_list.dart';
-import 'package:graduation_project/pages/product_page/product_list.dart';
-import 'package:graduation_project/pages/profile/person_provider.dart';
+import 'package:graduation_project/providers/cart_list.dart';
+import 'package:graduation_project/providers/favorite_list.dart';
+import 'package:graduation_project/providers/order_list.dart';
+import 'package:graduation_project/product_list/product_list.dart';
+import 'package:graduation_project/providers/person_provider.dart';
 import 'package:graduation_project/providers/analytics_provider.dart';
 import 'package:graduation_project/providers/market_provider.dart';
 import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
+import 'package:graduation_project/screens/auth/signup_page.dart';
+import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
 import 'package:graduation_project/screens/seller_requests_screen.dart';
 import 'package:graduation_project/semiAPIcall/get_request.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +47,8 @@ class MyApp extends StatelessWidget {
     //   home: OnboardingScreen(),
     // );
     return MaterialApp(
-      home: SellerRequestsPage(),
+      // have to make it in the real app appear just once !!!!!
+      home: OnboardingScreen(),
     );
   }
 }

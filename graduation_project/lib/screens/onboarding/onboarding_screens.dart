@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/auth/signup/signup_page.dart';
+import 'package:graduation_project/screens/auth/signup_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -15,6 +15,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 249, 255, 254),
       body: Stack(
         children: [
           PageView(
@@ -48,10 +49,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: SmoothPageIndicator(
                 controller: _controller,
                 count: 3,
-                effect: WormEffect(
+                effect: const WormEffect(
                   dotHeight: 10,
                   dotWidth: 10,
-                  activeDotColor: Colors.blue,
+                  activeDotColor: Color.fromARGB(255, 30, 195, 195),
                 ),
               ),
             ),
@@ -71,28 +72,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       // Navigate to Login or Home Screen
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 14),
+                      backgroundColor: const Color.fromARGB(255, 56, 150, 144),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: Text("Get Started"),
+                    child: const Text("Get Started", style: TextStyle(color: Colors.white),),
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
                         onPressed: () => _controller.jumpToPage(2),
-                        child: Text("Skip"),
+                        child: const Text("Skip", style: TextStyle(color: Color.fromARGB(255, 25, 123, 105)),),
                       ),
                       FloatingActionButton(
+                        backgroundColor: const Color.fromARGB(255, 121, 200, 192),
                         onPressed: () {
                           _controller.nextPage(
-                            duration: Duration(milliseconds: 500),
+                            duration: const Duration(milliseconds: 500),
                             curve: Curves.easeInOut,
                           );
                         },
-                        child: Icon(Icons.arrow_forward),
+                        child: const Icon(Icons.arrow_forward, color: Colors.white,),
                       ),
                     ],
                   ),
@@ -105,23 +108,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
  Widget buildPage({required String animation, required String title, required String description}) {
   return Column(
     children: [
-      SizedBox(height: 200),
+      const SizedBox(height: 200),
       Lottie.asset(animation, height: 400),
-      SizedBox(height: 20),
+      const SizedBox(height: 20),
       Text(
         title,
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Text(
           description,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+          style: const TextStyle(fontSize: 16, color: Colors.grey),
         ),
       ),
-      SizedBox(height: 40),
+      const SizedBox(height: 40),
     ],
   );
 }

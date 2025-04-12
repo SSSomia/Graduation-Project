@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/screens/edit_product_screen.dart';
+import 'package:graduation_project/screens/product/edit_product_screen.dart';
 import '../models/product.dart';
 import 'package:provider/provider.dart';
 import '../providers/market_provider.dart';

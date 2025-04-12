@@ -1,4 +1,4 @@
-import 'package:graduation_project/pages/profile/person_module.dart';
+import 'package:graduation_project/models/person_module.dart';
 
 class Seller {
   late String sellerID;

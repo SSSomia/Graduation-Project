@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/pages/auth/login/login_page.dart';
+import 'package:graduation_project/screens/auth/login_page.dart';
 
 class SellerRequestsPage extends StatefulWidget {
   @override
