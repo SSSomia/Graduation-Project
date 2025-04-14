@@ -11,16 +11,16 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _stockController = TextEditingController();
+  final _categoryController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _stockController = TextEditingController();
   List<File> _images = [];
 
   Future<void> _pickImages() async {
     final List<XFile>? pickedFiles = await ImagePicker().pickMultiImage();
-
     if (pickedFiles != null && pickedFiles.isNotEmpty) {
       setState(() {
         _images = pickedFiles.map((file) => File(file.path)).toList();
@@ -29,12 +29,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   void _addProduct() {
-    if (_nameController.text.isEmpty ||
-        _priceController.text.isEmpty ||
-        _categoryController.text.isEmpty ||
-        _descriptionController.text.isEmpty ||
-        _stockController.text.isEmpty ||
-        _images.isEmpty) {
+    if (!_formKey.currentState!.validate() || _images.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please complete all fields and select images')),
+      );
       return;
     }
 
@@ -54,61 +52,150 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final inputStyle = InputDecoration(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    );
+
     return Scaffold(
-      appBar: AppBar(title: Text("Add Product")),
+      appBar: AppBar(title: const Text("Add Product")),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
           child: Column(
             children: [
-              TextField(
+              // Product Name
+              TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: "Product Name"),
+                decoration: inputStyle.copyWith(
+                  labelText: "Product Name",
+                  prefixIcon: const Icon(Icons.shopping_bag),
+                ),
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Required' : null,
               ),
-              TextField(
+              const SizedBox(height: 16),
+
+              // Price
+              TextFormField(
                 controller: _priceController,
-                decoration: InputDecoration(labelText: "Price"),
+                decoration: inputStyle.copyWith(
+                  labelText: "Price",
+                  prefixIcon: const Icon(Icons.attach_money),
+                ),
                 keyboardType: TextInputType.number,
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Required' : null,
               ),
-              TextField(
+              const SizedBox(height: 16),
+
+              // Category
+              TextFormField(
                 controller: _categoryController,
-                decoration: InputDecoration(labelText: "Category"),
+                decoration: inputStyle.copyWith(
+                  labelText: "Category",
+                  prefixIcon: const Icon(Icons.category),
+                ),
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Required' : null,
               ),
-              TextField(
+              const SizedBox(height: 16),
+
+              // Description
+              TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: "Description"),
+                decoration: inputStyle.copyWith(
+                  labelText: "Description",
+                  prefixIcon: const Icon(Icons.description),
+                ),
                 maxLines: 3,
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Required' : null,
               ),
-              TextField(
+              const SizedBox(height: 16),
+
+              // Stock
+              TextFormField(
                 controller: _stockController,
-                decoration: InputDecoration(labelText: "Stock Quantity"),
+                decoration: inputStyle.copyWith(
+                  labelText: "Stock Quantity",
+                  prefixIcon: const Icon(Icons.inventory),
+                ),
                 keyboardType: TextInputType.number,
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Required' : null,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 24),
+
+              // Image Grid
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Product Images",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              const SizedBox(height: 10),
+
               SizedBox(
                 height: 200,
                 child: _images.isEmpty
-                    ? Text("No Images Selected")
+                    ? Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade400),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Text("No images selected"),
+                      )
                     : GridView.builder(
                         itemCount: _images.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3, // Number of images per row
-                          crossAxisSpacing: 4,
-                          mainAxisSpacing: 4,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
                         ),
                         itemBuilder: (context, index) {
-                          return Image.file(_images[index], fit: BoxFit.cover);
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.file(_images[index], fit: BoxFit.cover),
+                          );
                         },
                       ),
               ),
-              ElevatedButton(
+              const SizedBox(height: 16),
+
+              // Pick Images Button
+              OutlinedButton.icon(
                 onPressed: _pickImages,
-                child: Text("Pick Image"),
+                icon: const Icon(Icons.photo_library),
+                label: const Text("Pick Images"),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
               ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _addProduct,
-                child: Text("Add Product"),
+
+              const SizedBox(height: 24),
+
+              // Add Product Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: _addProduct,
+                  icon: const Icon(Icons.check),
+                  label: const Text("Add Product"),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    textStyle: const TextStyle(fontSize: 16),
+                  ),
+                ),
               ),
             ],
           ),

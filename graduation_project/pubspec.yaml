@@ -55,5 +55,6 @@ flutter:
     - assets\animation\firstImage.json
     - assets\animation\thirdImage.json
     - assets\animation\secondImage.json
+    - assets\images\logo\bag.png
    # - assets\images\onBoarding\
 

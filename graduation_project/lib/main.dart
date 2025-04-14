@@ -12,6 +12,7 @@ import 'package:graduation_project/providers/sellers_provider.dart';
 import 'package:graduation_project/screens/auth/signup_page.dart';
 import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
 import 'package:graduation_project/screens/seller_requests_screen.dart';
+import 'package:graduation_project/screens/without_login/home_page_wihoutLogin.dart';
 import 'package:graduation_project/semiAPIcall/get_request.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => SalesProvider()),
     ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
-    ChangeNotifierProvider(create: (context) => SellersProvider()),
+    ChangeNotifierProvider(create: (_) => SellersProvider()),
     ChangeNotifierProvider(create: (_) => DataProvider())
   ], child: const MyApp()));
 }
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
     // );
     return MaterialApp(
       // have to make it in the real app appear just once !!!!!
-      home: OnboardingScreen(),
+      home: HomePageWihoutlogin(),
     );
   }
 }
