@@ -1,5 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:graduation_project/models/seller_model.dart';
+import 'package:graduation_project/screens/auth/before_signup.dart';
+import 'package:graduation_project/screens/auth/forget_pawword.dart';
 import 'package:graduation_project/screens/mainPage.dart';
 import 'package:graduation_project/screens/auth/signup_page.dart';
 import 'package:graduation_project/models/person_module.dart';
@@ -266,7 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                       ),
-                      Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(
@@ -305,6 +309,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: SizedBox(
                           width: 300,
                           height: 50,
+                          /// that must be changed
                           child: ElevatedButton(
                             onPressed: _selectedOption == ECharacteres.user
                                 ? _login
@@ -321,7 +326,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      Row(
+                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text('Don\'t have an account?'),
@@ -330,13 +335,23 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SignupPage()),
+                                    builder: (context) => const RoleSelectionPage()),
                               );
                             },
                             child: const Text('Sign up'),
                           ),
                         ],
                       ),
+                       TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ForgotPasswordPage()),
+                              );
+                            },
+                            child: const Text('Forget Password'),
+                          ),
                     ],
                   ),
                 ),

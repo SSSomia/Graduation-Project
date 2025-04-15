@@ -9,6 +9,8 @@ import 'package:graduation_project/providers/market_provider.dart';
 import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
+import 'package:graduation_project/screens/auth/before_signup.dart';
+import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/auth/signup_page.dart';
 import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
 import 'package:graduation_project/screens/seller_requests_screen.dart';
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
     // );
     return MaterialApp(
       // have to make it in the real app appear just once !!!!!
-      home: HomePageWihoutlogin(),
+      home: LoginPage(),
     );
   }
 }

@@ -13,6 +13,7 @@ class PersonModule {
   late String emial ;
   late DateTime createdAt;
   late String image = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
+  late String role;
 
   PersonModule(
     this.personId,
@@ -22,7 +23,7 @@ class PersonModule {
     this.createdAt,
     this.address,
     this.emial,
-    this.phoneNumber
+    this.phoneNumber, this.role
   );
 
   

@@ -4,14 +4,14 @@ import 'package:graduation_project/screens/auth/other_user_data.dart';
 import 'package:graduation_project/models/person_module.dart';
 import 'package:graduation_project/providers/person_provider.dart';
 import 'package:provider/provider.dart';
-
+  
 class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
-
+   SignupPage({super.key, required  this.role});
+  String role;
+  
   @override
   State<SignupPage> createState() => _SignupPageState();
 }
-
 
 class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
@@ -298,7 +298,7 @@ class _SignupPageState extends State<SignupPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                         OtherUserData( userName: _conUserName.text, name: '${_conFirstName.text} ${_conLastName.text}', password: _conPassword.text, createdAt:DateTime.now() )));
+                                                         OtherUserData( userName: _conUserName.text, name: '${_conFirstName.text} ${_conLastName.text}', password: _conPassword.text, createdAt:DateTime.now(), role: widget.role )));
                                             // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                                             // sharedPreferences.setString("userName", "")
                                           }
