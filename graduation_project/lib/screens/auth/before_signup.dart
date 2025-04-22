@@ -17,7 +17,7 @@ class RoleSelectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: const Color.fromARGB(255, 249, 252, 252),
       appBar: AppBar(
         title: const Text("Get Started"),
         centerTitle: true,
@@ -106,7 +106,7 @@ Widget _buildRoleCard(
                   ),
                 ),
               ),
-              Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+              const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
             ],
           ),
         ),

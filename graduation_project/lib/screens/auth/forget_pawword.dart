@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/screens/auth/send_link.dart';
+import 'package:graduation_project/screens/auth/reset_pawword_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -11,21 +11,18 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final RegExp emailRegExp = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+  );
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text;
       // You can now send the email to your backend to handle password reset
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Password reset link sent to $email'),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ResetLinkSentPage(email: _emailController.text),
+          builder: (context) => const ResetPasswordPage(),
         ),
       );
     }
@@ -37,7 +34,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       appBar: AppBar(
         title: const Text('Forgot Password'),
         centerTitle: true,
-        backgroundColor: const Color(0xFF035862),
+        backgroundColor: const Color.fromARGB(255, 116, 180, 187),
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -49,7 +46,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   size: 80, color: Colors.teal),
               const SizedBox(height: 20),
               const Text(
-                'Enter your email address and we\'ll send you a link to reset your password.',
+                'Enter your email address to reset your password.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
@@ -70,7 +67,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     if (value == null || value.isEmpty) {
                       return 'Email is required';
                     }
-                    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                    if (emailRegExp.hasMatch(value)) {
                       return 'Please enter a valid email';
                     }
                     return null;
@@ -89,7 +86,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                 ),
                 child: const Text(
-                  'Send Reset Link',
+                  'Reset Password',
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
