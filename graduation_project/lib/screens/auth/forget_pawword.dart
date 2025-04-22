@@ -67,7 +67,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     if (value == null || value.isEmpty) {
                       return 'Email is required';
                     }
-                    if (emailRegExp.hasMatch(value)) {
+                    if (!emailRegExp.hasMatch(value)) {
                       return 'Please enter a valid email';
                     }
                     return null;

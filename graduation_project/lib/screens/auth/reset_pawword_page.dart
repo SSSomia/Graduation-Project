@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/auth/login_page.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({Key? key}) : super(key: key);
@@ -21,6 +22,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       // Handle password reset logic here
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Password reset successfully!')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
       );
     }
   }

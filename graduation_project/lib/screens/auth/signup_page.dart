@@ -1,17 +1,21 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/auth/other_user_data.dart';
 import 'package:graduation_project/models/person_module.dart';
 import 'package:graduation_project/providers/person_provider.dart';
+import 'package:graduation_project/screens/auth/seller_market_data.dart';
 import 'package:provider/provider.dart';
-  
+
 class SignupPage extends StatefulWidget {
-   SignupPage({super.key, required  this.role});
-  String role;
-  
+  SignupPage({super.key});
+
   @override
   State<SignupPage> createState() => _SignupPageState();
 }
+
+enum ECharacteres { user, seller }
 
 class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
@@ -21,12 +25,19 @@ class _SignupPageState extends State<SignupPage> {
   String? _userNameError;
   String? _passwordError;
   String? _confirmPasswordError;
+  String? _emailError;
+  ECharacteres? _selectedOption = ECharacteres.user;
+
+  final RegExp emailRegExp = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+  );
 
   final TextEditingController _conFirstName = TextEditingController();
   final TextEditingController _conLastName = TextEditingController();
   final TextEditingController _conUserName = TextEditingController();
   final TextEditingController _conPassword = TextEditingController();
   final TextEditingController _conConfirmPassword = TextEditingController();
+  final TextEditingController _conEmail = TextEditingController();
 
   @override
   void dispose() {
@@ -71,7 +82,7 @@ class _SignupPageState extends State<SignupPage> {
                         children: [
                   Container(
                     width: 350,
-                    height: 600,
+                    height: 650,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.rectangle,
@@ -208,6 +219,36 @@ class _SignupPageState extends State<SignupPage> {
                               },
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: TextFormField(
+                              controller: _conEmail,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter a email";
+                                } else if (!emailRegExp.hasMatch(value)) {
+                                  return "Please enter a valid email";
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                prefixIcon: const Icon(Icons.email_outlined),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                errorText: _emailError,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _emailError = value.isEmpty
+                                      ? "Please enter your email"
+                                      : null;
+                                });
+                              },
+                            ),
+                          ),
                           Container(
                               padding: const EdgeInsets.only(
                                   right: 20, left: 20, top: 10, bottom: 10),
@@ -224,7 +265,8 @@ class _SignupPageState extends State<SignupPage> {
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   labelText: 'Password',
-                                  prefixIcon: const Icon(Icons.password_outlined),
+                                  prefixIcon:
+                                      const Icon(Icons.password_outlined),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
@@ -273,7 +315,43 @@ class _SignupPageState extends State<SignupPage> {
                               },
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    Radio<ECharacteres>(
+                                      value: ECharacteres.user,
+                                      groupValue: _selectedOption,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedOption = value;
+                                        });
+                                      },
+                                    ),
+                                    const Text('User',
+                                        style: TextStyle(fontSize: 17)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Radio<ECharacteres>(
+                                      value: ECharacteres.seller,
+                                      groupValue: _selectedOption,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedOption = value;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Seller',
+                                        style: TextStyle(fontSize: 17)),
+                                  ],
+                                ),
+                              ]),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Consumer<PersonProvider>(
                               builder: (context, personList, child) {
                             return MouseRegion(
@@ -284,21 +362,79 @@ class _SignupPageState extends State<SignupPage> {
                                     child: ElevatedButton(
                                         onPressed: () {
                                           // _validateForm();
+
                                           if (_formKey.currentState!
                                               .validate()) {
+                                            if (_selectedOption ==
+                                                ECharacteres.user) {
+                                              personList.addPerson(PersonModule(
+                                                  personList.numberOfPersons
+                                                      .toString(),
+                                                  _conUserName.text,
+                                                  "${_conFirstName.text} ${_conLastName.text}",
+                                                  _conPassword.text,
+                                                  DateTime.now(),
+                                                  _conEmail.text,
+                                                  _selectedOption.toString()));
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginPage(),
+                                                ),
+                                              );
+                                            } else {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SellerMarketData(
+                                                          person: PersonModule(
+                                                              personList
+                                                                  .numberOfPersons
+                                                                  .toString(),
+                                                              _conUserName.text,
+                                                              "${_conFirstName.text} ${_conLastName.text}",
+                                                              _conPassword.text,
+                                                              DateTime.now(),
+                                                              _conEmail.text,
+                                                              _selectedOption
+                                                                  .toString())),
+                                                ),
+                                              );
+                                                //  Navigator.push(
+                                                // context,
+                                                // MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         LoginPage()));
+                                            }
                                             // personList.addPerson(PersonModule(
                                             //     personList.numberOfPersons
                                             //         .toString(),
                                             //     _conUserName.text,
                                             //     "${_conFirstName.text} ${_conLastName.text}",
                                             //     _conPassword.text,
-                                            //     DateTime.now()));
+                                            //     DateTime.now(), _conEmail.text, _selectedOption.toString()));
 
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                         OtherUserData( userName: _conUserName.text, name: '${_conFirstName.text} ${_conLastName.text}', password: _conPassword.text, createdAt:DateTime.now(), role: widget.role )));
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             OtherUserData(
+                                            //                 userName:
+                                            //                     _conUserName
+                                            //                         .text,
+                                            //                 name:
+                                            //                     '${_conFirstName.text} ${_conLastName.text}',
+                                            //                 password:
+                                            //                     _conPassword
+                                            //                         .text,
+                                            //                 createdAt:
+                                            //                     DateTime.now(),
+                                            //                 role:
+                                            //                     widget.role)));
+                                           
+
                                             // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                                             // sharedPreferences.setString("userName", "")
                                           }
@@ -313,7 +449,7 @@ class _SignupPageState extends State<SignupPage> {
                                               255), // Text (foreground) color of the button
                                         ),
                                         child: const Text(
-                                          '------>',
+                                          'Sign Up',
                                           style: TextStyle(fontSize: 20),
                                         ))));
                           }),

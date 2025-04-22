@@ -335,7 +335,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const RoleSelectionPage()),
+                                    builder: (context) =>  SignupPage()),
                               );
                             },
                             child: const Text('Sign up'),
