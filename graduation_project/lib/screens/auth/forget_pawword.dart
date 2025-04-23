@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/screens/auth/reset_pawword_page.dart';
@@ -80,7 +82,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const ResetPasswordPage(),
+                            builder: (context) => ResetPasswordPage(
+                                email: email,
+                                token: forgetPasswrodProvider.token),
                           ),
                         );
                       } else {

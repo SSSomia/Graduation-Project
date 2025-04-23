@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/api_providers/register_provider.dart';
+import 'package:graduation_project/api_providers/reset_password_provider.dart';
 import 'package:graduation_project/providers/cart_list.dart';
 import 'package:graduation_project/providers/favorite_list.dart';
 import 'package:graduation_project/providers/order_list.dart';
@@ -32,6 +33,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => UserProvider()),
     ChangeNotifierProvider(create: (_) => LoginProvider()),
     ChangeNotifierProvider(create: (_) => ForgetPasswrodProvider()),
+    ChangeNotifierProvider(create: (_) => ResetPasswordProvider()),
   ], child: const MyApp()));
 }
 

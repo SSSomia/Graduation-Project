@@ -72,4 +72,25 @@ class ApiService {
       return null;
     }
   }
+
+  Future<Map<String, dynamic>?> resetPassword(
+      String email, String token, String password) async {
+    final url = Uri.parse('${baseUrl}Auth/reset-password');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json
+          .encode({"Email": email, "Token": token, "NewPassword": password}),
+    );
+
+    if (response.statusCode == 200) {
+      print("password updated");
+      return json.decode(response.body);
+    } else {
+      print("password not updated: ${response.statusCode} - ${response.body}");
+
+      // Handle failure (returning null in this example)
+      return null;
+    }
+  }
 }

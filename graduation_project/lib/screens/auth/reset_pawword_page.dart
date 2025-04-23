@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
+import 'package:graduation_project/api_providers/reset_password_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
+import 'package:provider/provider.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({Key? key}) : super(key: key);
-
+  ResetPasswordPage({Key? key, required this.email, required this.token})
+      : super(key: key);
+  String email;
+  String token;
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
@@ -16,21 +21,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
   bool _obscureNewPassword = true;
   bool _obscureConfirmPassword = true;
-
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      // Handle password reset logic here
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password reset successfully!')),
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginPage(),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,21 +122,64 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
                     // Reset Button
                     SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _submit,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: const Text(
-                          "Reset Password",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
+                        width: double.infinity,
+                        child: Consumer<ResetPasswordProvider>(
+                            builder: (context, resetPasswrodProvider, child) {
+                          return ElevatedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                await resetPasswrodProvider.resetPassword(
+                                    widget.email,
+                                    widget.token,
+                                    _newPasswordController.text);
+                                if (resetPasswrodProvider.isAuthenticated) {
+                                  // Navigate to another screen or show success message
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('password is reset!')),
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginPage(),
+                                    ),
+                                  );
+
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) =>
+                                  //         const ResetPasswordPage(),
+                                  //   ),
+                                  // );
+                                }
+                                // } else {
+                                //   // Show an error message if login fails
+                                //   ScaffoldMessenger.of(context).showSnackBar(
+                                //       const SnackBar(
+                                //           content: Text(
+                                //               'password not reset. Try again.')));
+                                // }
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const LoginPage(),
+                                //   ),
+                                // );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text(
+                              "Reset Password",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          );
+                        })),
                   ],
                 ),
               ),
