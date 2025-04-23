@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/models/seller_model.dart';
 import 'package:graduation_project/screens/auth/before_signup.dart';
 import 'package:graduation_project/screens/auth/forget_pawword.dart';
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
             Provider.of<PersonProvider>(context, listen: false);
         PersonModule globalUserData =
             personProvider.getPersonDataUsingUserName(_userName.text);
-        globalUser =  GlobalUser(
+        globalUser = GlobalUser(
             globalUserData.personId,
             globalUserData.name,
             globalUserData.userName,
@@ -270,7 +271,7 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                       ),
-                        Row(
+                      Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(
@@ -309,11 +310,34 @@ class _LoginPageState extends State<LoginPage> {
                         child: SizedBox(
                           width: 300,
                           height: 50,
+
                           /// that must be changed
                           child: ElevatedButton(
-                            onPressed: _selectedOption == ECharacteres.user
-                                ? _login
-                                : _loginSeller,
+                            onPressed: () async {
+                              await Provider.of<LoginProvider>(context,
+                                      listen: false)
+                                  .login(_userName.text, _password.text);
+
+                              // Check if login is successful
+                              if (Provider.of<LoginProvider>(context,
+                                      listen: false)
+                                  .isAuthenticated) {
+                                // Navigate to another screen or show success message
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Login successful!')),
+                                );
+                              } else {
+                                // Show an error message if login fails
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text('Login failed. Try again.')),
+                                );
+                              }
+                            },
+                            // onPressed: _selectedOption == ECharacteres.user
+                            //     ? _login
+                            //     : _loginSeller,
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   const Color.fromARGB(255, 3, 88, 98),
@@ -326,7 +350,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                     Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text('Don\'t have an account?'),
@@ -335,23 +359,24 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>  SignupPage()),
+                                    builder: (context) => SignupPage()),
                               );
                             },
                             child: const Text('Sign up'),
                           ),
                         ],
                       ),
-                       TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ForgotPasswordPage()),
-                              );
-                            },
-                            child: const Text('Forget Password'),
-                          ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ForgotPasswordPage()),
+                          );
+                        },
+                        child: const Text('Forget Password'),
+                      ),
                     ],
                   ),
                 ),

@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_models/register.dart';
+import 'package:graduation_project/api_providers/register_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/auth/other_user_data.dart';
 import 'package:graduation_project/models/person_module.dart';
@@ -349,64 +351,90 @@ class _SignupPageState extends State<SignupPage> {
                                   ],
                                 ),
                               ]),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Consumer<PersonProvider>(
-                              builder: (context, personList, child) {
+                          Consumer<UserProvider>(
+                              builder: (context, userProvider, child) {
                             return MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 child: SizedBox(
                                     width: 300,
                                     height: 50,
                                     child: ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           // _validateForm();
 
                                           if (_formKey.currentState!
                                               .validate()) {
                                             if (_selectedOption ==
                                                 ECharacteres.user) {
-                                              personList.addPerson(PersonModule(
-                                                  personList.numberOfPersons
-                                                      .toString(),
-                                                  _conUserName.text,
-                                                  "${_conFirstName.text} ${_conLastName.text}",
-                                                  _conPassword.text,
-                                                  DateTime.now(),
-                                                  _conEmail.text,
-                                                  _selectedOption.toString()));
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginPage(),
+                                              await userProvider.register(
+                                                user: User(
+                                                  FirstName: _conFirstName.text,
+                                                  LastName: _conLastName.text,
+                                                  UserName: _conUserName.text,
+                                                  Email: _conEmail.text,
+                                                  Password: _conPassword.text,
+                                                  Role: 0,
                                                 ),
                                               );
-                                            } else {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SellerMarketData(
-                                                          person: PersonModule(
-                                                              personList
-                                                                  .numberOfPersons
-                                                                  .toString(),
-                                                              _conUserName.text,
-                                                              "${_conFirstName.text} ${_conLastName.text}",
-                                                              _conPassword.text,
-                                                              DateTime.now(),
-                                                              _conEmail.text,
-                                                              _selectedOption
-                                                                  .toString())),
-                                                ),
-                                              );
-                                                //  Navigator.push(
-                                                // context,
-                                                // MaterialPageRoute(
+
+                                              if (userProvider
+                                                  .isAuthenticated) {
+                                                print("every thing is good");
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                      content: Text(
+                                                          'Login successful!')),
+                                                );
+                                                // Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(
                                                 //     builder: (context) =>
-                                                //         LoginPage()));
+                                                //         const LoginPage(),
+                                                //   ),
+                                                // );
+                                                // Navigate to the next screen or show success message
+                                              } else {
+                                                print("an error accure");
+                                                // Show error message
+                                              }
+
+                                              // personList.addPerson(PersonModule(
+                                              //     personList.numberOfPersons
+                                              //         .toString(),
+                                              //     _conUserName.text,
+                                              //     "${_conFirstName.text} ${_conLastName.text}",
+                                              //     _conPassword.text,
+                                              //     DateTime.now(),
+                                              //     _conEmail.text,
+                                              //     _selectedOption.toString()));
+                                            } else {
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //         SellerMarketData(
+                                              //             person: PersonModule(
+                                              //                 personList
+                                              //                     .numberOfPersons
+                                              //                     .toString(),
+                                              //                 _conUserName.text,
+                                              //                 "${_conFirstName.text} ${_conLastName.text}",
+                                              //                 _conPassword.text,
+                                              //                 DateTime.now(),
+                                              //                 _conEmail.text,
+                                              //                 _selectedOption
+                                              //                     .toString())),
+                                              // ),
+                                              // );
+                                              //  Navigator.push(
+                                              // context,
+                                              // MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //         LoginPage()));
                                             }
                                             // personList.addPerson(PersonModule(
                                             //     personList.numberOfPersons
@@ -433,7 +461,6 @@ class _SignupPageState extends State<SignupPage> {
                                             //                     DateTime.now(),
                                             //                 role:
                                             //                     widget.role)));
-                                           
 
                                             // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                                             // sharedPreferences.setString("userName", "")

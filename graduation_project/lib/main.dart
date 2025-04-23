@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_providers/login_provider.dart';
+import 'package:graduation_project/api_providers/register_provider.dart';
 import 'package:graduation_project/providers/cart_list.dart';
 import 'package:graduation_project/providers/favorite_list.dart';
 import 'package:graduation_project/providers/order_list.dart';
@@ -9,12 +11,7 @@ import 'package:graduation_project/providers/market_provider.dart';
 import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
-import 'package:graduation_project/screens/auth/before_signup.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/screens/auth/signup_page.dart';
-import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
-import 'package:graduation_project/screens/seller_requests_screen.dart';
-import 'package:graduation_project/screens/without_login/home_page_wihoutLogin.dart';
 import 'package:graduation_project/semiAPIcall/get_request.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +27,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => SalesProvider()),
     ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
     ChangeNotifierProvider(create: (_) => SellersProvider()),
-    ChangeNotifierProvider(create: (_) => DataProvider())
+    ChangeNotifierProvider(create: (_) => DataProvider()),
+    ChangeNotifierProvider(create: (_) => UserProvider())
   ], child: const MyApp()));
 }
 
