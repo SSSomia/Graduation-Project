@@ -26,123 +26,120 @@ enum ECharacteres { user, seller }
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkBoxValue = false;
-  final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  final RegExp emailRegExp = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+  );
+  final TextEditingController _conEmail = TextEditingController();
+
   ECharacteres? _selectedOption = ECharacteres.user;
 
   String? _errorMessage;
-  String? _userNameError;
+  String? _emailError;
   String? _passwordError;
 
-  void _login() {
-    final persons = Provider.of<PersonProvider>(context, listen: false);
+  //  void _login() {
+  //   final persons = Provider.of<PersonProvider>(context, listen: false);
+  //   if (_formKey.currentState!.validate()) {
+  //     bool userExists = persons.persons.values.any((person) =>
+  //         person.userName == _conEmail.text &&
+  //         person.password == _password.text);
+  //     if (userExists) {
+  //       setState(() {
+  //         _errorMessage = null; // Hide error message on successful login
+  //       });
+  //       PersonProvider personProvider =
+  //           Provider.of<PersonProvider>(context, listen: false);
+  //       PersonModule globalUserData =
+  //           personProvider.getPersonDataUsingUserName(_conEmail.text);
+  //       globalUser = GlobalUser(
+  //           globalUserData.personId,
+  //           globalUserData.name,
+  //           globalUserData.userName,
+  //           globalUserData.password,
+  //           globalUserData.createdAt,
+  //           globalUserData.address,
+  //           globalUserData.emial,
+  //           globalUserData.phoneNumber,
+  //           false,
+  //           '',
+  //           '',
+  //           '');
+  //       // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
+  //       //     globalUser.password, globalUser.createdAt);
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => const MainHomePage()),
+  //       );
+  //     } else {
+  //       setState(() {
+  //         _errorMessage = "Incorrect username or password!";
+  //         _conEmailError =
+  //             _conEmail.text.isEmpty ? "Please enter your user name" : null;
+  //         _passwordError =
+  //             _password.text.isEmpty ? "Please enter your password" : null;
+  //       });
+  //     }
+  //   }
+  // }
 
-    if (_formKey.currentState!.validate()) {
-      bool userExists = persons.persons.values.any((person) =>
-          person.userName == _userName.text &&
-          person.password == _password.text);
-
-      if (userExists) {
-        setState(() {
-          _errorMessage = null; // Hide error message on successful login
-        });
-
-        PersonProvider personProvider =
-            Provider.of<PersonProvider>(context, listen: false);
-        PersonModule globalUserData =
-            personProvider.getPersonDataUsingUserName(_userName.text);
-        globalUser = GlobalUser(
-            globalUserData.personId,
-            globalUserData.name,
-            globalUserData.userName,
-            globalUserData.password,
-            globalUserData.createdAt,
-            globalUserData.address,
-            globalUserData.emial,
-            globalUserData.phoneNumber,
-            false,
-            '',
-            '',
-            '');
-        // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
-        //     globalUser.password, globalUser.createdAt);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const MainHomePage()),
-        );
-      } else {
-        setState(() {
-          _errorMessage = "Incorrect username or password!";
-          _userNameError =
-              _userName.text.isEmpty ? "Please enter your user name" : null;
-          _passwordError =
-              _password.text.isEmpty ? "Please enter your password" : null;
-        });
-      }
-    }
-  }
-
-  void _loginSeller() {
-    final seller = Provider.of<SellersProvider>(context, listen: false);
-
-    if (_formKey.currentState!.validate()) {
-      bool userExists = seller.sellers.values.any((person) =>
-          person.person.userName == _userName.text &&
-          person.person.password == _password.text);
-
-      if (userExists) {
-        setState(() {
-          _errorMessage = null; // Hide error message on successful login
-        });
-
-        SellersProvider sellerProvider =
-            Provider.of<SellersProvider>(context, listen: false);
-        Seller globalUserData =
-            sellerProvider.getSellerDataUsingUserName(_userName.text);
-        globalUser = GlobalUser(
-            globalUserData.sellerID,
-            globalUserData.person.name,
-            globalUserData.person.userName,
-            globalUserData.person.password,
-            globalUserData.person.createdAt,
-            globalUserData.person.address,
-            globalUserData.person.emial,
-            globalUserData.person.password,
-            true,
-            globalUserData.storeName,
-            globalUserData.address,
-            globalUserData.storeDescription);
-
-        // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
-        //     globalUser.password, globalUser.createdAt);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SellerHomeScreen()),
-        );
-      } else {
-        setState(() {
-          _errorMessage = "Incorrect username or password!";
-          _userNameError =
-              _userName.text.isEmpty ? "Please enter your user name" : null;
-          _passwordError =
-              _password.text.isEmpty ? "Please enter your password" : null;
-        });
-      }
-    }
-  }
+  // void _loginSeller() {
+  //   final seller = Provider.of<SellersProvider>(context, listen: false);
+  //   if (_formKey.currentState!.validate()) {
+  //     bool userExists = seller.sellers.values.any((person) =>
+  //         person.person.userName == _conEmail.text &&
+  //         person.person.password == _password.text);
+  //     if (userExists) {
+  //       setState(() {
+  //         _errorMessage = null; // Hide error message on successful login
+  //       });
+  //       SellersProvider sellerProvider =
+  //           Provider.of<SellersProvider>(context, listen: false);
+  //       Seller globalUserData =
+  //           sellerProvider.getSellerDataUsingUserName(_conEmail.text);
+  //       globalUser = GlobalUser(
+  //           globalUserData.sellerID,
+  //           globalUserData.person.name,
+  //           globalUserData.person.userName,
+  //           globalUserData.person.password,
+  //           globalUserData.person.createdAt,
+  //           globalUserData.person.address,
+  //           globalUserData.person.emial,
+  //           globalUserData.person.password,
+  //           true,
+  //           globalUserData.storeName,
+  //           globalUserData.address,
+  //           globalUserData.storeDescription);
+  //       // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
+  //       //     globalUser.password, globalUser.createdAt);
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => SellerHomeScreen()),
+  //       );
+  //     } else {
+  //       setState(() {
+  //         _errorMessage = "Incorrect username or password!";
+  //         _conEmailError =
+  //             _conEmail.text.isEmpty ? "Please enter your user name" : null;
+  //         _passwordError =
+  //             _password.text.isEmpty ? "Please enter your password" : null;
+  //       });
+  //     }
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    _userName.addListener(_clearError);
+    _conEmail.addListener(_clearError);
     _password.addListener(_clearError);
   }
 
   @override
   void dispose() {
-    _userName.removeListener(_clearError);
+    _conEmail.removeListener(_clearError);
     _password.removeListener(_clearError);
-    _userName.dispose();
+    _conEmail.dispose();
     _password.dispose();
     super.dispose();
   }
@@ -199,31 +196,33 @@ class _LoginPageState extends State<LoginPage> {
                             style: const TextStyle(color: Colors.red),
                           ),
                         ),
-                      Container(
+                      Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         child: TextFormField(
-                          controller: _userName,
-                          onChanged: (value) {
-                            setState(() {
-                              _userNameError = _userName.text.isEmpty
-                                  ? "Please enter your user name"
-                                  : null;
-                            });
+                          controller: _conEmail,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter a email";
+                            } else if (!emailRegExp.hasMatch(value)) {
+                              return "Please enter a valid email";
+                            }
+                            return null;
                           },
                           decoration: InputDecoration(
-                            labelText: 'Username',
-                            errorText: _userNameError,
-                            prefixIcon: const Icon(Icons.person),
+                            labelText: 'Email',
+                            prefixIcon: const Icon(Icons.email_outlined),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
+                            errorText: _emailError,
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your username';
-                            }
-                            return null;
+                          onChanged: (value) {
+                            setState(() {
+                              _emailError = value.isEmpty
+                                  ? "Please enter your email"
+                                  : null;
+                            });
                           },
                         ),
                       ),
@@ -271,85 +270,89 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                       ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Radio<ECharacteres>(
-                                  value: ECharacteres.user,
-                                  groupValue: _selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedOption = value;
-                                    });
-                                  },
-                                ),
-                                const Text('User',
-                                    style: TextStyle(fontSize: 17)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio<ECharacteres>(
-                                  value: ECharacteres.seller,
-                                  groupValue: _selectedOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedOption = value;
-                                    });
-                                  },
-                                ),
-                                const Text('Seller',
-                                    style: TextStyle(fontSize: 17)),
-                              ],
-                            ),
-                          ]),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: SizedBox(
-                          width: 300,
-                          height: 50,
+                      // Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Row(
+                      //         children: [
+                      //           Radio<ECharacteres>(
+                      //             value: ECharacteres.user,
+                      //             groupValue: _selectedOption,
+                      //             onChanged: (value) {
+                      //               setState(() {
+                      //                 _selectedOption = value;
+                      //               });
+                      //             },
+                      //           ),
+                      //           const Text('User',
+                      //               style: TextStyle(fontSize: 17)),
+                      //         ],
+                      //       ),
+                      //       Row(
+                      //         children: [
+                      //           Radio<ECharacteres>(
+                      //             value: ECharacteres.seller,
+                      //             groupValue: _selectedOption,
+                      //             onChanged: (value) {
+                      //               setState(() {
+                      //                 _selectedOption = value;
+                      //               });
+                      //             },
+                      //           ),
+                      //           const Text('Seller',
+                      //               style: TextStyle(fontSize: 17)),
+                      //         ],
+                      //       ),
+                      //     ]),
+                      Consumer<LoginProvider>(
+                          builder: (context, loginProvider, child) {
+                        return MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: SizedBox(
+                            width: 300,
+                            height: 50,
 
-                          /// that must be changed
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              await Provider.of<LoginProvider>(context,
-                                      listen: false)
-                                  .login(_userName.text, _password.text);
+                            /// that must be changed
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                 if (_formKey.currentState!
+                                              .validate()) {
+                                await loginProvider.login(_conEmail.text, _password.text);
 
-                              // Check if login is successful
-                              if (Provider.of<LoginProvider>(context,
-                                      listen: false)
-                                  .isAuthenticated) {
-                                // Navigate to another screen or show success message
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Login successful!')),
-                                );
-                              } else {
-                                // Show an error message if login fails
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text('Login failed. Try again.')),
-                                );
-                              }
-                            },
-                            // onPressed: _selectedOption == ECharacteres.user
-                            //     ? _login
-                            //     : _loginSeller,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 3, 88, 98),
-                              foregroundColor: Colors.white,
-                            ),
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(fontSize: 20),
+                                // Check if login is successful
+                                if (Provider.of<LoginProvider>(context,
+                                        listen: false)
+                                    .isAuthenticated) {
+                                  // Navigate to another screen or show success message
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Login successful!')),
+                                  );
+                                } else {
+                                  // Show an error message if login fails
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('Login failed. Try again.')),
+                                  );
+                                }
+                              }},
+                              // onPressed: _selectedOption == ECharacteres.user
+                              //     ? _login
+                              //     : _loginSeller,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 3, 88, 98),
+                                foregroundColor: Colors.white,
+                              ),
+                              child: const Text(
+                                'Login',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

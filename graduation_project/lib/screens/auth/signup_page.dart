@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/register.dart';
+import 'package:graduation_project/api_models/user_model.dart';
 import 'package:graduation_project/api_providers/register_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/auth/other_user_data.dart';
@@ -380,22 +380,19 @@ class _SignupPageState extends State<SignupPage> {
                                                 ),
                                               );
 
-                                              if (userProvider
-                                                  .isAuthenticated) {
-                                                print("every thing is good");
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
                                                   const SnackBar(
                                                       content: Text(
-                                                          'Login successful!')),
+                                                          'Sign Up successful!')),
                                                 );
-                                                // Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //     builder: (context) =>
-                                                //         const LoginPage(),
-                                                //   ),
-                                                // );
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const LoginPage(),
+                                                  ),
+                                                );
                                                 // Navigate to the next screen or show success message
                                               } else {
                                                 print("an error accure");
@@ -464,7 +461,7 @@ class _SignupPageState extends State<SignupPage> {
 
                                             // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                                             // sharedPreferences.setString("userName", "")
-                                          }
+                                          
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: const Color.fromARGB(

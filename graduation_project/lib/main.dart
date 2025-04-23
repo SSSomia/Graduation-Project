@@ -28,7 +28,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
     ChangeNotifierProvider(create: (_) => SellersProvider()),
     ChangeNotifierProvider(create: (_) => DataProvider()),
-    ChangeNotifierProvider(create: (_) => UserProvider())
+    ChangeNotifierProvider(create: (_) => UserProvider()),
+    ChangeNotifierProvider(create: (_) => LoginProvider())
   ], child: const MyApp()));
 }
 

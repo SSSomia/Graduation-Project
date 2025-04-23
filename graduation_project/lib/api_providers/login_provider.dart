@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/services/login_api.dart';
+import 'package:graduation_project/services/api_service.dart';
 
 class LoginProvider with ChangeNotifier {
   String _token = "";
@@ -9,13 +9,13 @@ class LoginProvider with ChangeNotifier {
   bool get isAuthenticated => _isAuthenticated;
 
   // Login method
-  Future<void> login(String username, String password) async {
+  Future<void> login(String email, String password) async {
     // Call the API to authenticate the user
-    final result = await LoginApi().login(username, password);
-    if (result != null) {
+    final result = await ApiService().login(email, password);
+    if (result != null && result.containsKey('token')) {
       _token = result['token'];
       _isAuthenticated = true;
-      notifyListeners();  // Notify listeners (UI) that the state has changed
+      notifyListeners(); // Notify listeners (UI) that the state has changed
     }
   }
 
