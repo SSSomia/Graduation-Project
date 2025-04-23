@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/api_providers/register_provider.dart';
 import 'package:graduation_project/providers/cart_list.dart';
@@ -29,7 +30,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => SellersProvider()),
     ChangeNotifierProvider(create: (_) => DataProvider()),
     ChangeNotifierProvider(create: (_) => UserProvider()),
-    ChangeNotifierProvider(create: (_) => LoginProvider())
+    ChangeNotifierProvider(create: (_) => LoginProvider()),
+    ChangeNotifierProvider(create: (_) => ForgetPasswrodProvider()),
   ], child: const MyApp()));
 }
 

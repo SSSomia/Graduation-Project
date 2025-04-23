@@ -53,4 +53,23 @@ class ApiService {
       return null;
     }
   }
+
+  Future<Map<String, dynamic>?> forgetPassword(String email) async {
+    final url = Uri.parse('${baseUrl}Auth/forget-password');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(email),
+    );
+
+    if (response.statusCode == 200) {
+      print("Email is varified");
+      return json.decode(response.body);
+    } else {
+      print("Email not found: ${response.statusCode} - ${response.body}");
+
+      // Handle failure (returning null in this example)
+      return null;
+    }
+  }
 }

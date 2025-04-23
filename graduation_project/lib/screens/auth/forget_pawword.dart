@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/screens/auth/reset_pawword_page.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -14,19 +16,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final RegExp emailRegExp = RegExp(
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
   );
-
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      final email = _emailController.text;
-      // You can now send the email to your backend to handle password reset
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ResetPasswordPage(),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,21 +64,47 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
               ),
               const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: _submit,
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-                  backgroundColor: const Color(0xFF035862),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Consumer<ForgetPasswrodProvider>(
+                  builder: (context, forgetPasswrodProvider, child) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      final email = _emailController.text;
+                      // You can now send the email to your backend to handle password reset
+                      await forgetPasswrodProvider.forgetPassword(email);
+                      if (forgetPasswrodProvider.isAuthenticated) {
+                        // Navigate to another screen or show success message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('email is exist!')),
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ResetPasswordPage(),
+                          ),
+                        );
+                      } else {
+                        // Show an error message if login fails
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('email not found. Try again.')));
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32, vertical: 14),
+                    backgroundColor: const Color(0xFF035862),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'Reset Password',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ),
+                  child: const Text(
+                    'Reset Password',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                );
+              })
             ],
           ),
         ),
