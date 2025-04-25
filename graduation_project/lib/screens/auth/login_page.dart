@@ -5,6 +5,7 @@ import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/models/seller_model.dart';
 import 'package:graduation_project/screens/auth/before_signup.dart';
 import 'package:graduation_project/screens/auth/forget_pawword.dart';
+import 'package:graduation_project/screens/home_page.dart';
 import 'package:graduation_project/screens/mainPage.dart';
 import 'package:graduation_project/screens/auth/signup_page.dart';
 import 'package:graduation_project/models/person_module.dart';
@@ -315,28 +316,33 @@ class _LoginPageState extends State<LoginPage> {
                             /// that must be changed
                             child: ElevatedButton(
                               onPressed: () async {
-                                 if (_formKey.currentState!
-                                              .validate()) {
-                                await loginProvider.login(_conEmail.text, _password.text);
+                                if (_formKey.currentState!.validate()) {
+                                  await loginProvider.login(
+                                      _conEmail.text, _password.text);
 
-                                // Check if login is successful
-                                if (Provider.of<LoginProvider>(context,
-                                        listen: false)
-                                    .isAuthenticated) {
-                                  // Navigate to another screen or show success message
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Login successful!')),
-                                  );
-                                } else {
-                                  // Show an error message if login fails
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content:
-                                            Text('Login failed. Try again.')),
-                                  );
+                                  // Check if login is successful
+                                  if (loginProvider.isAuthenticated) {
+                                    // Navigate to another screen or show success message
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Login successful!')),
+                                    );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                               MainHomePage()),
+                                    );
+                                  } else {
+                                    // Show an error message if login fails
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content:
+                                              Text('Login failed. Try again.')),
+                                    );
+                                  }
                                 }
-                              }},
+                              },
                               // onPressed: _selectedOption == ECharacteres.user
                               //     ? _login
                               //     : _loginSeller,

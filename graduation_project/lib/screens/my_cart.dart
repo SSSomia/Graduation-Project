@@ -75,7 +75,7 @@ class _MyCartState extends State<MyCart> {
                   final item = cartList.cartList.values.toList()[index];
                   return Column(
                     children: [
-                      ListTileItem(item: item.product),
+                      // ListTileItem(item: item.product),
                       const Divider(
                         height: 1,
                         color: Color.fromARGB(255, 194, 194, 194),

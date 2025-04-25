@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/providers/cart_list.dart';
 import 'package:graduation_project/models/product_module.dart';
 import 'package:graduation_project/screens/product/productPage.dart';
@@ -7,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class ProductCard extends StatefulWidget {
   ProductCard({required this.product});
-  final Product product;
+  final ProductModule product;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -33,14 +34,14 @@ class _ProductCardState extends State<ProductCard> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProductPage(product: Product(id: widget.product.id, productName: widget.product.productName, imageUrl: widget.product.imageUrl, price: widget.product.price, category: widget.product.category, stock: widget.product.stock, discription: widget.product.discription),)),
+                      MaterialPageRoute(builder: (context) => ProductPage(product: ProductModule(productId: widget.product.productId, name: widget.product.name, price: widget.product.price, description: widget.product.description, stockQuantity: widget.product.stockQuantity, categoryId: widget.product.categoryId, storeId: widget.product.storeId, imageUrls: widget.product.imageUrls))),
                     );
                   },
                   child: ClipRRect(
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(20)),
                     child: Image.network(
-                      widget.product.imageUrl[0],
+                      widget.product.imageUrls[0],
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) {
@@ -76,7 +77,7 @@ class _ProductCardState extends State<ProductCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.product.productName,
+                        widget.product.name,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                         maxLines: 1,
@@ -91,7 +92,7 @@ class _ProductCardState extends State<ProductCard> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                     AddToCartButton(product: widget.product, border: 20,backgroundButtonColor:  Color.fromARGB(255, 50, 116, 138), foreButtonColor: Colors.white,),
+                    //  AddToCartButton(product: product, border: 20,backgroundButtonColor:  Color.fromARGB(255, 50, 116, 138), foreButtonColor: Colors.white,),
                     ],
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/edit_profile_data.dart';
+import 'package:graduation_project/screens/home_page.dart';
 import 'package:graduation_project/widgets/chang_password.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
           sectionHeader("Account"),
           buildCardTile(Icons.person, "Edit Profile", onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => EditProfileData()));
+                MaterialPageRoute(builder: (context) => HomePage()));
           }),
           const SizedBox(height: 24),
           sectionHeader("Preferences"),

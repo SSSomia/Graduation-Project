@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/models/order_module.dart';
 import 'package:graduation_project/providers/cart_list.dart';
 import 'package:graduation_project/screens/my_cart.dart';
@@ -13,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
   ProductPage({super.key, required this.product});
-  Product product;
+  ProductModule product;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -28,7 +29,7 @@ class _ProductPageState extends State<ProductPage> {
       backgroundColor: const Color.fromARGB(255, 246, 246, 246),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 228, 246, 254),
-        title: Text(widget.product.productName),
+        title: Text(widget.product.name),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -42,7 +43,7 @@ class _ProductPageState extends State<ProductPage> {
                 child: Stack(
                   children: [
                     PageView.builder(
-                      itemCount: widget.product.imageUrl.length,
+                      itemCount: widget.product.imageUrls.length,
                       onPageChanged: (index) {
                         setState(() {
                           _currentIndex = index;
@@ -55,7 +56,7 @@ class _ProductPageState extends State<ProductPage> {
                             borderRadius:
                                 BorderRadius.circular(30), // Curve here
                             child: Image.network(
-                              widget.product.imageUrl[index],
+                              widget.product.imageUrls[index],
                               fit: BoxFit.cover,
                               width: double.infinity,
                             ),
@@ -70,7 +71,7 @@ class _ProductPageState extends State<ProductPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
-                          widget.product.imageUrl.length,
+                          widget.product.imageUrls.length,
                           (index) => Container(
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             width: _currentIndex == index ? 12 : 8,
@@ -103,9 +104,9 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       ],
                     ),
-                    child: FavoriteButton(
-                      product: widget.product,
-                    ),
+                    // child: FavoriteButton(
+                    //   product: widget.product.,
+                    // ),
                   ))
             ]),
             const SizedBox(height: 25),
@@ -116,31 +117,31 @@ class _ProductPageState extends State<ProductPage> {
             // Product Title and Description
             const SizedBox(height: 5),
             Text(
-              widget.product.productName,
+              widget.product.name,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
-              widget.product.discription,
+              widget.product.description,
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 10),
             // Price and Add to Cart Button
-            Stock(productID: widget.product.id),
+            Stock(productID: widget.product.stockQuantity.toString()),
             const SizedBox(height: 10),
-            Center(
-              child: SizedBox(
-                height: 50,
-                width: 350,
-                child: AddToCartButton(
-                  product: widget.product,
-                  border: 50,
-                  backgroundButtonColor:
-                      const Color.fromARGB(255, 222, 233, 233),
-                  foreButtonColor: Colors.black,
-                ),
-              ),
-            ),
+            // Center(
+            //   child: SizedBox(
+            //     height: 50,
+            //     width: 350,
+            //     child: AddToCartButton(
+            //       product: widget.product,
+            //       border: 50,
+            //       backgroundButtonColor:
+            //           const Color.fromARGB(255, 222, 233, 233),
+            //       foreButtonColor: Colors.black,
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 8),
             Center(
               child: SizedBox(
@@ -258,7 +259,7 @@ class _ProductPageState extends State<ProductPage> {
                             _formKey.currentState!.save();
                             Navigator.pop(context);
 
-                            _showConfirmDialog();
+                            // _showConfirmDialog();
                           }
                         },
                       ),
@@ -294,51 +295,52 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  void _showConfirmDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirm Purchase'),
-          content: const Text('Are you sure you want to buy this item?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Provider.of<ProductList>(context, listen: false)
-                    .decreaseProductQuantityByOne(widget.product.id);
-                Provider.of<OrderList>(context, listen: false).newOrder(
-                  OrderModule(
-                    orderId: orderNumer.toString(),
-                    orderItems: [OrderItem(product: widget.product)],
-                    dateTime: DateTime.now(),
-                    status: "new",
-                    totalPrice: widget.product.price,
-                  ),
-                );
-                orderNumer++;
+//   void _showConfirmDialog() {
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: const Text('Confirm Purchase'),
+//           content: const Text('Are you sure you want to buy this item?'),
+//           actions: [
+//             TextButton(
+//               onPressed: () => Navigator.pop(context),
+//               child: const Text('Cancel'),
+//             ),
+//             ElevatedButton(
+//               onPressed: () {
+//                 Provider.of<ProductList>(context, listen: false)
+//                     .decreaseProductQuantityByOne(widget.product.stockQuantity);
+//                 Provider.of<OrderList>(context, listen: false).newOrder(
+//                   OrderModule(
+//                     orderId: orderNumer.toString(),
+//                     orderItems: [OrderItem(product: widget.product)],
+//                     dateTime: DateTime.now(),
+//                     status: "new",
+//                     totalPrice: widget.product.price,
+//                   ),
+//                 );
+//                 orderNumer++;
 
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Purchase Confirmed!'),
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                );
-                setState(() {
-                  widget.product.stock--;
-                });
-              },
-              child: const Text('Buy Now'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+//                 Navigator.of(context).pop();
+//                 ScaffoldMessenger.of(context).showSnackBar(
+//                   SnackBar(
+//                     content: Text('Purchase Confirmed!'),
+//                     behavior: SnackBarBehavior.floating,
+//                     shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(10)),
+//                   ),
+//                 );
+//                 setState(() {
+//                   widget.product.stock--;
+//                 });
+//               },
+//               child: const Text('Buy Now'),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
 }

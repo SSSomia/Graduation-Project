@@ -73,7 +73,7 @@ class _NavigationExampleState extends State<MainHomePage> {
       body: <Widget>[
          You(),
         HomePage(),
-        Orders(),
+        // Orders(),
         MyCart(),
       ][currentPageIndex],
     );

@@ -6,6 +6,7 @@ import 'package:graduation_project/screens/contact_us.dart';
 import 'package:graduation_project/screens/edit_profile_data.dart';
 import 'package:graduation_project/screens/favorite_page.dart';
 import 'package:graduation_project/not%20used/utils/listTileDrawer.dart';
+import 'package:graduation_project/screens/home_page.dart';
 import 'package:graduation_project/screens/profile_page.dart';
 import 'package:graduation_project/screens/settings_screen.dart';
 
@@ -51,19 +52,19 @@ class _MyDrawerState extends State<MyDrawer> {
           onTap: () {
             Navigator.pop(context); // Close the drawer
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => EditProfileData()));
+                MaterialPageRoute(builder: (context) => You()));
           },
         ),
-        ListTile(
-          leading:
-              const Icon(Icons.favorite_outline_outlined), // Add an icon here
-          title: const Text('Favorites'),
-          onTap: () {
-            Navigator.pop(context); // Close the drawer
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MyFavorites()));
-          },
-        ),
+        // ListTile(
+        //   leading:
+        //       const Icon(Icons.favorite_outline_outlined), // Add an icon here
+        //   title: const Text('Favorites'),
+        //   onTap: () {
+        //     Navigator.pop(context); // Close the drawer
+        //     Navigator.push(context,
+        //         MaterialPageRoute(builder: (context) => MyFavorites()));
+        //   },
+        // ),
         ListTile(
           leading: const Icon(Icons.settings_outlined), // Add an icon here
           title: const Text('Settings'),
