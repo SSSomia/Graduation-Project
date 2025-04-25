@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api_models/product_module.dart';
-import 'package:graduation_project/models/product.dart';
 import 'package:graduation_project/services/api_service.dart';
 
-class ProductsProvider with ChangeNotifier {
-  List<ProductModule> _products = [];
+class ProductProvider with ChangeNotifier {
+  ProductModule? _product;
   bool _isLoading = false;
   String? _error;
-  late ProductModule _product;
 
-  List<ProductModule> get products => _products;
+  ProductModule? get product => _product;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<void> fetchRandomProducts(String token) async {
+  // Fetch product by ID
+  Future<void> fetchProductById(String token, int productId) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
 
     try {
-      _products = await ApiService.fetchRandomProductss(token);
+      _product = await ApiService.fetchProductById(token, productId);
     } catch (e) {
       _error = e.toString();
     } finally {

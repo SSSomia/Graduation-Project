@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
+import 'package:graduation_project/api_providers/product_provider.dart';
 import 'package:graduation_project/api_providers/products_provider.dart';
 import 'package:graduation_project/api_providers/profile_provider.dart';
 import 'package:graduation_project/api_providers/register_provider.dart';
@@ -17,6 +18,7 @@ import 'package:graduation_project/providers/prodcut_provider.dart';
 import 'package:graduation_project/providers/sales_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
+import 'package:graduation_project/screens/product/productPage.dart';
 import 'package:graduation_project/semiAPIcall/get_request.dart';
 import 'package:provider/provider.dart';
 

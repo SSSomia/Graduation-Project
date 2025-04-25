@@ -34,7 +34,7 @@ class _ProductCardState extends State<ProductCard> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProductPage(product: ProductModule(productId: widget.product.productId, name: widget.product.name, price: widget.product.price, description: widget.product.description, stockQuantity: widget.product.stockQuantity, categoryId: widget.product.categoryId, storeId: widget.product.storeId, imageUrls: widget.product.imageUrls))),
+                      MaterialPageRoute(builder: (context) => ProductPage(productid:widget.product.productId)),
                     );
                   },
                   child: ClipRRect(

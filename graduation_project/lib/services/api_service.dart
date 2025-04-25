@@ -237,4 +237,41 @@ class ApiService {
       throw Exception("Failed to load profile: ${response.statusCode}");
     }
   }
+
+  // Future<Map<String, dynamic>?> getFavoriteListe(String token) async {
+  //   final url = Uri.parse('${baseUrl}Account/profile');
+  //   final response = await http.get(
+  //     url,
+  //     headers: {
+  //       'Authorization': 'Bearer $token',
+  //       'Content-Type': 'application/json',
+  //     },
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     return json.decode(response.body);
+  //   } else {
+  //     throw Exception("Failed to load profile: ${response.statusCode}");
+  //   }
+  // }
+
+  static Future<ProductModule> fetchProductById(
+      String token, int productId) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Products/$productId');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return ProductModule.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load product');
+    }
+  }
 }
