@@ -55,16 +55,16 @@ class _MyDrawerState extends State<MyDrawer> {
                 MaterialPageRoute(builder: (context) => You()));
           },
         ),
-        // ListTile(
-        //   leading:
-        //       const Icon(Icons.favorite_outline_outlined), // Add an icon here
-        //   title: const Text('Favorites'),
-        //   onTap: () {
-        //     Navigator.pop(context); // Close the drawer
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => MyFavorites()));
-        //   },
-        // ),
+        ListTile(
+          leading:
+              const Icon(Icons.favorite_outline_outlined), // Add an icon here
+          title: const Text('Favorites'),
+          onTap: () {
+            Navigator.pop(context); // Close the drawer
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MyFavorites()));
+          },
+        ),
         ListTile(
           leading: const Icon(Icons.settings_outlined), // Add an icon here
           title: const Text('Settings'),

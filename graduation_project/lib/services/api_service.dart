@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:graduation_project/api_models/favorite_model.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/api_models/user_model.dart';
 import 'package:graduation_project/models/product.dart';
@@ -274,4 +275,46 @@ class ApiService {
       throw Exception('Failed to load product');
     }
   }
+
+  // Fetch favorites
+  static Future<List<Favorite>> fetchFavorites(String token) async {
+    final response = await http.get(
+      Uri.parse('https://shopyapi.runasp.net/api/Favourite/my'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List data = json.decode(response.body);
+      return data.map((item) => Favorite.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load favorites');
+    }
+  }
+
+  // // Add favorite
+  // static Future<Favorite> addFavorite(int id) async {
+  //   final response = await http.post(
+  //     Uri.parse('https://shopyapi.runasp.net/api/Favourite/toggle'),
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: json.encode({'id': id}),
+  //   );
+
+  //   if (response.statusCode == 201) {
+  //     return Favorite.fromJson(json.decode(response.body));
+  //   } else {
+  //     throw Exception('Failed to add favorite');
+  //   }
+  // }
+
+  // // Remove favorite
+  // static Future<void> removeFavorite(int id) async {
+  //   final response = await http.delete(Uri.parse('https://shopyapi.runasp.net/api/Favourite/remove/$id'));
+
+  //   if (response.statusCode != 200) {
+  //     throw Exception('Failed to delete favorite');
+  //   }
+  // }
 }
