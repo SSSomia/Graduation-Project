@@ -1,359 +1,501 @@
-// import 'dart:io';
+import 'dart:io';
 
-// import 'package:flutter/material.dart';
-// import 'package:graduation_project/screens/auth/login_page.dart';
-// import 'package:graduation_project/user_data/globalUserData.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:graduation_project/api_models/user_model.dart';
+import 'package:graduation_project/api_providers/login_provider.dart';
+import 'package:graduation_project/api_providers/profile_provider.dart';
+import 'package:graduation_project/api_providers/update_profile_data.dart';
+import 'package:graduation_project/screens/auth/login_page.dart';
+import 'package:graduation_project/widgets/build_image.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-// // have to add the image of the user and defult image
-// class EditProfileData extends StatefulWidget {
-//   EditProfileData({super.key});
+// have to add the image of the user and defult image
+class EditProfileData extends StatefulWidget {
+  EditProfileData({super.key});
 
-//   @override
-//   State<EditProfileData> createState() => _EditProfileDataState();
-// }
+  @override
+  State<EditProfileData> createState() => _EditProfileDataState();
+}
 
-// class _EditProfileDataState extends State<EditProfileData> {
-//   File? _selectedImage;
-//   // final String _defaultImageUrl =
-//   //     "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
-//   final ImagePicker _picker = ImagePicker();
+class _EditProfileDataState extends State<EditProfileData> {
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = Provider.of<LoginProvider>(context, listen: false);
+      Provider.of<ProfileProvider>(context, listen: false)
+          .fetchProfile(authProvider.token);
+    });
+  }
 
-//   Future<void> _pickImage() async {
-//     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  File? _selectedImage;
+  // final String _defaultImageUrl =
+  //     "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
+  final ImagePicker _picker = ImagePicker();
 
-//     if (pickedFile != null) {
-//       setState(() {
-//         _selectedImage = File(pickedFile.path);
-//       });
-//       // can't save the image in user data
-//       globalUser.image = pickedFile.path;
-//       // globalUser.image = _selectedImage;
-//     }
-//   }
+  // Future<void> _pickImage() async {
+  //   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
-//   void _showInputDialog(
-//       String title, String initialValue, Function(String) onSubmit) {
-//     TextEditingController textController =
-//         TextEditingController(text: initialValue);
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       _selectedImage = File(pickedFile.path);
+  //     });
+  //     // can't save the image in user data
+  //     user.image = pickedFile.path;
+  //     // user.image = _selectedImage;
+  //   }
+  // }
 
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: Text("Enter $title"),
-//           content: TextField(
-//             controller: textController,
-//             decoration: InputDecoration(hintText: "Enter new $title"),
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//               child: const Text("Cancel"),
-//             ),
-//             TextButton(
-//               onPressed: () {
-//                 setState(() {
-//                   onSubmit(textController.text); // Update dynamically
-//                 });
-//                 Navigator.of(context).pop();
-//               },
-//               child: const Text("OK"),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
+  void _showInputDialog(
+      String title, String initialValue, Function(String) onSubmit) {
+    TextEditingController textController =
+        TextEditingController(text: initialValue);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("My Profile"),
-//         backgroundColor: const Color.fromARGB(255, 238, 249, 250),
-//       ),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           children: [
-//             const SizedBox(
-//               height: 10,
-//             ),
-//             // Profile Header
-//             Stack(children: [
-//               Container(
-//                 padding: const EdgeInsets.all(20),
-//                 decoration: const BoxDecoration(
-//                   color: Color.fromARGB(255, 3, 117, 138),
-//                   borderRadius: BorderRadius.all(Radius.circular(40)),
-//                 ),
-//                 child: Column(
-//                   children: [
-//                     CircleAvatar(
-//                       radius: 60,
-//                       //   backgroundImage: _selectedImage != null
-//                       //       ? FileImage(_selectedImage!) // Show selected image
-//                       //       : (globalUser.image != null &&
-//                       //                   globalUser.image.isNotEmpty
-//                       //               ? FileImage(File(
-//                       //                   globalUser.image)) // Show saved image
-//                       //               : AssetImage(
-//                       //                   "assets/images/profileDefultImage/defultImage.png"))
-//                       //           as ImageProvider, // Show default image
-//                       // ),
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Consumer<ProfileProvider>(
+              builder: (context, profileProvider, _) {
+            final user = profileProvider.userProfile!;
+            return AlertDialog(
+                title: Text("Enter $title"),
+                content: TextField(
+                  controller: textController,
+                  decoration: InputDecoration(hintText: "Enter new $title"),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Cancel"),
+                  ),
+                  Consumer<UpdateProfileData>(
+                      builder: (context, updateProfile, child) {
+                    return TextButton(
+                      onPressed: () async {
+                        final loginToken =
+                            Provider.of<LoginProvider>(context, listen: false);
+                        final String token = loginToken.token;
+                        List<String> names = user.name.trim().split(' ');
+                        String firstName = names.isNotEmpty ? names[0] : '';
+                        String lastName =
+                            names.length > 1 ? names.sublist(1).join(' ') : '';
+                        if (title == 'User name') {
+                          final result = await updateProfile.updateProfile(
+                              FirstN: firstName,
+                              LastN: lastName,
+                              Email: user.email,
+                              UserN: textController.text,
+                              profileImage0: null,
+                              token: token);
+                        } else if (title == 'First Name') {
+                          final result = await updateProfile.updateProfile(
+                              FirstN: textController.text,
+                              LastN: lastName,
+                              Email: user.email,
+                              UserN: user.UserName,
+                              profileImage0: null,
+                              token: token);
+                          print(result);
+                          user.name = '${textController.text} $lastName';
+                          // if (result) {
+                          // }
+                        } else if (title == 'Last Name') {
+                          final result = await updateProfile.updateProfile(
+                              FirstN: firstName,
+                              LastN: textController.text,
+                              Email: user.email,
+                              UserN: user.UserName,
+                              profileImage0: null,
+                              token: token);
+                          if (result) {
+                            user.name = '$firstName ${textController.text}';
+                          }
+                        } else if (title == 'Email') {
+                          final result = await updateProfile.updateProfile(
+                              FirstN: firstName,
+                              LastN: lastName,
+                              Email: textController.text,
+                              UserN: user.UserName,
+                              profileImage0: null,
+                              token: token);
+                        }
+                        Navigator.of(context).pop();
+                        setState(() {
+                          onSubmit(textController.text); // Update dynamically
+                        });
+                      },
+                      child: const Text("OK"),
+                    );
+                  })
+                ]);
+          });
+        });
+  }
 
-//                       backgroundImage: _selectedImage != null
-//                           ? FileImage(_selectedImage!) // Show selected image
-//                           : (globalUser.image != null &&
-//                                   globalUser.image.isNotEmpty &&
-//                                   File(globalUser.image).existsSync()
-//                               ? FileImage(
-//                                   File(globalUser.image)) // Show saved image
-//                               : const AssetImage(
-//                                   "assets/images/profileDefultImage/defultImage.png")),
-//                     ),
-//                     const SizedBox(height: 10),
-//                     Text(
-//                       globalUser.userName,
-//                       style: const TextStyle(
-//                         fontSize: 24,
-//                         fontWeight: FontWeight.bold,
-//                         color: Colors.white,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               Positioned(
-//                   top: 10,
-//                   right: 10,
-//                   child: Container(
-//                     decoration: const BoxDecoration(
-//                       //color: Colors.white,
-//                       shape: BoxShape.circle,
-//                       boxShadow: [
-//                         BoxShadow(
-//                           color: Color.fromARGB(155, 255, 255, 255),
-//                           blurRadius: 6,
-//                           offset: Offset(3, 3),
-//                         ),
-//                       ],
-//                     ),
-//                     child: IconButton(
-//                         icon: const Icon(Icons.edit_outlined),
-//                         onPressed: _pickImage),
-//                   )),
-//               Positioned(
-//                   bottom: 10,
-//                   right: 10,
-//                   child: Container(
-//                     decoration: const BoxDecoration(
-//                       //color: Colors.white,
-//                       shape: BoxShape.circle,
-//                       boxShadow: [
-//                         BoxShadow(
-//                           color: Color.fromARGB(155, 255, 255, 255),
-//                           blurRadius: 12,
-//                           offset: Offset(3, 3),
-//                         ),
-//                       ],
-//                     ),
-//                     child: IconButton(
-//                         icon: const Icon(Icons.edit_outlined),
-//                         onPressed: () {
-//                           setState(() {
-//                             _showInputDialog("User name", globalUser.userName,
-//                                 (newValue) {
-//                               globalUser.userName = newValue;
-//                             });
-//                           });
-//                         }),
-//                   )),
-//             ]),
-//             const SizedBox(height: 15),
+  // List<String> names = fullName.trim().split(' ');
+  // String firstName = names.isNotEmpty ? names[0] : '';
+  // String lastName = names.length > 1 ? names.sublist(1).join(' ') : '';
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("My Profile"),
+          backgroundColor: const Color.fromARGB(255, 238, 249, 250),
+        ),
+        body: Consumer<ProfileProvider>(builder: (context, profileProvider, _) {
+          if (profileProvider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (profileProvider.error != null) {
+            return Center(child: Text('Error: ${profileProvider.error}'));
+          } else if (profileProvider.userProfile != null) {
+            final user = profileProvider.userProfile!;
 
-//             // Profile Details
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-//               child: Column(children: [
-//                 const Divider(),
-//                 const SizedBox(height: 10),
-//                 const Text(
-//                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-//                   "Personal Information",
-//                   textAlign: TextAlign.start,
-//                 ),
-//                 ListTile(
-//                     title: const Text("Name"),
-//                     subtitle: Text(globalUser.name),
-//                     trailing: IconButton(
-//                         icon: const Icon(Icons.edit_outlined),
-//                         onPressed: () {
-//                           setState(() {
-//                             _showInputDialog("Name", globalUser.userEmail,
-//                                 (newValue) {
-//                               globalUser.name = newValue;
-//                             });
-//                           });
-//                         })),
-//                 ListTile(
-//                     title: const Text("Email"),
-//                     subtitle: globalUser.userEmail == ""
-//                         ? const Text(
-//                             "not added yet!",
-//                             style: TextStyle(color: Colors.grey),
-//                           )
-//                         : Text(globalUser.userEmail),
-//                     trailing: IconButton(
-//                         icon: const Icon(Icons.edit_outlined),
-//                         onPressed: () {
-//                           setState(() {
-//                             _showInputDialog("Email", globalUser.userEmail,
-//                                 (newValue) {
-//                               globalUser.userEmail = newValue;
-//                             });
-//                           });
-//                         })),
-//                 ListTile(
-//                   title: const Text("Password"),
-//                   subtitle: Text(globalUser.userPassword),
-//                   trailing: IconButton(
-//                     icon: const Icon(Icons.edit_outlined),
-//                     onPressed: () {
-//                       _showInputDialog("Password", globalUser.userPassword,
-//                           (newValue) {
-//                         globalUser.userPassword = newValue;
-//                       });
-//                     },
-//                   ),
-//                 ),
-//                 ListTile(
-//                   title: const Text("Phone Number"),
-//                   subtitle: globalUser.userPhone == ""
-//                       ? const Text(
-//                           "not added yet!",
-//                           style: TextStyle(color: Colors.grey),
-//                         )
-//                       : Text(globalUser.userPhone),
-//                   trailing: IconButton(
-//                     icon: const Icon(Icons.edit_outlined),
-//                     onPressed: () {
-//                       _showInputDialog("Phone Number", globalUser.userPhone,
-//                           (newValue) {
-//                         globalUser.userPhone = newValue;
-//                       });
-//                     },
-//                   ),
-//                 ),
-//                 ListTile(
-//                   title: const Text("Address"),
-//                   subtitle: globalUser.userAddress == ""
-//                       ? const Text(
-//                           "not added yet!",
-//                           style: TextStyle(color: Colors.grey),
-//                         )
-//                       : Text(globalUser.userAddress),
-//                   trailing: IconButton(
-//                     icon: const Icon(Icons.edit_outlined),
-//                     onPressed: () {
-//                       _showInputDialog("Address", globalUser.userAddress,
-//                           (newValue) {
-//                         globalUser.userAddress = newValue;
-//                       });
-//                     },
-//                   ),
-//                 ),
-//                 ListTile(
-//                   title: const Text("Created at"),
-//                   subtitle:
-//                       Text(globalUser.createdAt.toString().substring(0, 10)),
-//                 ),
-//                 const Divider(),
-//                 globalUser.isSeller
-//                     ? Column(
-//                         children: [
-//                           const SizedBox(height: 10),
-//                           const Text(
-//                             style: TextStyle(
-//                                 fontWeight: FontWeight.bold, fontSize: 18),
-//                             "Store Information",
-//                             textAlign: TextAlign.start,
-//                           ),
-//                           ListTile(
-//                             title: const Text("Name"),
-//                             subtitle: globalUser.marketName == ""
-//                                 ? const Text(
-//                                     "not added yet!",
-//                                     style: TextStyle(color: Colors.grey),
-//                                   )
-//                                 : Text(globalUser.marketName),
-//                             trailing: IconButton(
-//                               icon: const Icon(Icons.edit_outlined),
-//                               onPressed: () {
-//                                 _showInputDialog(
-//                                     "Store Name", globalUser.marketName,
-//                                     (newValue) {
-//                                   globalUser.marketName = newValue;
-//                                 });
-//                               },
-//                             ),
-//                           ),
-//                           ListTile(
-//                             title: const Text("Address"),
-//                             subtitle: globalUser.marketAddress == ""
-//                                 ? const Text(
-//                                     "not added yet!",
-//                                     style: TextStyle(color: Colors.grey),
-//                                   )
-//                                 : Text(globalUser.marketAddress),
-//                             trailing: IconButton(
-//                               icon: const Icon(Icons.edit_outlined),
-//                               onPressed: () {
-//                                 _showInputDialog(
-//                                     "Store Address", globalUser.marketAddress,
-//                                     (newValue) {
-//                                   globalUser.marketAddress = newValue;
-//                                 });
-//                               },
-//                             ),
-//                           ),
-//                           ListTile(
-//                             title: const Text("Description"),
-//                             subtitle: globalUser.marketDescription == ""
-//                                 ? const Text(
-//                                     "not added yet!",
-//                                     style: TextStyle(color: Colors.grey),
-//                                   )
-//                                 : Text(globalUser.marketDescription),
-//                             trailing: IconButton(
-//                               icon: const Icon(Icons.edit_outlined),
-//                               onPressed: () {
-//                                 _showInputDialog(
-//                                     "Description", globalUser.marketDescription,
-//                                     (newValue) {
-//                                   globalUser.marketDescription = newValue;
-//                                 });
-//                               },
-//                             ),
-//                           ),
-//                           const Divider(),
-//                         ],
-//                       )
-//                     : SizedBox(
-//                         height: 0,
-//                       )
-//               ]),
-//             ),
+            List<String> names = user.name.trim().split(' ');
+            String firstName = names.isNotEmpty ? names[0] : '';
+            String lastName =
+                names.length > 1 ? names.sublist(1).join(' ') : '';
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // Profile Header
+                  Stack(children: [
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 3, 117, 138),
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                      ),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 60,
+                            backgroundColor: Colors.grey[200],
+                            child: ClipOval(
+                              child: SizedBox(
+                                width: 120, // 2 * radius
+                                height: 120,
+                                child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  child: buildImage(user.imageurl),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // CircleAvatar(
+                          //     radius: 60,
+                          //     child: ClipOval(
+                          //       child: buildImage(user.imageurl),
+                          //     )),
+                          // CircleAvatar(
+                          //   radius: 60,
+                          //   backgroundImage: _selectedImage != null
+                          //       ? FileImage(
+                          //           _selectedImage!) // Show selected image
+                          //       : (
+                          //           user.imageurl != null &&
+                          //                   user.imageurl.isNotEmpty &&
+                          //                   File(user.imageurl).existsSync()
+                          //               ? FileImage(File(
+                          //                   user.imageurl)) // Show saved image
+                          //               :
+                          //               //buildImage(user.imageurl),
+                          //         // CircleAvatar(
+                          //             // radius: 60,
+                          //             // child: ClipOval(
+                          //             //   child: buildImage(user.imageurl),
+                          //             // )),
+                          // )),
+                          const SizedBox(height: 10),
+                          Text(
+                            user.UserName,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                        top: 10,
+                        right: 10,
+                        child: Container(
+                            decoration: const BoxDecoration(
+                              //color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromARGB(155, 255, 255, 255),
+                                  blurRadius: 6,
+                                  offset: Offset(3, 3),
+                                ),
+                              ],
+                            ),
+                            child: Consumer<UpdateProfileData>(
+                                builder: (context, updateProfile, child) {
+                              return IconButton(
+                                  icon: const Icon(Icons.edit_outlined),
+                                  onPressed:
+                                      //  _pickImage
+                                      () async {
+                                    final pickedFile = await _picker.pickImage(
+                                        source: ImageSource.gallery);
 
-//             // Logout Button
-//             const SizedBox(height: 20),
-           
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+                                    if (pickedFile != null) {
+                                      setState(() {
+                                        _selectedImage = File(pickedFile.path);
+                                      });
+                                      // can't save the image in user data
+                                      user.imageurl = pickedFile.path;
+                                      // user.image = _selectedImage;
+                                    }
+
+                                    final loginToken =
+                                        Provider.of<LoginProvider>(context,
+                                            listen: false);
+                                    final String token = loginToken.token;
+                                    await updateProfile.updateProfile(
+                                        FirstN: firstName,
+                                        LastN: lastName,
+                                        Email: user.email,
+                                        UserN: user.UserName,
+                                        profileImage0: _selectedImage,
+                                        token: token);
+                                  });
+                            }))),
+                    Positioned(
+                        bottom: 10,
+                        right: 10,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            //color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(155, 255, 255, 255),
+                                blurRadius: 12,
+                                offset: Offset(3, 3),
+                              ),
+                            ],
+                          ),
+                          child: IconButton(
+                              icon: const Icon(Icons.edit_outlined),
+                              onPressed: () {
+                                setState(() {
+                                  _showInputDialog("User name", user.UserName,
+                                      (newValue) {
+                                    user.UserName = newValue;
+                                  });
+                                });
+                              }),
+                        )),
+                  ]),
+                  const SizedBox(height: 15),
+
+                  // Profile Details
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(children: [
+                      const Divider(),
+                      const SizedBox(height: 10),
+                      const Text(
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                        "Personal Information",
+                        textAlign: TextAlign.start,
+                      ),
+                      ListTile(
+                          title: const Text("First Name"),
+                          subtitle: Text(firstName),
+                          trailing: IconButton(
+                              icon: const Icon(Icons.edit_outlined),
+                              onPressed: () {
+                                setState(() {
+                                  _showInputDialog("First Name", firstName,
+                                      (newValue) {
+                                    firstName = newValue;
+                                  });
+                                });
+                              })),
+                      ListTile(
+                          title: const Text("Last Name"),
+                          subtitle: Text(lastName),
+                          trailing: IconButton(
+                              icon: const Icon(Icons.edit_outlined),
+                              onPressed: () {
+                                setState(() {
+                                  _showInputDialog("Last Name", lastName,
+                                      (newValue) {
+                                    lastName = newValue;
+                                  });
+                                });
+                              })),
+                      ListTile(
+                          title: const Text("Email"),
+                          subtitle: user.email == ""
+                              ? const Text(
+                                  "not added yet!",
+                                  style: TextStyle(color: Colors.grey),
+                                )
+                              : Text(user.email),
+                          trailing: IconButton(
+                              icon: const Icon(Icons.edit_outlined),
+                              onPressed: () {
+                                setState(() {
+                                  _showInputDialog("Email", user.email,
+                                      (newValue) {
+                                    user.email = newValue;
+                                  });
+                                });
+                              })),
+                      // ListTile(
+                      //   title: const Text("Password"),
+                      //   subtitle: Text(user.),
+                      //   trailing: IconButton(
+                      //     icon: const Icon(Icons.edit_outlined),
+                      //     onPressed: () {
+                      //       _showInputDialog(
+                      //           "Password", user.,
+                      //           (newValue) {
+                      //         user. = newValue;
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   title: const Text("Phone Number"),
+                      //   subtitle: user.userPhone == ""
+                      //       ? const Text(
+                      //           "not added yet!",
+                      //           style: TextStyle(color: Colors.grey),
+                      //         )
+                      //       : Text(user.userPhone),
+                      //   trailing: IconButton(
+                      //     icon: const Icon(Icons.edit_outlined),
+                      //     onPressed: () {
+                      //       _showInputDialog(
+                      //           "Phone Number", user.userPhone,
+                      //           (newValue) {
+                      //         user.userPhone = newValue;
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   title: const Text("Address"),
+                      //   subtitle: user.userAddress == ""
+                      //       ? const Text(
+                      //           "not added yet!",
+                      //           style: TextStyle(color: Colors.grey),
+                      //         )
+                      //       : Text(user.userAddress),
+                      //   trailing: IconButton(
+                      //     icon: const Icon(Icons.edit_outlined),
+                      //     onPressed: () {
+                      //       _showInputDialog("Address", user.userAddress,
+                      //           (newValue) {
+                      //         user.userAddress = newValue;
+                      //       });
+                      //     },
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   title: const Text("Created at"),
+                      //   subtitle: Text(
+                      //       user.createdAt.toString().substring(0, 10)),
+                      // ),
+                      const Divider(),
+                      // user.isSeller
+                      //     ? Column(
+                      //         children: [
+                      //           const SizedBox(height: 10),
+                      //           const Text(
+                      //             style: TextStyle(
+                      //                 fontWeight: FontWeight.bold,
+                      //                 fontSize: 18),
+                      //             "Store Information",
+                      //             textAlign: TextAlign.start,
+                      //           ),
+                      //           ListTile(
+                      //             title: const Text("Name"),
+                      //             subtitle: user.marketName == ""
+                      //                 ? const Text(
+                      //                     "not added yet!",
+                      //                     style: TextStyle(color: Colors.grey),
+                      //                   )
+                      //                 : Text(user.marketName),
+                      //             trailing: IconButton(
+                      //               icon: const Icon(Icons.edit_outlined),
+                      //               onPressed: () {
+                      //                 _showInputDialog(
+                      //                     "Store Name", user.marketName,
+                      //                     (newValue) {
+                      //                   user.marketName = newValue;
+                      //                 });
+                      //               },
+                      //             ),
+                      //           ),
+                      //           ListTile(
+                      //             title: const Text("Address"),
+                      //             subtitle: user.marketAddress == ""
+                      //                 ? const Text(
+                      //                     "not added yet!",
+                      //                     style: TextStyle(color: Colors.grey),
+                      //                   )
+                      //                 : Text(user.marketAddress),
+                      //             trailing: IconButton(
+                      //               icon: const Icon(Icons.edit_outlined),
+                      //               onPressed: () {
+                      //                 _showInputDialog("Store Address",
+                      //                     user.marketAddress, (newValue) {
+                      //                   user.marketAddress = newValue;
+                      //                 });
+                      //               },
+                      //             ),
+                      //           ),
+                      //           ListTile(
+                      //             title: const Text("Description"),
+                      //             subtitle: user.marketDescription == ""
+                      //                 ? const Text(
+                      //                     "not added yet!",
+                      //                     style: TextStyle(color: Colors.grey),
+                      //                   )
+                      //                 : Text(user.marketDescription),
+                      //             trailing: IconButton(
+                      //               icon: const Icon(Icons.edit_outlined),
+                      //               onPressed: () {
+                      //                 _showInputDialog("Description",
+                      //                     user.marketDescription,
+                      //                     (newValue) {
+                      //                   user.marketDescription = newValue;
+                      //                 });
+                      //               },
+                      //             ),
+                      //           ),
+                      //     const Divider(),
+                      //   ],
+                      // )
+                      // : SizedBox(
+                      //     height: 0,
+                      //   )
+                    ]),
+                  ),
+
+                  // Logout Button
+                  const SizedBox(height: 20),
+                ],
+              ),
+            );
+          } else {
+            return const Center(child: Text("No profile data found."));
+          }
+        }));
+  }
+}

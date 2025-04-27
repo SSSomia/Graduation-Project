@@ -8,52 +8,49 @@ class UpdateProfileData with ChangeNotifier {
   String _firstName = '';
   String _lastName = '';
   String _email = '';
-  String _password = '';
-  String _image = ''; // Base64 encoded image string or image URL
+  String _userName = '';
+  //String _password = '';
+  File? _image; // Base64 encoded image string or image URL
 
   // Getters to access current profile data
   String get firstName => _firstName;
   String get lastName => _lastName;
   String get email => _email;
-  String get password => _password;
-  String get image => _image;
+  //String get password => _password;
+  File? get image => _image;
+  String get userName => _userName;
 
-  // Method to update the profile data
   Future<bool> updateProfile({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required File? profileImage, // Optional profile image
+    required String FirstN,
+    required String LastN,
+    required String Email,
+    required String UserN,
+    File? profileImage0, // Optional profile image
+    required String token,
   }) async {
     try {
-      // Call the ProfileApi class to update the profile
-      Map<String, dynamic> response = await ApiService.updateProfile(
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        profileImage: profileImage,
+      final response = await ApiService.updateProfile(
+        firstName: FirstN,
+        lastName: LastN,
+        email: Email,
+        userName: UserN,
+        profileImage: profileImage0,
+        token: token,
       );
 
-      // If the update was successful, update local state
-      if (response['success'] == true) {
-        _firstName = firstName;
-        _lastName = lastName;
-        _email = email;
-        _password = password;
-        if (profileImage != null) {
-          _image = base64Encode(profileImage.readAsBytesSync()); // Save the base64 image
-        }
+      // If successful, update local state
+      _firstName = firstName;
+      _lastName = lastName;
+      _email = email;
+      _userName = userName;
+      _image = profileImage0;
 
-        notifyListeners(); // Notify listeners to update the UI
-        return true;
-      } else {
-        return false; // API failed (e.g., invalid data)
-      }
+      print(response);
+      notifyListeners(); // Update UI
+      return true;
     } catch (error) {
       print("Error updating profile: $error");
-      return false; // Handle network errors or other exceptions
+      return false;
     }
   }
 }

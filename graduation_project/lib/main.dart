@@ -44,6 +44,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => UpdateProfileData()),
     ChangeNotifierProvider(create: (_) => ProductsProvider()),
     ChangeNotifierProvider(create: (_) => FavoriteProvider()),
+    // ChangeNotifierProvider(create: (_) => UpdateProfileData()),
   ], child: const MyApp()));
 }
 

@@ -52,7 +52,7 @@ class _MyDrawerState extends State<MyDrawer> {
           onTap: () {
             Navigator.pop(context); // Close the drawer
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => You()));
+                MaterialPageRoute(builder: (context) => EditProfileData()));
           },
         ),
         ListTile(

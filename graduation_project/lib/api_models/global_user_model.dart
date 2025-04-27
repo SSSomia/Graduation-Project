@@ -1,13 +1,15 @@
 // models/user_model.dart
 class UserModel {
-  final String imageurl;
-  final String name;
-  final String email;
-  final String createdAt;
+  String imageurl;
+  String name;
+  String UserName;
+  String email;
+  String createdAt;
 
   UserModel({
     required this.imageurl,
     required this.name,
+    required this.UserName,
     required this.email,
     required this.createdAt,
   });
@@ -17,6 +19,7 @@ class UserModel {
       imageurl: json['imageUrl'] ?? '',
       name: json['name'] ?? '',
       email: json['email'] ?? '',
+      UserName: json['userName'] ?? '',
       createdAt: json['createdAt'] ?? '',
     );
   }
