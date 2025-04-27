@@ -116,83 +116,6 @@ class ApiService {
     }
   }
 
-  // Future<Map<String, dynamic>?> updateProfile(String FirstName, String LastName,
-  //     String email, String password, String profileImage) async {
-  //   final url = Uri.parse('${baseUrl}Account/update');
-  //   final response = await http.post(
-  //     url,
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: json.encode({
-  //       'FirstName': FirstName,
-  //       'LastName': LastName,
-  //       'Email': email,
-  //       'Password': password,
-  //       'ProfileImage': profileImage,
-  //     }),
-  //   );
-
-  //   if (response.statusCode == 200 || response.statusCode == 201) {
-  //     return json.decode(response.body);
-  //   } else {
-  //     print("Registration failed: ${response.statusCode} - ${response.body}");
-  //     // Handle error responses
-  //     return null;
-  //   }
-  // }
-
-  // static Future<String> convertImageToBase64(File imageFile) async {
-  //   final bytes = await imageFile.readAsBytes();
-  //   return base64Encode(bytes);
-  // }
-
-  // Function to update the profile with data
-  // static Future<String> updateProfile(
-  //     {required String firstName,
-  //     required String lastName,
-  //     required String email,
-  //     required String userName,
-  //     File? profileImage,
-  //     required String token // Optional profile image
-  //     }) async {
-  //   try {
-  //     // String? base64Image;
-  //     // if (profileImage != null) {
-  //     //   base64Image = await convertImageToBase64(profileImage);
-  //     // }
-  //     // Create a map of the profile data
-  //     final requestBody = {
-  //       'FirstName': firstName,
-  //       'LastName': lastName,
-  //       'Email': email,
-  //       'UserName': userName,
-  //       'ProfileImage': profileImage,
-  //     };
-
-  //     // Make the POST request to update the profile
-  //     final response = await http.put(
-  //       Uri.parse('https://shopyapi.runasp.net/api/Account/update'),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //       body: json.encode(requestBody), // Send the request body as JSON
-  //     );
-
-  //     // Parse the response
-  //     if (response.statusCode == 200) {
-  //       print("ture");
-  //       return json.decode(response.body);
-  //     } else {
-  //       print("Status Code: ${response.statusCode}");
-  //       print("Response Body: ${response.body}");
-  //       return 'Failed to update profile';
-  //     }
-  //   } catch (error) {
-  //     print("Error updating profile: $error");
-  //     return 'An error occurred';
-  //   }
-  // }
-
   static Future<Map<String, dynamic>?> updateProfile({
     required String firstName,
     required String lastName,
@@ -240,122 +163,6 @@ class ApiService {
     }
   }
 
-// static Future<String> updateProfile({
-//   required String firstName,
-//   required String lastName,
-//   required String email,
-//   required String userName,
-//   File? profileImage,
-//   required String token,
-// }) async {
-//   try {
-//     String? base64Image;
-
-//     if (profileImage != null) {
-//       List<int> imageBytes = await profileImage.readAsBytes();
-//       base64Image = base64Encode(imageBytes);
-//     }
-
-//     final requestBody = {
-//       'FirstName': firstName,
-//       'LastName': lastName,
-//       'Email': email,
-//       'UserName': userName,
-//       'ProfileImage': base64Image, // Base64 String
-//     };
-
-//     final response = await http.put(
-//       Uri.parse('https://shopyapi.runasp.net/api/Account/update'),
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': 'Bearer $token',
-//       },
-//       body: json.encode(requestBody),
-//     );
-
-//     if (response.statusCode == 200) {
-//       print("true");
-//       return json.decode(response.body);
-//     } else {
-//       print("Status Code: ${response.statusCode}");
-//       print("Response Body: ${response.body}");
-//       return 'Failed to update profile';
-//     }
-//   } catch (error) {
-//     print("Error updating profile: $error");
-//     return 'An error occurred';
-//   }
-// }
-
-  // static Future<String> convertImageToBase64(File imageFile) async {
-  //   final bytes = await imageFile.readAsBytes();
-  //   return base64Encode(bytes);
-  // }
-
-  // // Function to update the profile with data
-  // static Future<String> updateProfile({
-  //   required String firstName,
-  //   required String lastName,
-  //   required String email,
-  //   required String userName,
-  //   File? profileImage,
-  //   required String token, // Authorization token
-  // }) async {
-  //   try {
-  //     String? base64Image;
-
-  //     // Convert the profile image to base64 if it's not null
-  //     if (profileImage != null) {
-  //       base64Image = await convertImageToBase64(profileImage);
-  //     }
-
-  //     // Prepare the request body
-  //     final requestBody = {
-  //       'FirstName': firstName,
-  //       'LastName': lastName,
-  //       'Email': email,
-  //       'UserName': userName,
-  //       'ProfileImage': base64Image ?? '', // Use an empty string if no image
-  //     };
-
-  //     // Send PUT request to update profile
-  //     final response = await http.put(
-  //       Uri.parse('https://shopyapi.runasp.net/api/Account/update'),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //       body: json.encode(requestBody),
-  //     );
-
-  //     // Check the response status
-  //     if (response.statusCode == 200) {
-  //       return "Profile updated successfully!";
-  //     } else {
-  //       // Print response status and body for debugging
-  //       print("Status Code: ${response.statusCode}");
-  //       print("Response Body: ${response.body}");
-  //       return 'Failed to update profile';
-  //     }
-  //   } catch (error) {
-  //     print("Error updating profile: $error");
-  //     return 'An error occurred';
-  //   }
-  // }
-
-  // static Future<List<Product>> fetchRandomProducts() async {
-  //   final url =
-  //       Uri.parse('https://shopyapi.runasp.net/api/Products/random-products');
-
-  //   final response = await http.get(url);
-
-  //   if (response.statusCode == 200) {
-  //     List<dynamic> body = jsonDecode(response.body);
-  //     return body.map((json) => Product.fromJson(json)).toList();
-  //   } else {
-  //     throw Exception('Failed to load products');
-  //   }
-  // }
   static Future<List> fetchRandomProducts(String token) async {
     final url =
         Uri.parse('https://shopyapi.runasp.net/api/Products/random-products');
@@ -398,23 +205,6 @@ class ApiService {
       throw Exception("Failed to load profile: ${response.statusCode}");
     }
   }
-
-  // Future<Map<String, dynamic>?> getFavoriteListe(String token) async {
-  //   final url = Uri.parse('${baseUrl}Account/profile');
-  //   final response = await http.get(
-  //     url,
-  //     headers: {
-  //       'Authorization': 'Bearer $token',
-  //       'Content-Type': 'application/json',
-  //     },
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     return json.decode(response.body);
-  //   } else {
-  //     throw Exception("Failed to load profile: ${response.statusCode}");
-  //   }
-  // }
 
   static Future<ProductModule> fetchProductById(
       String token, int productId) async {
@@ -486,6 +276,38 @@ class ApiService {
       return response.body;
     } else {
       throw Exception('Failed to add favorite');
+    }
+  }
+
+  static Future<bool> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String token, // Token passed from Provider
+  }) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Account/change-password'); // Adjust endpoint
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'currentPassword': oldPassword,
+          'newPassword': newPassword,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print('Failed to change password: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Error: $e');
+      return false;
     }
   }
 }

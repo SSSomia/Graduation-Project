@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/about.dart';
+import 'package:graduation_project/screens/auth/change_password_page.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/edit_profile_data.dart';
 import 'package:graduation_project/screens/home_page.dart';
@@ -28,29 +30,36 @@ class _SettingsPageState extends State<SettingsPage> {
           sectionHeader("Account"),
           buildCardTile(Icons.person, "Edit Profile", onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => HomePage()));
+                MaterialPageRoute(builder: (context) => EditProfileData()));
           }),
-          const SizedBox(height: 24),
-          sectionHeader("Preferences"),
-          buildSwitchCardTile(
-            icon: Icons.dark_mode,
-            title: "Dark Mode",
-            value: _darkMode,
-            onChanged: (val) {
-              setState(() => _darkMode = val);
-            },
-          ),
-          buildSwitchCardTile(
-            icon: Icons.notifications,
-            title: "Push Notifications",
-            value: _notifications,
-            onChanged: (val) {
-              setState(() => _notifications = val);
-            },
-          ),
+          buildCardTile(Icons.person, "Change Password", onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ChangePasswordPage()));
+          }),
+          // const SizedBox(height: 24),
+          // sectionHeader("Preferences"),
+          // buildSwitchCardTile(
+          //   icon: Icons.dark_mode,
+          //   title: "Dark Mode",
+          //   value: _darkMode,
+          //   onChanged: (val) {
+          //     setState(() => _darkMode = val);
+          //   },
+          // ),
+          // buildSwitchCardTile(
+          //   icon: Icons.notifications,
+          //   title: "Push Notifications",
+          //   value: _notifications,
+          //   onChanged: (val) {
+          //     setState(() => _notifications = val);
+          //   },
+          // ),
           const SizedBox(height: 24),
           sectionHeader("More"),
-          buildCardTile(Icons.info_outline, "About App", onTap: () {}),
+          buildCardTile(Icons.info_outline, "About App", onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => AboutPage()));
+          }),
           buildCardTile(Icons.logout, "Log Out", onTap: () {
             Navigator.pushAndRemoveUntil(
               context,

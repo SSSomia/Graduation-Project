@@ -40,7 +40,7 @@ class _NavigationExampleState extends State<MainHomePage> {
               bottomRight: Radius.circular(20)),
         ),
       ),
-      endDrawer: const MyDrawer(),
+      endDrawer:  MyDrawer(),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
