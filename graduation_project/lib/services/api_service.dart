@@ -294,27 +294,38 @@ class ApiService {
     }
   }
 
-  // // Add favorite
-  // static Future<Favorite> addFavorite(int id) async {
-  //   final response = await http.post(
-  //     Uri.parse('https://shopyapi.runasp.net/api/Favourite/toggle'),
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: json.encode({'id': id}),
-  //   );
+  // Remove favorite
+  static Future<void> removeFavorite(String token, int id) async {
+    final response = await http.delete(
+      Uri.parse(
+          'https://shopyapi.runasp.net/api/Favourite/remove?productId=$id'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
-  //   if (response.statusCode == 201) {
-  //     return Favorite.fromJson(json.decode(response.body));
-  //   } else {
-  //     throw Exception('Failed to add favorite');
-  //   }
-  // }
+    if (response.statusCode != 200) {
+      throw Exception('Failed to delete favorite');
+    }
+  }
 
-  // // Remove favorite
-  // static Future<void> removeFavorite(int id) async {
-  //   final response = await http.delete(Uri.parse('https://shopyapi.runasp.net/api/Favourite/remove/$id'));
+  // Add favorite
+  static Future<String> addFavorite(String token, int id) async {
+    final response = await http.post(
+      Uri.parse(
+          'https://shopyapi.runasp.net/api/Favourite/toggle?productId=$id'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
-  //   if (response.statusCode != 200) {
-  //     throw Exception('Failed to delete favorite');
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      // print(response.body);
+      return response.body;
+    } else {
+      throw Exception('Failed to add favorite');
+    }
+  }
 }

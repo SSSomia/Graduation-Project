@@ -77,6 +77,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/api_providers/favorite_provider.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/providers/favorite_list.dart';
+import 'package:graduation_project/screens/product/productPage.dart';
 import 'package:provider/provider.dart';
 
 class MyFavorites extends StatefulWidget {
@@ -145,26 +146,36 @@ class _MyFavoritesState extends State<MyFavorites> {
                                       BorderRadius.all(Radius.circular(50)),
                                 ),
                                 child: ListTile(
-                                  // onTap: () => Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         ProductPage(product: item),
-                                  //   ),
-                                  // ),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ProductPage(productid: item.id),
+                                    ),
+                                  ),
                                   leading: CircleAvatar(
                                       backgroundImage:
                                           NetworkImage(item.imageUrl)),
                                   title: Text(item.name),
                                   trailing: IconButton(
-                                      icon: const Icon(Icons.delete,
-                                          color: Colors.red),
-                                      onPressed: () {}
-                                      //   context
-                                      //       .read<FavoriteProvider>()
-                                      //       .addRemoveItem(item);
-                                      // },
-                                      ),
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      final favoriteProvider =
+                                          Provider.of<FavoriteProvider>(context,
+                                              listen: false);
+                                      final loginToken =
+                                          Provider.of<LoginProvider>(context,
+                                              listen: false);
+
+                                      final String token = loginToken
+                                          .token; // 🔥 Replace this with your real user token
+
+                                      context
+                                          .read<FavoriteProvider>()
+                                          .removeFavorite(token, item.id);
+                                    },
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 10),

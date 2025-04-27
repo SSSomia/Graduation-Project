@@ -31,7 +31,7 @@ class _ProductPageState extends State<ProductPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final authProvider = Provider.of<LoginProvider>(context, listen: false);
       Provider.of<ProductProvider>(context, listen: false)
-          .fetchProductById(authProvider.token,widget.productid);
+          .fetchProductById(authProvider.token, widget.productid);
     });
   }
 
@@ -132,9 +132,9 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           ],
                         ),
-                        // child: FavoriteButton(
-                        //   product: widget.product.,
-                        // ),
+                        child: FavoriteButton(
+                          productid: widget.productid, name: product.name, image: product.imageUrls[0],
+                        ),
                       ))
                 ]),
                 const SizedBox(height: 25),
