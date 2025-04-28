@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:graduation_project/api_models/cart_model.dart';
 import 'package:graduation_project/api_models/favorite_model.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/api_models/user_model.dart';
@@ -284,7 +285,8 @@ class ApiService {
     required String newPassword,
     required String token, // Token passed from Provider
   }) async {
-    final url = Uri.parse('https://shopyapi.runasp.net/api/Account/change-password'); // Adjust endpoint
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Account/change-password'); // Adjust endpoint
 
     try {
       final response = await http.post(
@@ -310,4 +312,98 @@ class ApiService {
       return false;
     }
   }
+
+  static Future<Cart> fetchCart(String token) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Cart');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return Cart.fromJson(data);
+    } else {
+      throw Exception('Failed to load cart');
+    }
+  }
+
+  static Future<bool> updateCartQuantity(
+      int productId, int newQuantity, String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Cart/update?productId=$productId&newQuantity=$newQuantity');
+
+    try {
+      final response = await http.put(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Successful API call
+        return true;
+      } else {
+        print('Failed to update cart item quantity: ${response.body}');
+        return false;
+      }
+    } catch (error) {
+      print('Error updating cart item quantity: $error');
+      return false;
+    }
+  }
+
+  static Future<bool> removeCartItem(int productId, String token) async {
+    try {
+      final response = await http.delete(
+        Uri.parse(
+            'https://shopyapi.runasp.net/api/Cart/remove?productId=$productId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return true; // Successfully removed item
+      } else {
+        print('Failed to remove item: ${response.body}');
+        return false; // Failed to remove item
+      }
+    } catch (e) {
+      print('Error during API call: $e');
+      return false;
+    }
+  }
+
+  // Future<bool> addProductToCart(int productId, String token) async {
+  //   final url = Uri.parse(
+  //       'https://shopyapi.runasp.net/api/Cart/add?productId=$productId');
+
+  //   try {
+  //     final response = await http.post(
+  //       url,
+  //       headers: {
+  //         'Authorization': 'Bearer $token',
+  //         'Content-Type': 'application/json',
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       // Successful API call
+  //       return true;
+  //     } else {
+  //       print('Failed to add product to cart: ${response.body}');
+  //       return false;
+  //     }
+  //   } catch (error) {
+  //     print('Error adding product to cart: $error');
+  //     return false;
+  //   }
+  // }
 }

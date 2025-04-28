@@ -1,5 +1,7 @@
 // import 'package:flutter/material.dart';
+// import 'package:graduation_project/api_models/cart_model.dart';
 // import 'package:graduation_project/api_models/product_module.dart';
+// import 'package:graduation_project/api_providers/cart_provider.dart';
 // import 'package:graduation_project/providers/cart_list.dart';
 // import 'package:graduation_project/screens/product/productPage.dart';
 // import 'package:graduation_project/product_list/product_list.dart';
@@ -7,22 +9,22 @@
 // import 'package:provider/provider.dart';
 
 // class ListTileItem extends StatelessWidget {
-//   final ProductModule
+//   final Cart
 //       item; // Define the type of item as CartItem (or appropriate type)
 
 //   const ListTileItem({super.key, required this.item});
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return Consumer<CartList>(
-//       builder: (context, cartItem, child) {
-//         final orderItem = cartItem.cartList[item.productId];
+//     return Consumer<CartProvider>(
+//       builder: (context, cart, child) {
+//         final cartItem = cart.cart!.cartItems[0];
 //         return ListTile(
 //           onTap: () => Navigator.push(
 //               context,
 //               MaterialPageRoute(
 //                   builder: (context) => ProductPage(
-//                         product: item,
+//                         productid: cartItem.cartItems,
 //                       ))),
 //           leading: CircleAvatar(
 //             backgroundImage: NetworkImage(item.imageUrls[0]),

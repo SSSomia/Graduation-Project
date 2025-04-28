@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_providers/cart_provider.dart';
 import 'package:graduation_project/api_providers/change_password_provider.dart';
 import 'package:graduation_project/api_providers/favorite_provider.dart';
 import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
@@ -26,7 +27,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => CartList()),
+   // ChangeNotifierProvider(create: (_) => CartList()),
     ChangeNotifierProvider(create: (_) => FavoriteList()),
     ChangeNotifierProvider(create: (_) => OrderList()),
     ChangeNotifierProvider(create: (_) => PersonProvider()),
@@ -46,6 +47,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => ProductsProvider()),
     ChangeNotifierProvider(create: (_) => FavoriteProvider()),
     ChangeNotifierProvider(create: (_) => ChangePasswordProvider()),
+    ChangeNotifierProvider(create: (_) => CartProvider()),
     // ChangeNotifierProvider(create: (_) => UpdateProfileData()),
   ], child: const MyApp()));
 }

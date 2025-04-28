@@ -40,7 +40,7 @@ class _NavigationExampleState extends State<MainHomePage> {
               bottomRight: Radius.circular(20)),
         ),
       ),
-      endDrawer:  MyDrawer(),
+      endDrawer: MyDrawer(),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -71,9 +71,9 @@ class _NavigationExampleState extends State<MainHomePage> {
         ],
       ),
       body: <Widget>[
-         You(),
+        You(),
         HomePage(),
-        // Orders(),
+        Orders(),
         MyCart(),
       ][currentPageIndex],
     );
