@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_models/cart_model.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/providers/cart_list.dart';
 import 'package:graduation_project/models/product_module.dart';
@@ -18,7 +19,7 @@ class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     //final product = Provider.of<CartList>(context).cartList;
-   return SizedBox(
+    return SizedBox(
         height: 400,
         width: 200,
         child: Card(
@@ -34,7 +35,9 @@ class _ProductCardState extends State<ProductCard> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProductPage(productid:widget.product.productId)),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProductPage(productid: widget.product.productId)),
                     );
                   },
                   child: ClipRRect(
@@ -92,7 +95,19 @@ class _ProductCardState extends State<ProductCard> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                    //  AddToCartButton(product: product, border: 20,backgroundButtonColor:  Color.fromARGB(255, 50, 116, 138), foreButtonColor: Colors.white,),
+                      AddToCartButton(
+                        product: CartItem(
+                            productId: widget.product.productId,
+                            productName: widget.product.name,
+                            price: widget.product.price,
+                            quantity: 1,
+                            totalPrice: widget.product.price,
+                            imageUrl: widget.product.imageUrls[0]),
+                        border: 20,
+                        backgroundButtonColor:
+                            Color.fromARGB(255, 50, 116, 138),
+                        foreButtonColor: Colors.white,
+                      ),
                     ],
                   ),
                 ),
