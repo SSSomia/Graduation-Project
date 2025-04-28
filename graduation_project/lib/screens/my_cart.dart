@@ -303,7 +303,7 @@ class _MyCartState extends State<MyCart> {
       body: cartProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : cartProvider.cart == null
-              ? const Center(child: Text('Failed to load cart.'))
+              ? const Center(child: Text('Cart is empty!!'))
               : Column(
                   children: [
                     Card(

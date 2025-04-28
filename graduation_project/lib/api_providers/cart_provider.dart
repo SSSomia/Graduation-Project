@@ -16,6 +16,7 @@ class CartProvider with ChangeNotifier {
     try {
       _cart = await ApiService.fetchCart(token);
     } catch (error) {
+      _cart = null;
       rethrow;
     } finally {
       _isLoading = false;
@@ -23,21 +24,68 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-//   void updateQuantity(int productId, int newQuantity) {
-//   final itemIndex = cart!.cartItems.indexWhere((item) => item.productId == productId);
-//   if (itemIndex != -1) {
-//     cart!.cartItems[itemIndex].quantity = newQuantity;
+  bool isCartItemExist(CartItem product) {
+  //  print(_cart!.cartItems.any((item) => item.productId == product.productId));
+    return _cart!.cartItems.any((item) => item.productId == product.productId);
+  }
 
-//     // Update the total price of that item
-//     cart!.cartItems[itemIndex].totalPrice =
-//         cart!.cartItems[itemIndex].price * newQuantity;
+  void addToCart(CartItem product, String token) async {
+    // Show loading spinner while API request is in progress
+    _isLoading = true;
+    if (cart == null) {
+      _cart = Cart(cartItems: [], totalCartPrice: 0);
+    }
 
-//     // Recalculate total cart price
-//     cart!.totalCartPrice = cart!.cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+    // Call the API to add the item to the cart
+    final success = await ApiService.addProductToCart(product.productId, token);
 
-//     notifyListeners();
-//   }
-// }
+    if (success) {
+      // After successful API call, update the local cart state
+      cart!.cartItems.add(CartItem(
+          productId: product.productId,
+          productName: product.productName,
+          price: product.price,
+          quantity: product.quantity,
+          totalPrice: product.totalPrice,
+          imageUrl: product.imageUrl));
+      // Recalculate total price
+      cart!.totalCartPrice =
+          cart!.cartItems.fold(0.0, (sum, item) => sum + item.totalPrice);
+    } else {
+      // Handle API failure (e.g., show an error message)
+      print('Failed to add item to cart.');
+    }
+
+    // Hide loading spinner
+    _isLoading = false;
+    notifyListeners(); // Notify listeners to update the UI
+  }
+
+  // Future<void> addToCart(CartItem product, String token) async {
+  //   try {
+  //     // Ensure cart is initialized before adding
+  //     if (cart == null) {
+  //       _cart = Cart(cartItems: [], totalCartPrice: 0); // Initialize if it's null
+  //     }
+
+  //     // Check if the product is already in the cart and add accordingly
+  //     if (cart!.items.contains(product)) {
+  //       // You can handle quantity increment or any other logic here
+  //       cart!.updateProductQuantity(
+  //           product, cart!.getProductQuantity(product) + 1);
+  //     } else {
+  //       cart!.items.add(product);
+  //     }
+
+  //     // Call your API to add the product to the cart (make sure this API call is safe)
+  //     await _addToCartApiCall(product, token); // Add your API call here
+
+  //     notifyListeners(); // Notify listeners when cart is updated
+  //   } catch (e) {
+  //     // Catch any error and print it
+  //     print("Error adding to cart: $e");
+  //   }
+  // }
 
   void updateQuantity(int productId, int newQuantity, String token) async {
     final itemIndex =

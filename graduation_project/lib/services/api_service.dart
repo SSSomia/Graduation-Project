@@ -328,7 +328,7 @@ class ApiService {
       final data = json.decode(response.body);
       return Cart.fromJson(data);
     } else {
-      throw Exception('Failed to load cart');
+      throw Exception('Cart is empty!!');
     }
   }
 
@@ -381,29 +381,29 @@ class ApiService {
     }
   }
 
-  // Future<bool> addProductToCart(int productId, String token) async {
-  //   final url = Uri.parse(
-  //       'https://shopyapi.runasp.net/api/Cart/add?productId=$productId');
+  static Future<bool> addProductToCart(int productId, String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Cart/add?productId=$productId');
 
-  //   try {
-  //     final response = await http.post(
-  //       url,
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //         'Content-Type': 'application/json',
-  //       },
-  //     );
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
 
-  //     if (response.statusCode == 200) {
-  //       // Successful API call
-  //       return true;
-  //     } else {
-  //       print('Failed to add product to cart: ${response.body}');
-  //       return false;
-  //     }
-  //   } catch (error) {
-  //     print('Error adding product to cart: $error');
-  //     return false;
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        // Successful API call
+        return true;
+      } else {
+        print('Failed to add product to cart: ${response.body}');
+        return false;
+      }
+    } catch (error) {
+      print('Error adding product to cart: $error');
+      return false;
+    }
+  }
 }

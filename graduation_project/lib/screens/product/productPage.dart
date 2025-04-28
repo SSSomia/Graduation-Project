@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_models/cart_model.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/api_providers/product_provider.dart';
@@ -133,7 +134,9 @@ class _ProductPageState extends State<ProductPage> {
                           ],
                         ),
                         child: FavoriteButton(
-                          productid: widget.productid, name: product.name, image: product.imageUrls[0],
+                          productid: widget.productid,
+                          name: product.name,
+                          image: product.imageUrls[0],
                         ),
                       ))
                 ]),
@@ -157,39 +160,47 @@ class _ProductPageState extends State<ProductPage> {
                 ),
                 const SizedBox(height: 10),
                 // Price and Add to Cart Button
-                Stock(productID: product.stockQuantity.toString()),
+                Stock(
+                  stockQuantity: product.stockQuantity.toString(),
+                ),
                 const SizedBox(height: 10),
-                // Center(
-                //   child: SizedBox(
-                //     height: 50,
-                //     width: 350,
-                //     child: AddToCartButton(
-                //       product: widget.product,
-                //       border: 50,
-                //       backgroundButtonColor:
-                //           const Color.fromARGB(255, 222, 233, 233),
-                //       foreButtonColor: Colors.black,
-                //     ),
-                //   ),
-                // ),
-
-                const SizedBox(height: 8),
                 Center(
                   child: SizedBox(
                     height: 50,
                     width: 350,
-                    child: FilledButton(
-                      style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all<Color>(
-                              const Color.fromARGB(255, 50, 116, 138))),
-                      onPressed: () {
-                        showAddressDialog(context);
-                        // Navigate to checkout or further actions
-                      },
-                      child: const Text('Buy Now'),
+                    child: AddToCartButton(
+                      product: CartItem(
+                          productId: product.productId,
+                          productName: product.name,
+                          price: product.price,
+                          quantity: 1,
+                          totalPrice: product.price,
+                          imageUrl: product.imageUrls[0]),
+                      border: 50,
+                      backgroundButtonColor:
+                          const Color.fromARGB(255, 222, 233, 233),
+                      foreButtonColor: Colors.black,
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 8),
+                // Center(
+                //   child: SizedBox(
+                //     height: 50,
+                //     width: 350,
+                //     child: FilledButton(
+                //       style: ButtonStyle(
+                //           backgroundColor: WidgetStateProperty.all<Color>(
+                //               const Color.fromARGB(255, 50, 116, 138))),
+                //       onPressed: () {
+                //         showAddressDialog(context);
+                //         // Navigate to checkout or further actions
+                //       },
+                //       child: const Text('Buy Now'),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           );
