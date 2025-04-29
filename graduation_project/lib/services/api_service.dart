@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:graduation_project/api_models/cart_model.dart';
 import 'package:graduation_project/api_models/favorite_model.dart';
+import 'package:graduation_project/api_models/order_details_model.dart';
+import 'package:graduation_project/api_models/order_model.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/api_models/user_model.dart';
 import 'package:graduation_project/models/product.dart';
@@ -404,6 +406,38 @@ class ApiService {
     } catch (error) {
       print('Error adding product to cart: $error');
       return false;
+    }
+  }
+
+  static Future<List<Order>> fetchUserOrders(String token) async {
+    final response = await http.get(
+      Uri.parse('https://shopyapi.runasp.net/api/Order/user-orders'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((order) => Order.fromJson(order)).toList();
+    } else {
+      throw Exception('Failed to load user orders');
+    }
+  }
+
+  static Future<List<OrderDetail>> fetchOrderDetails(int orderId, String token) async {
+    final url = 'https://shopyapi.runasp.net/api/Order/order-details/$orderId';
+    final response = await http.get(Uri.parse(url),   headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((item) => OrderDetail.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load order details');
     }
   }
 }

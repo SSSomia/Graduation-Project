@@ -4,6 +4,8 @@ import 'package:graduation_project/api_providers/change_password_provider.dart';
 import 'package:graduation_project/api_providers/favorite_provider.dart';
 import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
+import 'package:graduation_project/api_providers/order_details_provider.dart';
+import 'package:graduation_project/api_providers/orders_provider.dart';
 import 'package:graduation_project/api_providers/product_provider.dart';
 import 'package:graduation_project/api_providers/products_provider.dart';
 import 'package:graduation_project/api_providers/profile_provider.dart';
@@ -27,9 +29,9 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-   // ChangeNotifierProvider(create: (_) => CartList()),
+    // ChangeNotifierProvider(create: (_) => CartList()),
     ChangeNotifierProvider(create: (_) => FavoriteList()),
-    ChangeNotifierProvider(create: (_) => OrderList()),
+    //ChangeNotifierProvider(create: (_) => OrderList()),
     ChangeNotifierProvider(create: (_) => PersonProvider()),
     ChangeNotifierProvider(create: (_) => ProductList()),
     ChangeNotifierProvider(create: (_) => MarketProvider()),
@@ -48,6 +50,9 @@ void main() {
     ChangeNotifierProvider(create: (_) => FavoriteProvider()),
     ChangeNotifierProvider(create: (_) => ChangePasswordProvider()),
     ChangeNotifierProvider(create: (_) => CartProvider()),
+    ChangeNotifierProvider(create: (_) => OrderProvider()),
+    ChangeNotifierProvider(create: (_) => OrderDetailProvider()),
+
     // ChangeNotifierProvider(create: (_) => UpdateProfileData()),
   ], child: const MyApp()));
 }
