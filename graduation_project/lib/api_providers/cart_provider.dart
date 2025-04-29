@@ -25,7 +25,7 @@ class CartProvider with ChangeNotifier {
   }
 
   bool isCartItemExist(CartItem product) {
-  //  print(_cart!.cartItems.any((item) => item.productId == product.productId));
+    //  print(_cart!.cartItems.any((item) => item.productId == product.productId));
     return _cart!.cartItems.any((item) => item.productId == product.productId);
   }
 
@@ -152,6 +152,14 @@ class CartProvider with ChangeNotifier {
         // Optionally, show an error message or log the failure
         print('Failed to remove item from the cart on the server.');
       }
+    }
+  }
+
+  void clearCartLocally() {
+    if (_cart != null) {
+      _cart!.cartItems.clear();
+      _cart!.totalCartPrice = 0.0;
+      notifyListeners();
     }
   }
 }

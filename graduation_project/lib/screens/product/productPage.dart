@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/api_models/cart_model.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
+import 'package:graduation_project/api_providers/orders_provider.dart';
 import 'package:graduation_project/api_providers/product_provider.dart';
 import 'package:graduation_project/api_providers/products_provider.dart';
 import 'package:graduation_project/models/order_module.dart';
@@ -185,29 +186,162 @@ class _ProductPageState extends State<ProductPage> {
                 ),
 
                 const SizedBox(height: 8),
-                // Center(
-                //   child: SizedBox(
-                //     height: 50,
-                //     width: 350,
-                //     child: FilledButton(
-                //       style: ButtonStyle(
-                //           backgroundColor: WidgetStateProperty.all<Color>(
-                //               const Color.fromARGB(255, 50, 116, 138))),
-                //       onPressed: () {
-                //         showAddressDialog(context);
-                //         // Navigate to checkout or further actions
-                //       },
-                //       child: const Text('Buy Now'),
-                //     ),
-                //   ),
-                // ),
+                Center(
+                  child: SizedBox(
+                    height: 50,
+                    width: 350,
+                    child: FilledButton(
+                      style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                              const Color.fromARGB(255, 50, 116, 138))),
+                      onPressed: () {
+                        showAddressDialog(context, product.productId);
+                        // Navigate to checkout or further actions
+                      },
+                      child: const Text('Buy Now'),
+                    ),
+                  ),
+                ),
               ],
             ),
           );
         }));
   }
 
-  Future<void> showAddressDialog(BuildContext context) async {
+  // Future<void> showAddressDialog(BuildContext context, int productId) async {
+  //   final TextEditingController fullNameController = TextEditingController();
+  //   final TextEditingController governmentController = TextEditingController();
+  //   final TextEditingController cityController = TextEditingController();
+  //   final TextEditingController addressController = TextEditingController();
+  //   final TextEditingController phoneController = TextEditingController();
+
+  //   final _formKey = GlobalKey<FormState>();
+
+  //   await showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return Dialog(
+  //         shape:
+  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  //         elevation: 5,
+  //         insetPadding: const EdgeInsets.all(20),
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(20),
+  //           child: SingleChildScrollView(
+  //             child: Column(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 const Text(
+  //                   "Address Details",
+  //                   style: TextStyle(
+  //                     fontSize: 22,
+  //                     fontWeight: FontWeight.bold,
+  //                     color: Color.fromARGB(255, 48, 150, 147),
+  //                   ),
+  //                 ),
+  //                 const SizedBox(height: 20),
+  //                 Form(
+  //                   key: _formKey,
+  //                   child: Column(
+  //                     children: [
+  //                       _buildTextField(
+  //                         controller: fullNameController,
+  //                         label: 'Full Name',
+  //                         icon: Icons.abc_outlined,
+  //                       ),
+  //                       const SizedBox(height: 12),
+  //                       _buildTextField(
+  //                         controller: governmentController,
+  //                         label: 'Government',
+  //                         icon: Icons.location_city,
+  //                       ),
+  //                       const SizedBox(height: 12),
+  //                       _buildTextField(
+  //                         controller: cityController,
+  //                         label: 'City',
+  //                         icon: Icons.location_on_outlined,
+  //                       ),
+  //                       const SizedBox(height: 12),
+  //                       _buildTextField(
+  //                         controller: addressController,
+  //                         label: 'Detailed Address',
+  //                         icon: Icons.home,
+  //                       ),
+  //                       const SizedBox(height: 12),
+  //                       _buildTextField(
+  //                         controller: phoneController,
+  //                         label: 'Phone Number',
+  //                         icon: Icons.phone,
+  //                         keyboardType: TextInputType.phone,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 const SizedBox(height: 24),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.end,
+  //                   children: [
+  //                     TextButton(
+  //                       style: TextButton.styleFrom(
+  //                         foregroundColor:
+  //                             const Color.fromARGB(255, 13, 26, 26),
+  //                       ),
+  //                       onPressed: () => Navigator.pop(context),
+  //                       child: const Text("Cancel"),
+  //                     ),
+  //                     const SizedBox(width: 10),
+  //                     Consumer<OrderProvider>(builder: (context, order, child) {
+  //                       return ElevatedButton.icon(
+  //                         // icon: const Icon(Icons.check_circle),
+  //                         label: const Text(
+  //                           "Buy Now",
+  //                           style: TextStyle(color: Colors.white),
+  //                         ),
+  //                         style: ElevatedButton.styleFrom(
+  //                           backgroundColor:
+  //                               const Color.fromARGB(255, 26, 123, 118),
+  //                           padding: const EdgeInsets.symmetric(
+  //                               horizontal: 20, vertical: 12),
+  //                           shape: RoundedRectangleBorder(
+  //                               borderRadius: BorderRadius.circular(10)),
+  //                         ),
+  //                         onPressed: () {
+  //                           if (_formKey.currentState!.validate()) {
+  //                             // Do something with the data
+  //                             final authProvider = Provider.of<LoginProvider>(
+  //                                 context,
+  //                                 listen: false);
+  //                             final result = order.placeOrder(
+  //                                 productId: productId,
+  //                                 quantity: 1,
+  //                                 fullName: fullNameController.text,
+  //                                 address: addressController.text,
+  //                                 city: cityController.text,
+  //                                 government: governmentController.text,
+  //                                 phoneNumber: phoneController.text,
+  //                                 token: authProvider.token);
+  //                             print(result);
+  //                             // _formKey.currentState!.save();
+  //                             Navigator.pop(context);
+
+  //                             // _showConfirmDialog();
+  //                           }
+  //                         },
+  //                       );
+  //                     })
+  //                   ],
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+  Future<void> showAddressDialog(BuildContext context, int productId) async {
+    final TextEditingController fullNameController = TextEditingController();
     final TextEditingController governmentController = TextEditingController();
     final TextEditingController cityController = TextEditingController();
     final TextEditingController addressController = TextEditingController();
@@ -223,94 +357,120 @@ class _ProductPageState extends State<ProductPage> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           elevation: 5,
           insetPadding: const EdgeInsets.all(20),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    "Address Details",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 65, 170, 192),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Form(
-                    key: _formKey,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.85,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: SingleChildScrollView(
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        _buildTextField(
-                          controller: governmentController,
-                          label: 'Government',
-                          icon: Icons.location_city,
+                        const Text(
+                          "Address Details",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 48, 150, 147),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildTextField(
-                          controller: cityController,
-                          label: 'City',
-                          icon: Icons.location_on_outlined,
+                        const SizedBox(height: 20),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              _buildTextField(
+                                controller: fullNameController,
+                                label: 'Full Name',
+                                icon: Icons.abc_outlined,
+                              ),
+                              const SizedBox(height: 12),
+                              _buildTextField(
+                                controller: governmentController,
+                                label: 'Government',
+                                icon: Icons.location_city,
+                              ),
+                              const SizedBox(height: 12),
+                              _buildTextField(
+                                controller: cityController,
+                                label: 'City',
+                                icon: Icons.location_on_outlined,
+                              ),
+                              const SizedBox(height: 12),
+                              _buildTextField(
+                                controller: addressController,
+                                label: 'Detailed Address',
+                                icon: Icons.home,
+                              ),
+                              const SizedBox(height: 12),
+                              _buildTextField(
+                                controller: phoneController,
+                                label: 'Phone Number',
+                                icon: Icons.phone,
+                                keyboardType: TextInputType.phone,
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildTextField(
-                          controller: addressController,
-                          label: 'Detailed Address',
-                          icon: Icons.home,
-                        ),
-                        const SizedBox(height: 12),
-                        _buildTextField(
-                          controller: phoneController,
-                          label: 'Phone Number',
-                          icon: Icons.phone,
-                          keyboardType: TextInputType.phone,
-                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor:
+                                    const Color.fromARGB(255, 13, 26, 26),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text("Cancel"),
+                            ),
+                            const SizedBox(width: 10),
+                            Consumer<OrderProvider>(
+                                builder: (context, order, child) {
+                              return ElevatedButton.icon(
+                                label: const Text(
+                                  "Buy Now",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 26, 123, 118),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    final authProvider =
+                                        Provider.of<LoginProvider>(context,
+                                            listen: false);
+                                    final result = await order.placeOrder(
+                                        productId: productId,
+                                        quantity: 1,
+                                        fullName: fullNameController.text,
+                                        address: addressController.text,
+                                        city: cityController.text,
+                                        government: governmentController.text,
+                                        phoneNumber: phoneController.text,
+                                        token: authProvider.token);
+                                    print(result);
+                                    Navigator.pop(context);
+                                  }
+                                },
+                              );
+                            })
+                          ],
+                        )
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor:
-                              const Color.fromARGB(255, 13, 26, 26),
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text("Cancel"),
-                      ),
-                      const SizedBox(width: 10),
-                      ElevatedButton.icon(
-                        icon: const Icon(Icons.check_circle),
-                        label: const Text(
-                          "Save",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 65, 170, 192),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // Do something with the data
-                            _formKey.currentState!.save();
-                            Navigator.pop(context);
-
-                            // _showConfirmDialog();
-                          }
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         );
       },

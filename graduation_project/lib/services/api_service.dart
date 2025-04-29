@@ -426,12 +426,16 @@ class ApiService {
     }
   }
 
-  static Future<List<OrderDetail>> fetchOrderDetails(int orderId, String token) async {
+  static Future<List<OrderDetail>> fetchOrderDetails(
+      int orderId, String token) async {
     final url = 'https://shopyapi.runasp.net/api/Order/order-details/$orderId';
-    final response = await http.get(Uri.parse(url),   headers: {
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
-      },);
+      },
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
@@ -440,4 +444,195 @@ class ApiService {
       throw Exception('Failed to load order details');
     }
   }
+
+  static Future<Map<String, dynamic>> placeOrder({
+    required int productId,
+    required int quantity,
+    required String fullName,
+    required String address,
+    required String city,
+    required String government,
+    required String phoneNumber,
+    required String token,
+  }) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Order/buy');
+
+    final body = {
+      "productId": productId,
+      "quantity": quantity,
+      "fullName": fullName,
+      "address": address,
+      "city": city,
+      "government": government,
+      "phoneNumber": phoneNumber,
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(body),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("object");
+        if (response.body.isNotEmpty) {
+          return json.decode(response.body);
+        } else {
+          return {
+            'success': true,
+            'message': 'Order placed successfully, but no response body.',
+          };
+        }
+      } else {
+        return {
+          'success': false,
+          'message': 'Order failed',
+          'error': response.body.isNotEmpty
+              ? json.decode(response.body)
+              : 'Empty error body',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Exception occurred',
+        'error': e.toString(),
+      };
+    }
+  }
+
+  static Future<Map<String, dynamic>> placeOrderFromCart({
+    required String fullName,
+    required String address,
+    required String city,
+    required String government,
+    required String phoneNumber,
+    required String token,
+  }) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Order/buy-from-cart');
+
+    final body = {
+      "fullName": fullName,
+      "address": address,
+      "city": city,
+      "government": government,
+      "phoneNumber": phoneNumber,
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(body),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+       // print("object");
+        if (response.body.isNotEmpty) {
+          return json.decode(response.body);
+        } else {
+          return {
+            'success': true,
+            'message': 'Order placed, but no response body',
+          };
+        }
+      } else {
+        return {
+          'success': false,
+          'message': 'Order failed',
+          'error': response.body.isNotEmpty
+              ? json.decode(response.body)
+              : 'Empty error body',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Exception occurred',
+        'error': e.toString(),
+      };
+    }
+  }
+
+  // static Future<Map<String, dynamic>> placeOrder({
+  //   required int productId,
+  //   required int quantity,
+  //   required String fullName,
+  //   required String address,
+  //   required String city,
+  //   required String government,
+  //   required String phoneNumber,
+  //   required String token,
+  // }) async {
+  //   final url = Uri.parse(
+  //       'https://shopyapi.runasp.net/api/Order/buy'); // Adjust endpoint if needed
+
+  //   final body = {
+  //     "productId": productId,
+  //     "quantity": quantity,
+  //     "fullName": fullName,
+  //     "address": address,
+  //     "city": city,
+  //     "government": government,
+  //     "phoneNumber": phoneNumber,
+  //   };
+
+  //   // final response = await http.post(
+  //   //   url,
+  //   //   headers: {
+  //   //     'Content-Type': 'application/json',
+  //   //     'Authorization': 'Bearer $token',
+  //   //   },
+  //   //   body: json.encode(body),
+  //   // );
+
+  //   // if (response.statusCode == 200 || response.statusCode == 201) {
+  //   //   return json.decode(response.body);
+  //   // } else {
+  //   //   print('${response.body}');
+  //   // }
+  //   // return {"message": "false"};
+  //   // // } else {
+  //   //   print("Order failed: ${response.body}");
+  //   //   // return json.decode(response.body);
+  //   // }
+
+  //   try {
+  //     final response = await http.post(
+  //       url,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer $token',
+  //       },
+  //       body: json.encode(body),
+  //     );
+
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       print("object");
+  //       return json.decode(response.body);
+  //     } else {
+  //       print('Order failed: ${response.body}');
+  //       return {
+  //         'success': false,
+  //         'message': 'Order failed',
+  //         'error': json.decode(response.body),
+  //       };
+  //     }
+  //   } catch (e) {
+  //     print('Exception during order: $e');
+  //     return {
+  //       'success': false,
+  //       'message': 'Exception occurred',
+  //       'error': e.toString(),
+  //     };
+  //   }
+  // }
 }

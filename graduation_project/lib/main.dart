@@ -33,7 +33,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => FavoriteList()),
     //ChangeNotifierProvider(create: (_) => OrderList()),
     ChangeNotifierProvider(create: (_) => PersonProvider()),
-    ChangeNotifierProvider(create: (_) => ProductList()),
+  //  ChangeNotifierProvider(create: (_) => ProductList()),
     ChangeNotifierProvider(create: (_) => MarketProvider()),
     ChangeNotifierProvider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => SalesProvider()),

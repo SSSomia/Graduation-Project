@@ -25,4 +25,58 @@ class OrderProvider with ChangeNotifier {
     _isLoading = false;
     notifyListeners();
   }
+
+  Future<bool> placeOrder({
+    required int productId,
+    required int quantity,
+    required String fullName,
+    required String address,
+    required String city,
+    required String government,
+    required String phoneNumber,
+    required String token,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+
+    final success = await ApiService.placeOrder(
+      productId: productId,
+      quantity: quantity,
+      fullName: fullName,
+      address: address,
+      city: city,
+      government: government,
+      phoneNumber: phoneNumber,
+      token: token,
+    );
+
+    _isLoading = false;
+    notifyListeners();
+
+    return true;
+  }
+
+  Future<void> placeOrderFromCart({
+    required String fullName,
+    required String address,
+    required String city,
+    required String government,
+    required String phoneNumber,
+    required String token,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+
+    final response = await ApiService.placeOrderFromCart(
+      fullName: fullName,
+      address: address,
+      city: city,
+      government: government,
+      phoneNumber: phoneNumber,
+      token: token,
+    );
+
+    _isLoading = false;
+    notifyListeners();
+  }
 }
