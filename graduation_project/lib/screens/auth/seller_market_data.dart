@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_models/store_info_model.dart';
+import 'package:graduation_project/api_providers/login_provider.dart';
+import 'package:graduation_project/api_providers/register_provider.dart';
+import 'package:graduation_project/api_providers/store_info_provider.dart';
 import 'package:graduation_project/models/seller_model.dart';
+import 'package:graduation_project/providers/market_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/models/person_module.dart';
 import 'package:graduation_project/providers/person_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
+import 'package:graduation_project/screens/seller/market_product_screen.dart';
 import 'package:provider/provider.dart';
 
 class SellerMarketData extends StatefulWidget {
-  PersonModule person;
-  SellerMarketData({super.key, required this.person});
+  SellerMarketData({
+    super.key,
+  });
 
   @override
   State<SellerMarketData> createState() => _SellerMarketDataState();
@@ -18,18 +25,18 @@ class _SellerMarketDataState extends State<SellerMarketData> {
   final _formKey = GlobalKey<FormState>();
 
   String? _nameError;
-  String? _addressError;
+  String? _typeError;
   String? _descriptionError;
 
   final TextEditingController _conName = TextEditingController();
-  final TextEditingController _conaddress = TextEditingController();
+  final TextEditingController _conType = TextEditingController();
   final TextEditingController _conDescription = TextEditingController();
 
   @override
   void dispose() {
     _conDescription.dispose();
     _conName.dispose();
-    _conaddress.dispose();
+    _conType.dispose();
     super.dispose();
   }
 
@@ -39,8 +46,8 @@ class _SellerMarketDataState extends State<SellerMarketData> {
           ? "Please enter market description"
           : null;
       _nameError = _conName.text.isEmpty ? "Please enter market name" : null;
-      _addressError =
-          _conaddress.text.isEmpty ? "Please enter your market address" : null;
+      _typeError =
+          _conType.text.isEmpty ? "Please enter your market type" : null;
     });
   }
 
@@ -119,34 +126,6 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                             padding: const EdgeInsets.only(
                                 right: 20, left: 20, top: 10, bottom: 10),
                             child: TextFormField(
-                              controller: _conaddress,
-                              validator: (value) {
-                                if (value == null || value.isEmpty)
-                                  return "Please enter your market address";
-                                return null;
-                              },
-                              //obscureText: true,
-                              decoration: InputDecoration(
-                                labelText: 'Address',
-                                prefixIcon: const Icon(Icons.home_outlined),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                errorText: _addressError,
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  _addressError = value.isEmpty
-                                      ? "Please enter your market address"
-                                      : null;
-                                });
-                              },
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                                right: 20, left: 20, top: 10, bottom: 10),
-                            child: TextFormField(
                               controller: _conDescription,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -172,6 +151,34 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                               },
                             ),
                           ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                right: 20, left: 20, top: 10, bottom: 10),
+                            child: TextFormField(
+                              controller: _conType,
+                              validator: (value) {
+                                if (value == null || value.isEmpty)
+                                  return "Please enter your market type";
+                                return null;
+                              },
+                              //obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: 'Store Type',
+                                prefixIcon: const Icon(Icons.home_outlined),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                errorText: _typeError,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _typeError = value.isEmpty
+                                      ? "Please enter your store type"
+                                      : null;
+                                });
+                              },
+                            ),
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -180,43 +187,59 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                               child: SizedBox(
                                   width: 300,
                                   height: 50,
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        // _validateForm();
-                                        if (_formKey.currentState!.validate()) {
-                                          sellerProvider.addSeller(
-                                            Seller(
-                                                person: widget.person,
-                                                address: _conaddress.text,
-                                                storeName: _conName.text,
-                                                storeDescription:
-                                                    _conDescription.text,
-                                                sellerID: sellerProvider
-                                                    .numberOfSellers
-                                                    .toString()),
-                                          );
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const LoginPage()));
-                                          // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                                          // sharedPreferences.setString("userName", "")
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 3, 88, 98),
-                                        foregroundColor: const Color.fromARGB(
-                                            255,
-                                            255,
-                                            255,
-                                            255), // Text (foreground) color of the button
-                                      ),
-                                      child: const Text(
-                                        'Sign Up',
-                                        style: TextStyle(fontSize: 20),
-                                      )))),
+                                  child: Consumer<StoreProvider>(
+                                      builder: (context, store, child) {
+                                    return ElevatedButton(
+                                        onPressed: () async {
+                                          // _validateForm();
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            final authProvider =
+                                                Provider.of<UserProvider>(
+                                                    context,
+                                                    listen: false);
+
+                                            await store.submitStore(
+                                                StoreModel(
+                                                    storeName: _conName.text,
+                                                    storeDescription:
+                                                        _conDescription.text,
+                                                    storeType: _conType.text),
+                                                authProvider.token);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const LoginPage()));
+                                            // sellerProvider.addSeller(
+                                            //   Seller(
+                                            //       person: widget.person,
+                                            //       address: _conaddress.text,
+                                            //       storeName: _conName.text,
+                                            //       storeDescription:
+                                            //           _conDescription.text,
+                                            //       sellerID: sellerProvider
+                                            //           .numberOfSellers
+                                            //           .toString()),
+                                            // );
+                                            // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                            // sharedPreferences.setString("userName", "")
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 3, 88, 98),
+                                          foregroundColor: const Color.fromARGB(
+                                              255,
+                                              255,
+                                              255,
+                                              255), // Text (foreground) color of the button
+                                        ),
+                                        child: const Text(
+                                          'Sign Up',
+                                          style: TextStyle(fontSize: 20),
+                                        ));
+                                  }))),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

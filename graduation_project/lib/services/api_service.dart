@@ -5,6 +5,7 @@ import 'package:graduation_project/api_models/favorite_model.dart';
 import 'package:graduation_project/api_models/order_details_model.dart';
 import 'package:graduation_project/api_models/order_model.dart';
 import 'package:graduation_project/api_models/product_module.dart';
+import 'package:graduation_project/api_models/store_info_model.dart';
 import 'package:graduation_project/api_models/user_model.dart';
 import 'package:graduation_project/models/product.dart';
 import 'package:http/http.dart' as http;
@@ -535,7 +536,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-       // print("object");
+        // print("object");
         if (response.body.isNotEmpty) {
           return json.decode(response.body);
         } else {
@@ -559,6 +560,27 @@ class ApiService {
         'message': 'Exception occurred',
         'error': e.toString(),
       };
+    }
+  }
+
+
+  static Future<String> submitStoreInfo(StoreModel store, String token) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Store/submit-store-info');
+    final response = await http.post(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(store.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      print("true");
+      return 'Success';
+    } else {
+      throw Exception('Failed to submit store: ${response.body}');
     }
   }
 
