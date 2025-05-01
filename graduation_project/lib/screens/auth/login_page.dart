@@ -12,6 +12,7 @@ import 'package:graduation_project/models/person_module.dart';
 import 'package:graduation_project/providers/person_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
 import 'package:graduation_project/screens/seller/seller_home_screen.dart';
+import 'package:graduation_project/screens/seller_requests_screen.dart';
 import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:provider/provider.dart';
 
@@ -205,9 +206,10 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter a email";
-                            } else if (!emailRegExp.hasMatch(value)) {
-                              return "Please enter a valid email";
                             }
+                            // } else if (!emailRegExp.hasMatch(value)) {
+                            //   return "Please enter a valid email";
+                            // }
                             return null;
                           },
                           decoration: InputDecoration(
@@ -331,8 +333,14 @@ class _LoginPageState extends State<LoginPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                               MainHomePage()),
+                                              SellerRequestsPage()),
                                     );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //            MainHomePage()),
+                                    // );
                                   } else {
                                     // Show an error message if login fails
                                     ScaffoldMessenger.of(context).showSnackBar(

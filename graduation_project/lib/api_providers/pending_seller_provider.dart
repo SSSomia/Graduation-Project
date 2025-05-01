@@ -1,0 +1,49 @@
+// providers/pending_sellers_provider.dart
+import 'package:flutter/material.dart';
+import 'package:graduation_project/api_models/pending_seller.dart';
+import 'package:graduation_project/services/api_service.dart';
+
+class AdminProvider with ChangeNotifier {
+  final ApiService _service = ApiService();
+
+  List<PendingSeller> _pendingSellers = [];
+  List<PendingSeller> get pendingSellers => _pendingSellers;
+
+  Future<void> loadPendingSellers(String token) async {
+    _pendingSellers = await _service.fetchPendingSellers(token);
+    notifyListeners();
+  }
+
+  Future<void> approveSeller(
+      {required int userId, required String token}) async {
+    try {
+      await ApiService().approveSeller(userId, token);
+
+      // Update the local list
+      final index =
+          pendingSellers.indexWhere((seller) => seller.userId == userId);
+      if (index != -1) {
+        pendingSellers[index].status = 'accepted';
+        notifyListeners();
+      }
+    } catch (e) {
+      throw Exception("Approval failed: $e");
+    }
+  }
+
+  Future<void> rejectSeller(
+      {required int sellerId, required String token}) async {
+    try {
+      await ApiService().rejectSeller(sellerId, token);
+
+      final index =
+          pendingSellers.indexWhere((seller) => seller.userId == sellerId);
+      if (index != -1) {
+        pendingSellers[index].status = 'rejected';
+        notifyListeners();
+      }
+    } catch (e) {
+      throw Exception("Rejection failed: $e");
+    }
+  }
+}

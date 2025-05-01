@@ -4,6 +4,7 @@ import 'package:graduation_project/api_models/cart_model.dart';
 import 'package:graduation_project/api_models/favorite_model.dart';
 import 'package:graduation_project/api_models/order_details_model.dart';
 import 'package:graduation_project/api_models/order_model.dart';
+import 'package:graduation_project/api_models/pending_seller.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/api_models/store_info_model.dart';
 import 'package:graduation_project/api_models/user_model.dart';
@@ -563,7 +564,6 @@ class ApiService {
     }
   }
 
-
   static Future<String> submitStoreInfo(StoreModel store, String token) async {
     final url =
         Uri.parse('https://shopyapi.runasp.net/api/Store/submit-store-info');
@@ -581,6 +581,63 @@ class ApiService {
       return 'Success';
     } else {
       throw Exception('Failed to submit store: ${response.body}');
+    }
+  }
+
+  Future<List<PendingSeller>> fetchPendingSellers(String token) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Admin/pending-sellers');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+        // 'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => PendingSeller.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to fetch pending sellers');
+    }
+  }
+
+  Future<Map<String, dynamic>> approveSeller(int userId, String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Admin/approve-seller/$userId');
+    final response = await http.post(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': '*/*',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to approve seller: ${response.body}');
+    }
+  }
+
+  Future<void> rejectSeller(int sellerId, String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Admin/reject-seller/$sellerId');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+      body: {}, // Empty body
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to reject seller');
     }
   }
 
