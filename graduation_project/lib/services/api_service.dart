@@ -8,6 +8,7 @@ import 'package:graduation_project/api_models/pending_seller.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/api_models/store_info_model.dart';
 import 'package:graduation_project/api_models/user_model.dart';
+import 'package:graduation_project/api_providers/pending_seller_provider.dart';
 import 'package:graduation_project/models/product.dart';
 import 'package:http/http.dart' as http;
 
@@ -581,6 +582,23 @@ class ApiService {
       return 'Success';
     } else {
       throw Exception('Failed to submit store: ${response.body}');
+    }
+  }
+
+  Future<List<PendingSeller>> getApprovedSellers(String token) async {
+    final response = await http.get(
+      Uri.parse('https://shopyapi.runasp.net/api/Admin/approved-sellers'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': '*/*',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+      return jsonData.map((json) => PendingSeller.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to fetch approved sellers');
     }
   }
 

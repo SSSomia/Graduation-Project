@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/models/seller_model.dart';
+import 'package:graduation_project/screens/admin_management_page.dart';
+import 'package:graduation_project/screens/approved_seller.dart';
 import 'package:graduation_project/screens/auth/before_signup.dart';
 import 'package:graduation_project/screens/auth/forget_pawword.dart';
 import 'package:graduation_project/screens/home_page.dart';
@@ -333,7 +335,7 @@ class _LoginPageState extends State<LoginPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              SellerRequestsPage()),
+                                              AdminManagementPage()),
                                     );
                                     // Navigator.push(
                                     //   context,

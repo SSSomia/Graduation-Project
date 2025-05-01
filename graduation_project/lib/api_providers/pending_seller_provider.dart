@@ -9,8 +9,15 @@ class AdminProvider with ChangeNotifier {
   List<PendingSeller> _pendingSellers = [];
   List<PendingSeller> get pendingSellers => _pendingSellers;
 
+  List<PendingSeller> _approvedSeller = [];
+  List<PendingSeller> get approvedSeller => _approvedSeller;
+
   Future<void> loadPendingSellers(String token) async {
     _pendingSellers = await _service.fetchPendingSellers(token);
+    notifyListeners();
+  }
+  Future<void> loadApprovedSellers(String token) async {
+    _approvedSeller = await _service.getApprovedSellers(token);
     notifyListeners();
   }
 
