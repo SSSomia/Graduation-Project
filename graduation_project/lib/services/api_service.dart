@@ -8,7 +8,6 @@ import 'package:graduation_project/api_models/pending_seller.dart';
 import 'package:graduation_project/api_models/product_module.dart';
 import 'package:graduation_project/api_models/store_info_model.dart';
 import 'package:graduation_project/api_models/user_model.dart';
-import 'package:graduation_project/api_providers/pending_seller_provider.dart';
 import 'package:graduation_project/models/product.dart';
 import 'package:http/http.dart' as http;
 

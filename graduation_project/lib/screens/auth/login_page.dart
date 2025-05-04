@@ -1,7 +1,9 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
+import 'package:graduation_project/getUserRoleFromTokenFunction.dart';
 import 'package:graduation_project/models/seller_model.dart';
 import 'package:graduation_project/screens/admin_management_page.dart';
 import 'package:graduation_project/screens/approved_seller.dart';
@@ -14,6 +16,7 @@ import 'package:graduation_project/models/person_module.dart';
 import 'package:graduation_project/providers/person_provider.dart';
 import 'package:graduation_project/providers/sellers_provider.dart';
 import 'package:graduation_project/screens/seller/seller_home_screen.dart';
+import 'package:graduation_project/screens/seller/seller_main_page.dart';
 import 'package:graduation_project/screens/seller_requests_screen.dart';
 import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:provider/provider.dart';
@@ -326,23 +329,35 @@ class _LoginPageState extends State<LoginPage> {
 
                                   // Check if login is successful
                                   if (loginProvider.isAuthenticated) {
+                                    final role = getUserRoleFromToken(
+                                        loginProvider.token);
                                     // Navigate to another screen or show success message
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Login successful!')),
-                                    );
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              AdminManagementPage()),
-                                    );
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //            MainHomePage()),
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   const SnackBar(
+                                    //       content: Text('Login successful!')),
                                     // );
+                                    if (role == "seller") {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SellerHomeScreen()),
+                                      );
+                                    } else if (role == "user") {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainHomePage()),
+                                      );
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const AdminManagementPage()),
+                                      );
+                                    }
                                   } else {
                                     // Show an error message if login fails
                                     ScaffoldMessenger.of(context).showSnackBar(

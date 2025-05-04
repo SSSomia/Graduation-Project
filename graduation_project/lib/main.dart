@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/pending_seller.dart';
 import 'package:graduation_project/api_providers/cart_provider.dart';
 import 'package:graduation_project/api_providers/change_password_provider.dart';
 import 'package:graduation_project/api_providers/favorite_provider.dart';
