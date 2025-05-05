@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:graduation_project/api_providers/category_provider.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/api_providers/products_provider.dart';
 import 'package:graduation_project/not%20used/category/catigoryLine.dart';
@@ -26,6 +27,9 @@ class _HomePageState extends State<HomePage> {
       final authProvider = Provider.of<LoginProvider>(context, listen: false);
       Provider.of<ProductsProvider>(context, listen: false)
           .fetchRandomProducts(authProvider.token);
+      Future.microtask(() =>
+          Provider.of<CategoryProvider>(context, listen: false)
+              .loadCategories());
     });
   }
 
@@ -46,7 +50,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 15,
           ),
-          //CategoryLine(),
+          CategoryLine(),
           Expanded(
             child: GridView.builder(
               physics: CustomScrollPhysics(),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:graduation_project/api_models/cart_model.dart';
+import 'package:graduation_project/api_models/catigory_model.dart';
 import 'package:graduation_project/api_models/favorite_model.dart';
 import 'package:graduation_project/api_models/order_details_model.dart';
 import 'package:graduation_project/api_models/order_model.dart';
@@ -658,6 +659,33 @@ class ApiService {
     }
   }
 
+  static Future<List<Category>> fetchCategories() async {
+    final response = await http.get(
+      Uri.parse('https://shopyapi.runasp.net/api/Category/categories'),
+      headers: {'accept': '*/*'},
+    );
+
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body);
+      return data.map((item) => Category.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load categories');
+    }
+  }
+
+  static Future<List<ProductModule>> fetchProductsByCategory(
+      int categoryId) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Category/by-category/$categoryId');
+    final response = await http.get(url, headers: {'accept': '*/*'});
+
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((json) => ProductModule.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
   // static Future<Map<String, dynamic>> placeOrder({
   //   required int productId,
   //   required int quantity,

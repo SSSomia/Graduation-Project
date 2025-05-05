@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/api_providers/cart_provider.dart';
+import 'package:graduation_project/api_providers/category_provider.dart';
 import 'package:graduation_project/api_providers/change_password_provider.dart';
 import 'package:graduation_project/api_providers/favorite_provider.dart';
 import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
+import 'package:graduation_project/api_providers/get_products_of_category.dart';
 import 'package:graduation_project/api_providers/login_provider.dart';
 import 'package:graduation_project/api_providers/order_details_provider.dart';
 import 'package:graduation_project/api_providers/orders_provider.dart';
@@ -51,6 +53,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => OrderDetailProvider()),
     ChangeNotifierProvider(create: (_) => StoreProvider()),
     ChangeNotifierProvider(create: (_) => AdminProvider()),
+    ChangeNotifierProvider(create: (_) => CategoryProvider()),
+    ChangeNotifierProvider(create: (_) => CategoryProductProvider()),
 
     // ChangeNotifierProvider(create: (_) => UpdateProfileData()),
   ], child: const MyApp()));
