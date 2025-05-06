@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/pending_seller.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/api_providers/pending_seller_provider.dart';
+import 'package:graduation_project/models/pending_seller.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/pending_seller_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 
@@ -77,7 +77,7 @@ class _ApprovedSellersState extends State<ApprovedSellers> {
           Expanded(
             child: provider.approvedSeller.isEmpty
                 // ? const Center(child: CircularProgressIndicator())
-                ? Center(child: Text("No Approved Sellers!!"))
+                ? const Center(child: Text("No Approved Sellers!!"))
                 : ListView.builder(
                     itemCount: requests.length,
                     itemBuilder: (context, index) {
@@ -91,91 +91,8 @@ class _ApprovedSellersState extends State<ApprovedSellers> {
                           
                           onTap: () =>
                               showSellerDetailsDialog(context, request),
-                          // Row(
-                          //   mainAxisSize: MainAxisSize.min,
-                          //   children: [
-                          //     Consumer<AdminProvider>(
-                          //         builder: (context, admin, _) {
-                          //       // final user = profileProvider.userProfile!;
-                          //       return IconButton(
-                          //           icon: const Icon(Icons.check,
-                          //               color:
-                          //                   Color.fromARGB(255, 36, 146, 135)),
-                          //           onPressed: () async {
-                          //             final authProvider =
-                          //                 Provider.of<LoginProvider>(context,
-                          //                     listen: false);
-
-                          //             final result = await admin.approveSeller(
-                          //                 userId: request.userId,
-                          //                 token: authProvider.token);
-                          //           });
-                          //     }),
-                          //     Consumer<AdminProvider>(
-                          //         builder: (context, admin, _) {
-                          //       // final user = profileProvider.userProfile!;
-                          //       return IconButton(
-                          //           icon: const Icon(Icons.close,
-                          //               color:
-                          //                   Color.fromARGB(255, 146, 46, 39)),
-                          //           onPressed: () async {
-                          //             final authProvider =
-                          //                 Provider.of<LoginProvider>(context,
-                          //                     listen: false);
-
-                          //             final result = await admin.rejectSeller(
-                          //                 sellerId: request.userId,
-                          //                 token: authProvider.token);
-                          //           });
-                          //     })
-                          //   ],
-                          // )
-                          // : Text(request['status'].toUpperCase(),
-                          //     style: TextStyle(
-                          //         color: request['status'] == "accepted"
-                          //             ? const Color.fromARGB(
-                          //                 255, 35, 137, 146)
-                          //             : const Color.fromARGB(
-                          //                 255, 116, 19, 12),
-                          //         fontWeight: FontWeight.bold)),
                         ),
                       );
-                      // return Card(
-                      //   margin: const EdgeInsets.all(8.0),
-                      //   child: ListTile(
-                      //     leading: const CircleAvatar(child: Icon(Icons.store)),
-                      //     title: Text(request.storeName),
-                      //     subtitle:
-                      //         Text("${request.firstName} ${request.lastName}"),
-                      //     trailing: Row(
-                      //       mainAxisSize: MainAxisSize.min,
-                      //       children: [
-                      //         IconButton(
-                      //           icon: const Icon(Icons.check,
-                      //               color: Color.fromARGB(255, 36, 146, 135)),
-                      //           onPressed: () {
-                      //             // TODO: implement API call to accept
-                      //             ScaffoldMessenger.of(context).showSnackBar(
-                      //                 const SnackBar(
-                      //                     content: Text('Accepted')));
-                      //           },
-                      //         ),
-                      //         IconButton(
-                      //           icon: const Icon(Icons.close,
-                      //               color: Color.fromARGB(255, 146, 46, 39)),
-                      //           onPressed: () {
-                      //             // TODO: implement API call to reject
-                      //             ScaffoldMessenger.of(context).showSnackBar(
-                      //                 const SnackBar(
-                      //                     content: Text('Rejected')));
-                      //           },
-                      //         ),
-                      //       ],
-                      //     ),
-                          // onTap: () =>
-                          //     showSellerDetailsDialog(context, request),
-                      //   ),
-                      // );
                     },
                   ),
           ),

@@ -1,7 +1,7 @@
 // screens/you.dart
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/api_providers/profile_provider.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/widgets/build_image.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';

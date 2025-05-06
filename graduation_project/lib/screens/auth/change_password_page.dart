@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_providers/change_password_provider.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/api_providers/profile_provider.dart';
-import 'package:graduation_project/widgets/chang_password.dart';
+import 'package:graduation_project/providers/change_password_provider.dart';
+import 'package:graduation_project/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  const ChangePasswordPage({Key? key}) : super(key: key);
+  const ChangePasswordPage({super.key});
 
   @override
   State<ChangePasswordPage> createState() => _ChangePasswordPageState();
@@ -32,7 +30,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       print('Changing password from $currentPassword to $newPassword');
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Password changed successfully!'),
           backgroundColor: Colors.green,
         ),
@@ -154,7 +152,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 8,

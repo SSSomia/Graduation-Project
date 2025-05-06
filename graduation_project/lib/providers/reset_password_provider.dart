@@ -14,10 +14,6 @@ class ResetPasswordProvider with ChangeNotifier {
     // Call the API to authenticate the user
     final result = await ApiService().resetPassword(email, token0, password);
     _isAuthenticated = true;
-    notifyListeners(); // Notify listeners (UI) that the state has changed
-    // if (result != null && result.containsKey('token')) {
-    //   _token = result['token'];
-    //   _isAuthenticated = true;
-    // }
+    notifyListeners(); 
   }
 }

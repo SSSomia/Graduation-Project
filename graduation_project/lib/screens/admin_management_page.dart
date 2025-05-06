@@ -1,16 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/approved_seller.dart';
-import 'package:graduation_project/screens/profile_page.dart';
 import 'package:graduation_project/screens/seller_requests_screen.dart';
-import 'package:graduation_project/widgets/myDrawer.dart';
-import 'package:graduation_project/not%20used/constant.dart';
-import 'package:graduation_project/providers/cart_list.dart';
-import 'package:graduation_project/screens/home_page.dart';
-import 'package:graduation_project/screens/my_cart.dart';
-import 'package:graduation_project/screens/orders/orders.dart';
-import 'package:provider/provider.dart';
 
 class AdminManagementPage extends StatefulWidget {
   const AdminManagementPage({super.key});

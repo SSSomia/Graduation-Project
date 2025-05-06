@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/favorite_model.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
+import 'package:graduation_project/models/favorite_model.dart';
 import 'package:graduation_project/services/api_service.dart';
-import 'package:provider/provider.dart';
 
 class FavoriteProvider with ChangeNotifier {
   List<Favorite> _favorites = [];

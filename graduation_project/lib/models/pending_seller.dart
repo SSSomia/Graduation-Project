@@ -1,4 +1,3 @@
-// models/pending_seller.dart
 class PendingSeller {
   final int userId;
   final String firstName;

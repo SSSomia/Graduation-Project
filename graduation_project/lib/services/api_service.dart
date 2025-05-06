@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:graduation_project/api_models/cart_model.dart';
-import 'package:graduation_project/api_models/catigory_model.dart';
-import 'package:graduation_project/api_models/favorite_model.dart';
-import 'package:graduation_project/api_models/order_details_model.dart';
-import 'package:graduation_project/api_models/order_model.dart';
-import 'package:graduation_project/api_models/pending_seller.dart';
-import 'package:graduation_project/api_models/product_module.dart';
-import 'package:graduation_project/api_models/store_info_model.dart';
-import 'package:graduation_project/api_models/user_model.dart';
-import 'package:graduation_project/models/product.dart';
+import 'package:graduation_project/models/cart_model.dart';
+import 'package:graduation_project/models/catigory_model.dart';
+import 'package:graduation_project/models/favorite_model.dart';
+import 'package:graduation_project/models/order_details_model.dart';
+import 'package:graduation_project/models/order_model.dart';
+import 'package:graduation_project/models/pending_seller.dart';
+import 'package:graduation_project/models/product_module.dart';
+import 'package:graduation_project/models/store_info_model.dart';
+import 'package:graduation_project/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -35,7 +34,6 @@ class ApiService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(response.body);
     } else {
-      print("Registration failed: ${response.statusCode} - ${response.body}");
       // Handle error responses
       return null;
     }
@@ -54,10 +52,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       // Successfully logged in
-      print("Login Successfully");
       return json.decode(response.body);
     } else {
-      print("Login failed: ${response.statusCode} - ${response.body}");
 
       // Handle failure (returning null in this example)
       return null;
@@ -73,10 +69,8 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      print("Email is varified");
       return json.decode(response.body);
     } else {
-      print("Email not found: ${response.statusCode} - ${response.body}");
 
       // Handle failure (returning null in this example)
       return null;
@@ -94,10 +88,8 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      print("password updated");
       return json.decode(response.body);
     } else {
-      print("password not updated: ${response.statusCode} - ${response.body}");
 
       // Handle failure (returning null in this example)
       return null;
@@ -115,7 +107,6 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      print("object");
       return json.decode(response.body);
     } else {
       throw Exception("Failed to load profile: ${response.statusCode}");
@@ -156,19 +147,16 @@ class ApiService {
       final response = await http.Response.fromStream(streamedResponse);
 
       if (response.statusCode == 200) {
-        print("true");
         return json.decode(response.body);
       } else {
-        print("Status Code: ${response.statusCode}");
-        print("Response Body: ${response.body}");
         return json.decode(response.body);
       }
     } catch (error) {
-      print("Error updating profile: $error");
       //  return null;
     }
+    return null;
   }
-
+//// changes made here*********************************
   static Future<List> fetchRandomProducts(String token) async {
     final url =
         Uri.parse('https://shopyapi.runasp.net/api/Products/random-products');
@@ -179,9 +167,8 @@ class ApiService {
       });
       if (response.statusCode == 200) {
         final List<ProductModule> body = jsonDecode(response.body);
-        print("true");
         // Map and cast to List<Product>
-        return body.map((json) => Product.fromJson(json)).toList();
+        return body.map((json) => ProductModule.fromJson(json as Map<String, dynamic>)).toList();
       } else {
         throw Exception('Failed to load products: ${response.statusCode}');
       }
@@ -309,11 +296,9 @@ class ApiService {
       if (response.statusCode == 200) {
         return true;
       } else {
-        print('Failed to change password: ${response.body}');
         return false;
       }
     } catch (e) {
-      print('Error: $e');
       return false;
     }
   }
@@ -355,11 +340,9 @@ class ApiService {
         // Successful API call
         return true;
       } else {
-        print('Failed to update cart item quantity: ${response.body}');
         return false;
       }
     } catch (error) {
-      print('Error updating cart item quantity: $error');
       return false;
     }
   }
@@ -377,11 +360,9 @@ class ApiService {
       if (response.statusCode == 200) {
         return true; // Successfully removed item
       } else {
-        print('Failed to remove item: ${response.body}');
         return false; // Failed to remove item
       }
     } catch (e) {
-      print('Error during API call: $e');
       return false;
     }
   }
@@ -403,11 +384,9 @@ class ApiService {
         // Successful API call
         return true;
       } else {
-        print('Failed to add product to cart: ${response.body}');
         return false;
       }
     } catch (error) {
-      print('Error adding product to cart: $error');
       return false;
     }
   }
@@ -481,7 +460,6 @@ class ApiService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("object");
         if (response.body.isNotEmpty) {
           return json.decode(response.body);
         } else {
@@ -578,7 +556,6 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      print("true");
       return 'Success';
     } else {
       throw Exception('Failed to submit store: ${response.body}');

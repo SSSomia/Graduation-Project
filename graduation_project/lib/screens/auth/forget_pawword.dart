@@ -1,7 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
+import 'package:graduation_project/providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/screens/auth/reset_pawword_page.dart';
 import 'package:provider/provider.dart';
 

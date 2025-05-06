@@ -3,8 +3,6 @@ import 'package:graduation_project/screens/about.dart';
 import 'package:graduation_project/screens/auth/change_password_page.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/edit_profile_data.dart';
-import 'package:graduation_project/screens/home_page.dart';
-import 'package:graduation_project/widgets/chang_password.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -36,24 +34,6 @@ class _SettingsPageState extends State<SettingsPage> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ChangePasswordPage()));
           }),
-          // const SizedBox(height: 24),
-          // sectionHeader("Preferences"),
-          // buildSwitchCardTile(
-          //   icon: Icons.dark_mode,
-          //   title: "Dark Mode",
-          //   value: _darkMode,
-          //   onChanged: (val) {
-          //     setState(() => _darkMode = val);
-          //   },
-          // ),
-          // buildSwitchCardTile(
-          //   icon: Icons.notifications,
-          //   title: "Push Notifications",
-          //   value: _notifications,
-          //   onChanged: (val) {
-          //     setState(() => _notifications = val);
-          //   },
-          // ),
           const SizedBox(height: 24),
           sectionHeader("More"),
           buildCardTile(Icons.info_outline, "About App", onTap: () {

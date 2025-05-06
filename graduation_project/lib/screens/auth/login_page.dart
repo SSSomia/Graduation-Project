@@ -1,24 +1,11 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/getUserRoleFromTokenFunction.dart';
-import 'package:graduation_project/models/seller_model.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/function/getUserRoleFromTokenFunction.dart';
 import 'package:graduation_project/screens/admin_management_page.dart';
-import 'package:graduation_project/screens/approved_seller.dart';
-import 'package:graduation_project/screens/auth/before_signup.dart';
 import 'package:graduation_project/screens/auth/forget_pawword.dart';
-import 'package:graduation_project/screens/home_page.dart';
 import 'package:graduation_project/screens/mainPage.dart';
 import 'package:graduation_project/screens/auth/signup_page.dart';
-import 'package:graduation_project/models/person_module.dart';
-import 'package:graduation_project/providers/person_provider.dart';
-import 'package:graduation_project/providers/sellers_provider.dart';
 import 'package:graduation_project/screens/seller/seller_home_screen.dart';
-import 'package:graduation_project/screens/seller/seller_main_page.dart';
-import 'package:graduation_project/screens/seller_requests_screen.dart';
-import 'package:graduation_project/user_data/globalUserData.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -39,101 +26,10 @@ class _LoginPageState extends State<LoginPage> {
   );
   final TextEditingController _conEmail = TextEditingController();
 
-  ECharacteres? _selectedOption = ECharacteres.user;
 
   String? _errorMessage;
   String? _emailError;
   String? _passwordError;
-
-  //  void _login() {
-  //   final persons = Provider.of<PersonProvider>(context, listen: false);
-  //   if (_formKey.currentState!.validate()) {
-  //     bool userExists = persons.persons.values.any((person) =>
-  //         person.userName == _conEmail.text &&
-  //         person.password == _password.text);
-  //     if (userExists) {
-  //       setState(() {
-  //         _errorMessage = null; // Hide error message on successful login
-  //       });
-  //       PersonProvider personProvider =
-  //           Provider.of<PersonProvider>(context, listen: false);
-  //       PersonModule globalUserData =
-  //           personProvider.getPersonDataUsingUserName(_conEmail.text);
-  //       globalUser = GlobalUser(
-  //           globalUserData.personId,
-  //           globalUserData.name,
-  //           globalUserData.userName,
-  //           globalUserData.password,
-  //           globalUserData.createdAt,
-  //           globalUserData.address,
-  //           globalUserData.emial,
-  //           globalUserData.phoneNumber,
-  //           false,
-  //           '',
-  //           '',
-  //           '');
-  //       // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
-  //       //     globalUser.password, globalUser.createdAt);
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const MainHomePage()),
-  //       );
-  //     } else {
-  //       setState(() {
-  //         _errorMessage = "Incorrect username or password!";
-  //         _conEmailError =
-  //             _conEmail.text.isEmpty ? "Please enter your user name" : null;
-  //         _passwordError =
-  //             _password.text.isEmpty ? "Please enter your password" : null;
-  //       });
-  //     }
-  //   }
-  // }
-
-  // void _loginSeller() {
-  //   final seller = Provider.of<SellersProvider>(context, listen: false);
-  //   if (_formKey.currentState!.validate()) {
-  //     bool userExists = seller.sellers.values.any((person) =>
-  //         person.person.userName == _conEmail.text &&
-  //         person.person.password == _password.text);
-  //     if (userExists) {
-  //       setState(() {
-  //         _errorMessage = null; // Hide error message on successful login
-  //       });
-  //       SellersProvider sellerProvider =
-  //           Provider.of<SellersProvider>(context, listen: false);
-  //       Seller globalUserData =
-  //           sellerProvider.getSellerDataUsingUserName(_conEmail.text);
-  //       globalUser = GlobalUser(
-  //           globalUserData.sellerID,
-  //           globalUserData.person.name,
-  //           globalUserData.person.userName,
-  //           globalUserData.person.password,
-  //           globalUserData.person.createdAt,
-  //           globalUserData.person.address,
-  //           globalUserData.person.emial,
-  //           globalUserData.person.password,
-  //           true,
-  //           globalUserData.storeName,
-  //           globalUserData.address,
-  //           globalUserData.storeDescription);
-  //       // GlobalUser(globalUser.personId, globalUser.name, globalUser.userName,
-  //       //     globalUser.password, globalUser.createdAt);
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => SellerHomeScreen()),
-  //       );
-  //     } else {
-  //       setState(() {
-  //         _errorMessage = "Incorrect username or password!";
-  //         _conEmailError =
-  //             _conEmail.text.isEmpty ? "Please enter your user name" : null;
-  //         _passwordError =
-  //             _password.text.isEmpty ? "Please enter your password" : null;
-  //       });
-  //     }
-  //   }
-  // }
 
   @override
   void initState() {
@@ -278,40 +174,6 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                       ),
-                      // Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       Row(
-                      //         children: [
-                      //           Radio<ECharacteres>(
-                      //             value: ECharacteres.user,
-                      //             groupValue: _selectedOption,
-                      //             onChanged: (value) {
-                      //               setState(() {
-                      //                 _selectedOption = value;
-                      //               });
-                      //             },
-                      //           ),
-                      //           const Text('User',
-                      //               style: TextStyle(fontSize: 17)),
-                      //         ],
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Radio<ECharacteres>(
-                      //             value: ECharacteres.seller,
-                      //             groupValue: _selectedOption,
-                      //             onChanged: (value) {
-                      //               setState(() {
-                      //                 _selectedOption = value;
-                      //               });
-                      //             },
-                      //           ),
-                      //           const Text('Seller',
-                      //               style: TextStyle(fontSize: 17)),
-                      //         ],
-                      //       ),
-                      //     ]),
                       Consumer<LoginProvider>(
                           builder: (context, loginProvider, child) {
                         return MouseRegion(
@@ -331,11 +193,6 @@ class _LoginPageState extends State<LoginPage> {
                                   if (loginProvider.isAuthenticated) {
                                     final role = getUserRoleFromToken(
                                         loginProvider.token);
-                                    // Navigate to another screen or show success message
-                                    // ScaffoldMessenger.of(context).showSnackBar(
-                                    //   const SnackBar(
-                                    //       content: Text('Login successful!')),
-                                    // );
                                     if (role == "seller") {
                                       Navigator.push(
                                         context,

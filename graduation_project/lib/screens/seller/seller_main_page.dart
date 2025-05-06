@@ -17,11 +17,11 @@ class SellerMainPage extends StatelessWidget {
               Icons.list,
               () => Navigator.push(
                   context, MaterialPageRoute(builder: (_) => OrdersScreen()))),
-          _buildCard(
-              "Products",
-              Icons.shop_outlined,
-              () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => MarketProductScreen()))),
+          // _buildCard(
+          //     "Products",
+          //     Icons.shop_outlined,
+          //     () => Navigator.push(context,
+          //         MaterialPageRoute(builder: (_) => MarketProductScreen()))),
           _buildCard(
               "Analytics",
               Icons.analytics_outlined,

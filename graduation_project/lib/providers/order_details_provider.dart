@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/order_details_model.dart';
+import 'package:graduation_project/models/order_details_model.dart';
 import 'package:graduation_project/services/api_service.dart';
 
 class OrderDetailProvider with ChangeNotifier {

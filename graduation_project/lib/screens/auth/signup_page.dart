@@ -1,17 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/user_model.dart';
-import 'package:graduation_project/api_providers/register_provider.dart';
+import 'package:graduation_project/models/user_model.dart';
+import 'package:graduation_project/providers/register_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/screens/auth/other_user_data.dart';
-import 'package:graduation_project/models/person_module.dart';
-import 'package:graduation_project/providers/person_provider.dart';
 import 'package:graduation_project/screens/auth/seller_market_data.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
-  SignupPage({super.key});
+  const SignupPage({super.key});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -418,69 +413,8 @@ class _SignupPageState extends State<SignupPage> {
                                                     SellerMarketData(),
                                               ),
                                             );
-                                            // Show error message
                                           }
-
-                                          // personList.addPerson(PersonModule(
-                                          //     personList.numberOfPersons
-                                          //         .toString(),
-                                          //     _conUserName.text,
-                                          //     "${_conFirstName.text} ${_conLastName.text}",
-                                          //     _conPassword.text,
-                                          //     DateTime.now(),
-                                          //     _conEmail.text,
-                                          //     _selectedOption.toString()));
-                                        } else {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) =>
-                                          //         SellerMarketData(
-                                          //             person: PersonModule(
-                                          //                 personList
-                                          //                     .numberOfPersons
-                                          //                     .toString(),
-                                          //                 _conUserName.text,
-                                          //                 "${_conFirstName.text} ${_conLastName.text}",
-                                          //                 _conPassword.text,
-                                          //                 DateTime.now(),
-                                          //                 _conEmail.text,
-                                          //                 _selectedOption
-                                          //                     .toString())),
-                                          // ),
-                                          // );
-                                          //  Navigator.push(
-                                          // context,
-                                          // MaterialPageRoute(
-                                          //     builder: (context) =>
-                                          //         LoginPage()));
-                                        }
-                                        // personList.addPerson(PersonModule(
-                                        //     personList.numberOfPersons
-                                        //         .toString(),
-                                        //     _conUserName.text,
-                                        //     "${_conFirstName.text} ${_conLastName.text}",
-                                        //     _conPassword.text,
-                                        //     DateTime.now(), _conEmail.text, _selectedOption.toString()));
-
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             OtherUserData(
-                                        //                 userName:
-                                        //                     _conUserName
-                                        //                         .text,
-                                        //                 name:
-                                        //                     '${_conFirstName.text} ${_conLastName.text}',
-                                        //                 password:
-                                        //                     _conPassword
-                                        //                         .text,
-                                        //                 createdAt:
-                                        //                     DateTime.now(),
-                                        //                 role:
-                                        //                     widget.role)));
-
+                                        } else {}
                                         // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                                         // sharedPreferences.setString("userName", "")
                                       },

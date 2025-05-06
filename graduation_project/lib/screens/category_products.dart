@@ -1,16 +1,7 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_providers/category_provider.dart';
-import 'package:graduation_project/api_providers/get_products_of_category.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/api_providers/products_provider.dart';
-import 'package:graduation_project/not%20used/category/catigoryLine.dart';
-import 'package:graduation_project/product_list/product_list.dart';
-import 'package:graduation_project/widgets/myDrawer.dart';
-import 'package:graduation_project/not%20used/constant.dart';
+import 'package:graduation_project/providers/get_products_of_category.dart';
 import 'package:graduation_project/widgets/product_card.dart';
-import 'package:graduation_project/models/product_module.dart';
 import 'package:provider/provider.dart';
 
 class CategoryProducts extends StatefulWidget {
@@ -36,7 +27,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
     // final products = Provider.of<ProductList>(context).productMap;
     return Scaffold(
         appBar: AppBar(
-          title: Text("Category Products"),
+          title: const Text("Category Products"),
         ),
         body:
             Consumer<CategoryProductProvider>(builder: (context, provider, _) {
@@ -76,7 +67,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
 class CustomScrollPhysics extends ScrollPhysics {
   final double speedFactor;
 
-  CustomScrollPhysics({ScrollPhysics? parent, this.speedFactor = 0.5})
+  const CustomScrollPhysics({ScrollPhysics? parent, this.speedFactor = 0.5})
       : super(parent: parent);
 
   @override

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/api_providers/profile_provider.dart';
-import 'package:graduation_project/not%20used/constant.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/screens/about.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/contact_us.dart';
 import 'package:graduation_project/screens/edit_profile_data.dart';
 import 'package:graduation_project/screens/favorite_page.dart';
-import 'package:graduation_project/not%20used/utils/listTileDrawer.dart';
-import 'package:graduation_project/screens/home_page.dart';
-import 'package:graduation_project/screens/profile_page.dart';
 import 'package:graduation_project/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +41,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
           // If user data is null (still loading), show loading indicator
           if (user == null) {
-            return UserAccountsDrawerHeader(
+            return const UserAccountsDrawerHeader(
               accountName: Text('Loading...'),
               accountEmail: Text('Loading...'),
               currentAccountPicture: CircularProgressIndicator(),
@@ -56,16 +52,16 @@ class _MyDrawerState extends State<MyDrawer> {
           return UserAccountsDrawerHeader(
             accountName: Text(
               user.UserName,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromARGB(255, 57, 149, 159),
             ),
             accountEmail: Text(
               user.email,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            currentAccountPicture: Icon(
+            currentAccountPicture: const Icon(
               Icons.shopping_bag_outlined,
               size: 60,
               color: Colors.white,
@@ -87,7 +83,7 @@ class _MyDrawerState extends State<MyDrawer> {
           onTap: () {
             Navigator.pop(context);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MyFavorites()));
+                MaterialPageRoute(builder: (context) => const MyFavorites()));
           },
         ),
         ListTile(

@@ -1,43 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_providers/cart_provider.dart';
-import 'package:graduation_project/api_providers/category_provider.dart';
-import 'package:graduation_project/api_providers/change_password_provider.dart';
-import 'package:graduation_project/api_providers/favorite_provider.dart';
-import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
-import 'package:graduation_project/api_providers/get_products_of_category.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/api_providers/order_details_provider.dart';
-import 'package:graduation_project/api_providers/orders_provider.dart';
-import 'package:graduation_project/api_providers/pending_seller_provider.dart';
-import 'package:graduation_project/api_providers/product_provider.dart';
-import 'package:graduation_project/api_providers/products_provider.dart';
-import 'package:graduation_project/api_providers/profile_provider.dart';
-import 'package:graduation_project/api_providers/register_provider.dart';
-import 'package:graduation_project/api_providers/reset_password_provider.dart';
-import 'package:graduation_project/api_providers/store_info_provider.dart';
-import 'package:graduation_project/api_providers/update_profile_data.dart';
-import 'package:graduation_project/providers/favorite_list.dart';
-import 'package:graduation_project/providers/person_provider.dart';
-import 'package:graduation_project/providers/analytics_provider.dart';
-import 'package:graduation_project/providers/market_provider.dart';
-import 'package:graduation_project/providers/sales_provider.dart';
-import 'package:graduation_project/providers/sellers_provider.dart';
+import 'package:graduation_project/providers/cart_provider.dart';
+import 'package:graduation_project/providers/category_provider.dart';
+import 'package:graduation_project/providers/change_password_provider.dart';
+import 'package:graduation_project/providers/favorite_provider.dart';
+import 'package:graduation_project/providers/forget_passwrod_provider.dart';
+import 'package:graduation_project/providers/get_products_of_category.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/order_details_provider.dart';
+import 'package:graduation_project/providers/orders_provider.dart';
+import 'package:graduation_project/providers/pending_seller_provider.dart';
+import 'package:graduation_project/providers/product_provider.dart';
+import 'package:graduation_project/providers/products_provider.dart';
+import 'package:graduation_project/providers/profile_provider.dart';
+import 'package:graduation_project/providers/register_provider.dart';
+import 'package:graduation_project/providers/reset_password_provider.dart';
+import 'package:graduation_project/providers/store_info_provider.dart';
+import 'package:graduation_project/providers/update_profile_data.dart';
+import 'package:graduation_project/providerNotUse/analytics_provider.dart';
+import 'package:graduation_project/providerNotUse/sales_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/semiAPIcall/get_request.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-    // ChangeNotifierProvider(create: (_) => CartList()),
-    ChangeNotifierProvider(create: (_) => FavoriteList()),
-    //ChangeNotifierProvider(create: (_) => OrderList()),
-    ChangeNotifierProvider(create: (_) => PersonProvider()),
-    //  ChangeNotifierProvider(create: (_) => ProductList()),
-    ChangeNotifierProvider(create: (_) => MarketProvider()),
     ChangeNotifierProvider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => SalesProvider()),
     ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
-    ChangeNotifierProvider(create: (_) => SellersProvider()),
     ChangeNotifierProvider(create: (_) => DataProvider()),
     ChangeNotifierProvider(create: (_) => UserProvider()),
     ChangeNotifierProvider(create: (_) => LoginProvider()),
@@ -55,8 +44,6 @@ void main() {
     ChangeNotifierProvider(create: (_) => AdminProvider()),
     ChangeNotifierProvider(create: (_) => CategoryProvider()),
     ChangeNotifierProvider(create: (_) => CategoryProductProvider()),
-
-    // ChangeNotifierProvider(create: (_) => UpdateProfileData()),
   ], child: const MyApp()));
 }
 
@@ -66,16 +53,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // return const MaterialApp(
-    //   title: 'Graduation project',
-    //   home: SignupPage(),
-    // );
     // return MaterialApp(
     //   title: 'Seller App',
     //   theme: ThemeData(primarySwatch: Colors.blue),
     //   home: OnboardingScreen(),
     // );
-    return MaterialApp(
+    return const MaterialApp(
       // have to make it in the real app appear just once !!!!!
       home: LoginPage(),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_providers/forget_passwrod_provider.dart';
-import 'package:graduation_project/api_providers/reset_password_provider.dart';
+import 'package:graduation_project/providers/reset_password_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:provider/provider.dart';
 

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/user_model.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/api_providers/profile_provider.dart';
-import 'package:graduation_project/api_providers/update_profile_data.dart';
+import 'package:graduation_project/models/user_model.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/profile_provider.dart';
+import 'package:graduation_project/providers/update_profile_data.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/widgets/build_image.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,9 +30,7 @@ class _EditProfileDataState extends State<EditProfileData> {
   }
 
   File? _selectedImage;
-  // final String _defaultImageUrl =
-  //     "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251108/person-icon-md.png";
-  final ImagePicker _picker = ImagePicker();
+ final ImagePicker _picker = ImagePicker();
 
   // Future<void> _pickImage() async {
   //   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -135,9 +133,6 @@ class _EditProfileDataState extends State<EditProfileData> {
         });
   }
 
-  // List<String> names = fullName.trim().split(' ');
-  // String firstName = names.isNotEmpty ? names[0] : '';
-  // String lastName = names.length > 1 ? names.sublist(1).join(' ') : '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,30 +182,6 @@ class _EditProfileDataState extends State<EditProfileData> {
                               ),
                             ),
                           ),
-                          // CircleAvatar(
-                          //     radius: 60,
-                          //     child: ClipOval(
-                          //       child: buildImage(user.imageurl),
-                          //     )),
-                          // CircleAvatar(
-                          //   radius: 60,
-                          //   backgroundImage: _selectedImage != null
-                          //       ? FileImage(
-                          //           _selectedImage!) // Show selected image
-                          //       : (
-                          //           user.imageurl != null &&
-                          //                   user.imageurl.isNotEmpty &&
-                          //                   File(user.imageurl).existsSync()
-                          //               ? FileImage(File(
-                          //                   user.imageurl)) // Show saved image
-                          //               :
-                          //               //buildImage(user.imageurl),
-                          //         // CircleAvatar(
-                          //             // radius: 60,
-                          //             // child: ClipOval(
-                          //             //   child: buildImage(user.imageurl),
-                          //             // )),
-                          // )),
                           const SizedBox(height: 10),
                           Text(
                             user.UserName,

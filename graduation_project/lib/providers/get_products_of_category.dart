@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/product_module.dart';
+import 'package:graduation_project/models/product_module.dart';
 import 'package:graduation_project/services/api_service.dart';
-import '../models/product.dart';
 
 class CategoryProductProvider with ChangeNotifier {
   List<ProductModule> _products = [];

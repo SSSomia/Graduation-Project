@@ -14,9 +14,6 @@ class ForgetPasswrodProvider with ChangeNotifier {
     final result = await ApiService().forgetPassword(email);
     if (result != null && result.containsKey('token')) {
       _token = result['token'];
-      print("**************");
-      print(_token);
-      print("**************");
       _isAuthenticated = true;
       notifyListeners(); // Notify listeners (UI) that the state has changed
     }

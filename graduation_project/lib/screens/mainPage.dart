@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/profile_page.dart';
 import 'package:graduation_project/widgets/myDrawer.dart';
-import 'package:graduation_project/not%20used/constant.dart';
-import 'package:graduation_project/providers/cart_list.dart';
 import 'package:graduation_project/screens/home_page.dart';
 import 'package:graduation_project/screens/my_cart.dart';
 import 'package:graduation_project/screens/orders/orders.dart';
-import 'package:provider/provider.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({super.key});
@@ -71,10 +68,10 @@ class _NavigationExampleState extends State<MainHomePage> {
         ],
       ),
       body: <Widget>[
-        You(),
+        const You(),
         HomePage(),
-        Orders(),
-        MyCart(),
+        const Orders(),
+        const MyCart(),
       ][currentPageIndex],
     );
   }

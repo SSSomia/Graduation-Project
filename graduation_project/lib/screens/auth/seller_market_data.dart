@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/store_info_model.dart';
-import 'package:graduation_project/api_providers/login_provider.dart';
-import 'package:graduation_project/api_providers/register_provider.dart';
-import 'package:graduation_project/api_providers/store_info_provider.dart';
-import 'package:graduation_project/models/seller_model.dart';
-import 'package:graduation_project/providers/market_provider.dart';
+import 'package:graduation_project/models/store_info_model.dart';
+import 'package:graduation_project/providers/register_provider.dart';
+import 'package:graduation_project/providers/store_info_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/models/person_module.dart';
-import 'package:graduation_project/providers/person_provider.dart';
-import 'package:graduation_project/providers/sellers_provider.dart';
-import 'package:graduation_project/screens/seller/market_product_screen.dart';
 import 'package:provider/provider.dart';
 
 class SellerMarketData extends StatefulWidget {
@@ -53,7 +46,7 @@ class _SellerMarketDataState extends State<SellerMarketData> {
 
   @override
   Widget build(BuildContext context) {
-    final sellerProvider = Provider.of<SellersProvider>(context, listen: false);
+   // final sellerProvider = Provider.of<SellersProvider>(context, listen: false);
     return SafeArea(
         child: Scaffold(
             backgroundColor: const Color.fromARGB(255, 93, 146, 152),
@@ -92,7 +85,7 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                                 color: Color.fromARGB(255, 0, 104, 115),
                                 fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Container(
@@ -101,8 +94,9 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                               child: TextFormField(
                                 controller: _conName,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty)
+                                  if (value == null || value.isEmpty) {
                                     return "Please enter market name";
+                                  }
                                   return null;
                                 },
                                 //obscureText: true,
@@ -157,8 +151,9 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                             child: TextFormField(
                               controller: _conType,
                               validator: (value) {
-                                if (value == null || value.isEmpty)
+                                if (value == null || value.isEmpty) {
                                   return "Please enter your market type";
+                                }
                                 return null;
                               },
                               //obscureText: true,
@@ -179,7 +174,7 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                               },
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           MouseRegion(

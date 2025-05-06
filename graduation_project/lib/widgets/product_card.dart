@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/cart_model.dart';
-import 'package:graduation_project/api_models/product_module.dart';
-import 'package:graduation_project/providers/cart_list.dart';
+import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/models/product_module.dart';
 import 'package:graduation_project/screens/product/productPage.dart';
 import 'package:graduation_project/widgets/add_to_cart_button.dart';
-import 'package:provider/provider.dart';
 
 class ProductCard extends StatefulWidget {
   ProductCard({required this.product});
@@ -105,7 +102,7 @@ class _ProductCardState extends State<ProductCard> {
                             imageUrl: widget.product.imageUrls[0]),
                         border: 20,
                         backgroundButtonColor:
-                            Color.fromARGB(255, 50, 116, 138),
+                            const Color.fromARGB(255, 50, 116, 138),
                         foreButtonColor: Colors.white,
                       ),
                     ],

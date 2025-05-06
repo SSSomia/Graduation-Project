@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/api_models/cart_model.dart';
+import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/services/api_service.dart';
 
 class CartProvider with ChangeNotifier {
@@ -60,32 +60,6 @@ class CartProvider with ChangeNotifier {
     _isLoading = false;
     notifyListeners(); // Notify listeners to update the UI
   }
-
-  // Future<void> addToCart(CartItem product, String token) async {
-  //   try {
-  //     // Ensure cart is initialized before adding
-  //     if (cart == null) {
-  //       _cart = Cart(cartItems: [], totalCartPrice: 0); // Initialize if it's null
-  //     }
-
-  //     // Check if the product is already in the cart and add accordingly
-  //     if (cart!.items.contains(product)) {
-  //       // You can handle quantity increment or any other logic here
-  //       cart!.updateProductQuantity(
-  //           product, cart!.getProductQuantity(product) + 1);
-  //     } else {
-  //       cart!.items.add(product);
-  //     }
-
-  //     // Call your API to add the product to the cart (make sure this API call is safe)
-  //     await _addToCartApiCall(product, token); // Add your API call here
-
-  //     notifyListeners(); // Notify listeners when cart is updated
-  //   } catch (e) {
-  //     // Catch any error and print it
-  //     print("Error adding to cart: $e");
-  //   }
-  // }
 
   void updateQuantity(int productId, int newQuantity, String token) async {
     final itemIndex =

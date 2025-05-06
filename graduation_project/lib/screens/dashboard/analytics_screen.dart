@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/widgets/order_pie_chart.dart';
 import 'package:graduation_project/widgets/top_product_list.dart';
 import 'package:provider/provider.dart';
-import '../../providers/sales_provider.dart';
+import '../../providerNotUse/sales_provider.dart';
 import '../../widgets/sales_summary_card.dart';
-import '../../widgets/sales_chart.dart';
 
 class AnalyticsScreen extends StatelessWidget {
   @override
