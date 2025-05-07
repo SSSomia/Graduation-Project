@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 15,
           ),
-          CategoryLine(),
+          const CategoryLine(),
           Expanded(
             child: GridView.builder(
               physics: CustomScrollPhysics(),

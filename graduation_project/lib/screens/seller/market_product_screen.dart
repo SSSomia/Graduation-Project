@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/seller_product_provider.dart';
 import 'package:graduation_project/screens/product/add_product_screen.dart';
+import 'package:graduation_project/widgets/product_item.dart';
 import 'package:provider/provider.dart';
 
-class MarketProductScreen extends StatelessWidget {
+class MarketProductScreen extends StatefulWidget {
+  @override
+  State<MarketProductScreen> createState() => _MarketProductScreenState();
+}
+
+class _MarketProductScreenState extends State<MarketProductScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = Provider.of<LoginProvider>(context, listen: false);
+      Provider.of<SellerProductProvider>(context, listen: false)
+          .fetchMyProducts(authProvider.token);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,19 +42,20 @@ class MarketProductScreen extends StatelessWidget {
               bottomRight: Radius.circular(20)),
         ),
       ),
-      body: Center(child: Text("MARKET PRODUCT")),
-      //  Consumer<MarketProvider>(// ✅ Listen to changes
-      //     builder: (context, marketProvider, child) {
-      //   final products = marketProvider.products;
-      //   return ListView.builder(
-      //           itemCount: products.length,
-      //           itemBuilder: (ctx, i) =>
-      //               ProductItem(product: products[i]),
-      //         );
-      // }),
-
+      body: // Center(child: Text("MARKET PRODUCT")),
+          Consumer<SellerProductProvider>(// ✅ Listen to changes
+              builder: (context, provider, child) {
+        if (provider.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final products = provider.products;
+        return ListView.builder(
+          itemCount: products.length,
+          itemBuilder: (ctx, i) => ProductItem(product: products[i]),
+        );
+      }),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,

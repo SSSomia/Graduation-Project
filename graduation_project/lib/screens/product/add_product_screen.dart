@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/models/seller_product.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/seller_product_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -26,12 +29,40 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 
-  void _addProduct() {
+  Future<void> _addProduct() async {
     if (!_formKey.currentState!.validate() || _images.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please complete all fields and select images')),
+        const SnackBar(
+            content: Text('Please complete all fields and select images')),
       );
       return;
+    }
+    final provider = Provider.of<SellerProductProvider>(context, listen: false);
+    final authProvider = Provider.of<LoginProvider>(context, listen: false);
+
+    final product = SellerProduct(
+      name: _nameController.text,
+      description: _descriptionController.text,
+      price: double.parse(_priceController.text),
+      stockQuantity: int.parse(_stockController.text),
+      categoryId: int.parse(_categoryController.text),
+    );
+
+    try {
+      final result = await provider.addProduct(
+        token: authProvider.token,
+        product: product,
+        images: _images,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result['message'])),
+      );
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add product: ${e.toString()}')),
+      );
     }
 
     // final newProduct = Product(
@@ -149,7 +180,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       )
                     : GridView.builder(
                         itemCount: _images.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 8,
@@ -157,7 +189,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         itemBuilder: (context, index) {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: Image.file(_images[index], fit: BoxFit.cover),
+                            child:
+                                Image.file(_images[index], fit: BoxFit.cover),
                           );
                         },
                       ),
@@ -170,7 +203,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 icon: const Icon(Icons.photo_library),
                 label: const Text("Pick Images"),
                 style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

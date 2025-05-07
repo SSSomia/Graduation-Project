@@ -723,50 +723,6 @@ class ApiService {
     }
   }
 
-
-  // static Future<Map<String, dynamic>?> updateProfile({
-  //   required String firstName,
-  //   required String lastName,
-  //   required String email,
-  //   required String userName,
-  //   File? profileImage,
-  //   required String token,
-  // }) async {
-  //   try {
-  //     final uri = Uri.parse('https://shopyapi.runasp.net/api/Account/update');
-  //     var request = http.MultipartRequest('PUT', uri);
-
-  //     // Add fields
-  //     request.fields['FirstName'] = firstName;
-  //     request.fields['LastName'] = lastName;
-  //     request.fields['Email'] = email;
-  //     request.fields['UserName'] = userName;
-
-  //     // Add profile image if exists
-  //     if (profileImage != null) {
-  //       request.files.add(await http.MultipartFile.fromPath(
-  //         'ProfileImage',
-  //         profileImage.path,
-  //       ));
-  //     }
-
-  //     // Add headers (especially the Authorization)
-  //     request.headers['Authorization'] = 'Bearer $token';
-
-  //     // Send the request
-  //     final streamedResponse = await request.send();
-  //     final response = await http.Response.fromStream(streamedResponse);
-
-  //     if (response.statusCode == 200) {
-  //       return json.decode(response.body);
-  //     } else {
-  //       return json.decode(response.body);
-  //     }
-  //   } catch (error) {
-  //     //  return null;
-  //   }
-  //   return null;
-  // }
   Future<Map<String, dynamic>> addProduct({
     required String token,
     required SellerProduct product,
@@ -796,6 +752,27 @@ class ApiService {
     } else {
       throw Exception(
           'Failed to add product: ${response.statusCode} ${response.body}');
+    }
+  }
+
+  Future<List<ProductModule>> fetchMyProducts(String token) async {
+    var uri = Uri.parse('https://shopyapi.runasp.net/api/Products/my-products');
+
+    var response = await http.get(
+      uri,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': '*/*',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> productList = json.decode(response.body);
+      return productList
+          .map((product) => ProductModule.fromJson(product))
+          .toList();
+    } else {
+      throw Exception('Failed to fetch products: ${response.statusCode}');
     }
   }
 }
