@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/models/catigory_model.dart';
 import 'package:graduation_project/models/seller_product.dart';
+import 'package:graduation_project/providers/category_provider.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,17 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
+  Category? selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load categories once the widget is mounted
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<CategoryProvider>(context, listen: false).loadCategories();
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
@@ -45,7 +58,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       description: _descriptionController.text,
       price: double.parse(_priceController.text),
       stockQuantity: int.parse(_stockController.text),
-      categoryId: int.parse(_categoryController.text),
+      categoryId: selectedCategory!.id,
     );
 
     try {
@@ -64,18 +77,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
         SnackBar(content: Text('Failed to add product: ${e.toString()}')),
       );
     }
-
-    // final newProduct = Product(
-    //   id: DateTime.now().toString(),
-    //   productName: _nameController.text,
-    //   price: double.parse(_priceController.text),
-    //   imageUrl: _images.map((img) => img.path).toList(),
-    //   category: _categoryController.text,
-    //   description: _descriptionController.text,
-    //   stock: int.parse(_stockController.text),
-    // );
-
-    // Provider.of<MarketProvider>(context, listen: false).addProduct(newProduct);
     Navigator.pop(context);
   }
 
@@ -120,15 +121,64 @@ class _AddProductScreenState extends State<AddProductScreen> {
               const SizedBox(height: 16),
 
               // Category
-              TextFormField(
-                controller: _categoryController,
-                decoration: inputStyle.copyWith(
-                  labelText: "Category",
-                  prefixIcon: const Icon(Icons.category),
-                ),
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Required' : null,
-              ),
+
+              Consumer<CategoryProvider>(builder: (context, provider, child) {
+                if (provider.isLoading) {
+                  return const CircularProgressIndicator();
+                }
+                return DropdownButtonFormField<Category>(
+                  decoration: inputStyle.copyWith(
+                    labelText: "Category",
+                    prefixIcon: const Icon(Icons.category),
+                  ),
+                  value: selectedCategory,
+                  isExpanded: true,
+                  items: provider.categories.map((cat) {
+                    return DropdownMenuItem<Category>(
+                      value: cat,
+                      child: Text(cat.name),
+                    );
+                  }).toList(),
+                  onChanged: (Category? newCat) {
+                    setState(() {
+                      selectedCategory = newCat;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a category';
+                    }
+                    return null;
+                  },
+                );
+              }),
+              //   return DropdownButton<Category>(
+              //     hint: const Text('Select a category'),
+              //     value: selectedCategory,
+              //     isExpanded: true,
+              //     items: provider.categories.map((cat) {
+              //       return DropdownMenuItem<Category>(
+              //         value: cat,
+              //         child: Text(cat
+              //             .name), // Assuming your Category model has a `name`
+              //       );
+              //     }).toList(),
+              //     onChanged: (Category? newCat) {
+              //       setState(() {
+              //         selectedCategory = newCat;
+              //       });
+              //     },
+              //   );
+              // }),
+              // TextFormField(
+              //   controller: _categoryController,
+              //   decoration: inputStyle.copyWith(
+              //     labelText: "Category",
+              //     prefixIcon: const Icon(Icons.category),
+              //   ),
+              //   validator: (value) =>
+              //       value == null || value.isEmpty ? 'Required' : null,
+              // ),
               const SizedBox(height: 16),
 
               // Description
