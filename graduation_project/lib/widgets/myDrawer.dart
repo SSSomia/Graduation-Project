@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/notification_provider.dart';
 import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/screens/about.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/contact_us.dart';
 import 'package:graduation_project/screens/edit_profile_data.dart';
 import 'package:graduation_project/screens/favorite_page.dart';
+import 'package:graduation_project/screens/notification_screen.dart';
 import 'package:graduation_project/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyDrawer extends StatefulWidget {
-  MyDrawer({super.key});
+  const MyDrawer({super.key});
 
   @override
   State<MyDrawer> createState() => _MyDrawerState();
@@ -31,7 +33,8 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<LoginProvider>(context, listen: false);
+    final notificationProvider = Provider.of<NotificationProvider>(context);
+    final count = notificationProvider.unreadCount;
 
     return NavigationDrawer(
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
@@ -74,7 +77,7 @@ class _MyDrawerState extends State<MyDrawer> {
           onTap: () {
             Navigator.pop(context);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => EditProfileData()));
+                MaterialPageRoute(builder: (context) => const EditProfileData()));
           },
         ),
         ListTile(
@@ -87,6 +90,83 @@ class _MyDrawerState extends State<MyDrawer> {
           },
         ),
         ListTile(
+          leading: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              const Icon(Icons.notifications_outlined, size: 28),
+              if (count > 0)
+                Positioned(
+                  top: -4,
+                  right: -6,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white, width: 1),
+                    ),
+                    child: Text(
+                      '$count',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          title: const Text('Notifications'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const NotificationScreen()));
+
+            // Navigate to notifications page
+          },
+        ),
+        // ListTile(
+        //   leading: Stack(children: [
+        //     const Icon(Icons.notifications),
+        //     if (notificationCount > 0)
+        //       Positioned(
+        //         right: 0,
+        //         top: 0,
+        //         child: Container(
+        //           padding: const EdgeInsets.all(2),
+        //           decoration: BoxDecoration(
+        //             color: Colors.red,
+        //             borderRadius: BorderRadius.circular(10),
+        //           ),
+        //           constraints: const BoxConstraints(
+        //             minWidth: 16,
+        //             minHeight: 16,
+        //           ),
+        //           child: Text(
+        //             '$notificationCount',
+        //             style: const TextStyle(
+        //               color: Colors.white,
+        //               fontSize: 10,
+        //             ),
+        //             textAlign: TextAlign.center,
+        //           ),
+        //         ),
+        //       ),
+        //   ]),
+        // ),
+        // ListTile(
+        //   leading: const Icon(Icons.notifications_active_outlined),
+        //   title: const Text('Notifications'),
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //     Navigator.push(context,
+        //         MaterialPageRoute(builder: (context) => const MyFavorites()));
+        //   },
+        // ),
+        const Divider(height: 1),
+        ListTile(
           leading: const Icon(Icons.settings_outlined),
           title: const Text('Settings'),
           onTap: () {
@@ -94,7 +174,6 @@ class _MyDrawerState extends State<MyDrawer> {
                 MaterialPageRoute(builder: (context) => const SettingsPage()));
           },
         ),
-        const Divider(height: 1),
         ListTile(
           leading: const Icon(Icons.info_outline_rounded),
           title: const Text('About Us'),
@@ -111,6 +190,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 MaterialPageRoute(builder: (context) => const ContactUsPage()));
           },
         ),
+        const Divider(height: 1),
         ListTile(
           leading: const Icon(Icons.logout_rounded),
           title: const Text('Logout'),

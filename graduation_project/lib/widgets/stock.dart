@@ -13,7 +13,7 @@ class Stock extends StatelessWidget {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         Text(
-          '${stockQuantity}',
+          stockQuantity,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
         )
       ],

@@ -6,6 +6,7 @@ import 'package:graduation_project/providers/favorite_provider.dart';
 import 'package:graduation_project/providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/providers/get_products_of_category.dart';
 import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/notification_provider.dart';
 import 'package:graduation_project/providers/order_details_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
 import 'package:graduation_project/providers/pending_seller_provider.dart';
@@ -44,6 +45,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => AdminProvider()),
     ChangeNotifierProvider(create: (_) => CategoryProvider()),
     ChangeNotifierProvider(create: (_) => CategoryProductProvider()),
+    ChangeNotifierProvider(create: (_) => NotificationProvider()),
   ], child: const MyApp()));
 }
 

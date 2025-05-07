@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/profile_page.dart';
-import 'package:graduation_project/screens/dashboard/analytics_screen.dart';
-import 'package:graduation_project/screens/seller/market_product_screen.dart';
 import 'package:graduation_project/screens/seller/seller_main_page.dart';
-import '../orders/orders_screen.dart';
 
 class SellerHomeScreen extends StatefulWidget {
   @override
@@ -57,7 +54,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
         ],
       ),
       body: <Widget>[
-         You(),
+         const You(),
         const SellerMainPage(),
       ][currentPageIndex],
     );

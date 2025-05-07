@@ -1,25 +1,22 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:graduation_project/models/user_model.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/providers/update_profile_data.dart';
-import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/widgets/build_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // have to add the image of the user and defult image
 class EditProfileData extends StatefulWidget {
-  EditProfileData({super.key});
+  const EditProfileData({super.key});
 
   @override
   State<EditProfileData> createState() => _EditProfileDataState();
 }
 
 class _EditProfileDataState extends State<EditProfileData> {
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -96,7 +93,6 @@ class _EditProfileDataState extends State<EditProfileData> {
                               UserN: user.UserName,
                               profileImage0: null,
                               token: token);
-                          print(result);
                           user.name = '${textController.text} $lastName';
                           // if (result) {
                           // }

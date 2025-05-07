@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/order_details_provider.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class OrderDetailsPage extends StatefulWidget {

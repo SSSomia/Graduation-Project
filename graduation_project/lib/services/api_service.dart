@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/models/catigory_model.dart';
 import 'package:graduation_project/models/favorite_model.dart';
+import 'package:graduation_project/models/notification_model.dart';
 import 'package:graduation_project/models/order_details_model.dart';
 import 'package:graduation_project/models/order_model.dart';
 import 'package:graduation_project/models/pending_seller.dart';
 import 'package:graduation_project/models/product_module.dart';
+import 'package:graduation_project/models/seller_product.dart';
 import 'package:graduation_project/models/store_info_model.dart';
 import 'package:graduation_project/models/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -54,7 +56,6 @@ class ApiService {
       // Successfully logged in
       return json.decode(response.body);
     } else {
-
       // Handle failure (returning null in this example)
       return null;
     }
@@ -71,7 +72,6 @@ class ApiService {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-
       // Handle failure (returning null in this example)
       return null;
     }
@@ -90,7 +90,6 @@ class ApiService {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-
       // Handle failure (returning null in this example)
       return null;
     }
@@ -156,6 +155,7 @@ class ApiService {
     }
     return null;
   }
+
 //// changes made here*********************************
   static Future<List> fetchRandomProducts(String token) async {
     final url =
@@ -168,7 +168,9 @@ class ApiService {
       if (response.statusCode == 200) {
         final List<ProductModule> body = jsonDecode(response.body);
         // Map and cast to List<Product>
-        return body.map((json) => ProductModule.fromJson(json as Map<String, dynamic>)).toList();
+        return body
+            .map((json) => ProductModule.fromJson(json as Map<String, dynamic>))
+            .toList();
       } else {
         throw Exception('Failed to load products: ${response.statusCode}');
       }
@@ -663,77 +665,137 @@ class ApiService {
       throw Exception('Failed to load products');
     }
   }
-  // static Future<Map<String, dynamic>> placeOrder({
-  //   required int productId,
-  //   required int quantity,
-  //   required String fullName,
-  //   required String address,
-  //   required String city,
-  //   required String government,
-  //   required String phoneNumber,
+
+  Future<int> getUnreadNotificationCount(String token) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Notification/unread/count');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return int.tryParse(response.body.trim()) ?? 0;
+    } else {
+      throw Exception('Failed to fetch notification count');
+    }
+  }
+
+  Future<List<AppNotification>> getNotifications(String token) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Notification');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonList = json.decode(response.body);
+      return jsonList
+          .map((jsonItem) => AppNotification.fromJson(jsonItem))
+          .toList();
+    } else {
+      throw Exception('Failed to fetch notifications');
+    }
+  }
+
+  Future<void> markAsRead(String token, int id) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Notification/$id/read');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to mark notification as read');
+    }
+  }
+
+
+  // static Future<Map<String, dynamic>?> updateProfile({
+  //   required String firstName,
+  //   required String lastName,
+  //   required String email,
+  //   required String userName,
+  //   File? profileImage,
   //   required String token,
   // }) async {
-  //   final url = Uri.parse(
-  //       'https://shopyapi.runasp.net/api/Order/buy'); // Adjust endpoint if needed
-
-  //   final body = {
-  //     "productId": productId,
-  //     "quantity": quantity,
-  //     "fullName": fullName,
-  //     "address": address,
-  //     "city": city,
-  //     "government": government,
-  //     "phoneNumber": phoneNumber,
-  //   };
-
-  //   // final response = await http.post(
-  //   //   url,
-  //   //   headers: {
-  //   //     'Content-Type': 'application/json',
-  //   //     'Authorization': 'Bearer $token',
-  //   //   },
-  //   //   body: json.encode(body),
-  //   // );
-
-  //   // if (response.statusCode == 200 || response.statusCode == 201) {
-  //   //   return json.decode(response.body);
-  //   // } else {
-  //   //   print('${response.body}');
-  //   // }
-  //   // return {"message": "false"};
-  //   // // } else {
-  //   //   print("Order failed: ${response.body}");
-  //   //   // return json.decode(response.body);
-  //   // }
-
   //   try {
-  //     final response = await http.post(
-  //       url,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //       body: json.encode(body),
-  //     );
+  //     final uri = Uri.parse('https://shopyapi.runasp.net/api/Account/update');
+  //     var request = http.MultipartRequest('PUT', uri);
 
-  //     if (response.statusCode == 200 || response.statusCode == 201) {
-  //       print("object");
+  //     // Add fields
+  //     request.fields['FirstName'] = firstName;
+  //     request.fields['LastName'] = lastName;
+  //     request.fields['Email'] = email;
+  //     request.fields['UserName'] = userName;
+
+  //     // Add profile image if exists
+  //     if (profileImage != null) {
+  //       request.files.add(await http.MultipartFile.fromPath(
+  //         'ProfileImage',
+  //         profileImage.path,
+  //       ));
+  //     }
+
+  //     // Add headers (especially the Authorization)
+  //     request.headers['Authorization'] = 'Bearer $token';
+
+  //     // Send the request
+  //     final streamedResponse = await request.send();
+  //     final response = await http.Response.fromStream(streamedResponse);
+
+  //     if (response.statusCode == 200) {
   //       return json.decode(response.body);
   //     } else {
-  //       print('Order failed: ${response.body}');
-  //       return {
-  //         'success': false,
-  //         'message': 'Order failed',
-  //         'error': json.decode(response.body),
-  //       };
+  //       return json.decode(response.body);
   //     }
-  //   } catch (e) {
-  //     print('Exception during order: $e');
-  //     return {
-  //       'success': false,
-  //       'message': 'Exception occurred',
-  //       'error': e.toString(),
-  //     };
+  //   } catch (error) {
+  //     //  return null;
   //   }
+  //   return null;
   // }
+  Future<Map<String, dynamic>> addProduct({
+    required String token,
+    required SellerProduct product,
+    required List<File> images,
+  }) async {
+    var uri = Uri.parse('https://shopyapi.runasp.net/api/Products/add-product');
+    var request = http.MultipartRequest('POST', uri);
+
+    // Headers
+    request.headers['Authorization'] = 'Bearer $token';
+    request.headers['accept'] = '*/*';
+
+    // Fields
+    request.fields.addAll(product.toFormFields());
+
+    // Images
+    for (var image in images) {
+      request.files
+          .add(await http.MultipartFile.fromPath('Images', image.path));
+    }
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception(
+          'Failed to add product: ${response.statusCode} ${response.body}');
+    }
+  }
 }

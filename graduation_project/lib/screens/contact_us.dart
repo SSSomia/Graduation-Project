@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ContactUsPage extends StatefulWidget {
-  const ContactUsPage({Key? key}) : super(key: key);
+  const ContactUsPage({super.key});
 
   @override
   State<ContactUsPage> createState() => _ContactUsPageState();
@@ -40,7 +40,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = const Color.fromARGB(255, 107, 158, 157);
+    const colorScheme = Color.fromARGB(255, 107, 158, 157);
 
     return Scaffold(
       appBar: AppBar(
@@ -166,7 +166,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               const SizedBox(height: 40),
 
               // Extra Contact Info (Optional)
-              Column(
+              const Column(
                 children: [
                   Text(
                     'Need urgent help?',
@@ -175,8 +175,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
                       color: colorScheme,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Row(
+                  SizedBox(height: 8),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.phone, size: 16, color: Colors.grey),
@@ -184,8 +184,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
                       Text('+1 800 123 4567'),
                     ],
                   ),
-                  const SizedBox(height: 6),
-                  const Row(
+                  SizedBox(height: 6),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.email, size: 16, color: Colors.grey),

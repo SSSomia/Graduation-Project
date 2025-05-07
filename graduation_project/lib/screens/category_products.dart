@@ -43,7 +43,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
               ),
               Expanded(
                 child: GridView.builder(
-                  physics: CustomScrollPhysics(),
+                  physics: const CustomScrollPhysics(),
                   padding: const EdgeInsets.all(10),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -67,8 +67,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
 class CustomScrollPhysics extends ScrollPhysics {
   final double speedFactor;
 
-  const CustomScrollPhysics({ScrollPhysics? parent, this.speedFactor = 0.5})
-      : super(parent: parent);
+  const CustomScrollPhysics({super.parent, this.speedFactor = 0.5});
 
   @override
   CustomScrollPhysics applyTo(ScrollPhysics? ancestor) {

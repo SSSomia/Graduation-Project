@@ -4,8 +4,7 @@ import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:provider/provider.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  ResetPasswordPage({Key? key, required this.email, required this.token})
-      : super(key: key);
+  ResetPasswordPage({super.key, required this.email, required this.token});
   String email;
   String token;
   @override
