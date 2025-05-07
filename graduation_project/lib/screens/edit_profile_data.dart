@@ -27,7 +27,7 @@ class _EditProfileDataState extends State<EditProfileData> {
   }
 
   File? _selectedImage;
- final ImagePicker _picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
 
   // Future<void> _pickImage() async {
   //   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -322,136 +322,6 @@ class _EditProfileDataState extends State<EditProfileData> {
                                   });
                                 });
                               })),
-                      // ListTile(
-                      //   title: const Text("Password"),
-                      //   subtitle: Text(user.),
-                      //   trailing: IconButton(
-                      //     icon: const Icon(Icons.edit_outlined),
-                      //     onPressed: () {
-                      //       _showInputDialog(
-                      //           "Password", user.,
-                      //           (newValue) {
-                      //         user. = newValue;
-                      //       });
-                      //     },
-                      //   ),
-                      // ),
-                      // ListTile(
-                      //   title: const Text("Phone Number"),
-                      //   subtitle: user.userPhone == ""
-                      //       ? const Text(
-                      //           "not added yet!",
-                      //           style: TextStyle(color: Colors.grey),
-                      //         )
-                      //       : Text(user.userPhone),
-                      //   trailing: IconButton(
-                      //     icon: const Icon(Icons.edit_outlined),
-                      //     onPressed: () {
-                      //       _showInputDialog(
-                      //           "Phone Number", user.userPhone,
-                      //           (newValue) {
-                      //         user.userPhone = newValue;
-                      //       });
-                      //     },
-                      //   ),
-                      // ),
-                      // ListTile(
-                      //   title: const Text("Address"),
-                      //   subtitle: user.userAddress == ""
-                      //       ? const Text(
-                      //           "not added yet!",
-                      //           style: TextStyle(color: Colors.grey),
-                      //         )
-                      //       : Text(user.userAddress),
-                      //   trailing: IconButton(
-                      //     icon: const Icon(Icons.edit_outlined),
-                      //     onPressed: () {
-                      //       _showInputDialog("Address", user.userAddress,
-                      //           (newValue) {
-                      //         user.userAddress = newValue;
-                      //       });
-                      //     },
-                      //   ),
-                      // ),
-                      // ListTile(
-                      //   title: const Text("Created at"),
-                      //   subtitle: Text(
-                      //       user.createdAt.toString().substring(0, 10)),
-                      // ),
-                      const Divider(),
-                      // user.isSeller
-                      //     ? Column(
-                      //         children: [
-                      //           const SizedBox(height: 10),
-                      //           const Text(
-                      //             style: TextStyle(
-                      //                 fontWeight: FontWeight.bold,
-                      //                 fontSize: 18),
-                      //             "Store Information",
-                      //             textAlign: TextAlign.start,
-                      //           ),
-                      //           ListTile(
-                      //             title: const Text("Name"),
-                      //             subtitle: user.marketName == ""
-                      //                 ? const Text(
-                      //                     "not added yet!",
-                      //                     style: TextStyle(color: Colors.grey),
-                      //                   )
-                      //                 : Text(user.marketName),
-                      //             trailing: IconButton(
-                      //               icon: const Icon(Icons.edit_outlined),
-                      //               onPressed: () {
-                      //                 _showInputDialog(
-                      //                     "Store Name", user.marketName,
-                      //                     (newValue) {
-                      //                   user.marketName = newValue;
-                      //                 });
-                      //               },
-                      //             ),
-                      //           ),
-                      //           ListTile(
-                      //             title: const Text("Address"),
-                      //             subtitle: user.marketAddress == ""
-                      //                 ? const Text(
-                      //                     "not added yet!",
-                      //                     style: TextStyle(color: Colors.grey),
-                      //                   )
-                      //                 : Text(user.marketAddress),
-                      //             trailing: IconButton(
-                      //               icon: const Icon(Icons.edit_outlined),
-                      //               onPressed: () {
-                      //                 _showInputDialog("Store Address",
-                      //                     user.marketAddress, (newValue) {
-                      //                   user.marketAddress = newValue;
-                      //                 });
-                      //               },
-                      //             ),
-                      //           ),
-                      //           ListTile(
-                      //             title: const Text("Description"),
-                      //             subtitle: user.marketDescription == ""
-                      //                 ? const Text(
-                      //                     "not added yet!",
-                      //                     style: TextStyle(color: Colors.grey),
-                      //                   )
-                      //                 : Text(user.marketDescription),
-                      //             trailing: IconButton(
-                      //               icon: const Icon(Icons.edit_outlined),
-                      //               onPressed: () {
-                      //                 _showInputDialog("Description",
-                      //                     user.marketDescription,
-                      //                     (newValue) {
-                      //                   user.marketDescription = newValue;
-                      //                 });
-                      //               },
-                      //             ),
-                      //           ),
-                      //     const Divider(),
-                      //   ],
-                      // )
-                      // : SizedBox(
-                      //     height: 0,
-                      //   )
                     ]),
                   ),
 

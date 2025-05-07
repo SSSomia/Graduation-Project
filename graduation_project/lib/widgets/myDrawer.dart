@@ -131,44 +131,6 @@ class _MyDrawerState extends State<MyDrawer> {
             // Navigate to notifications page
           },
         ),
-        // ListTile(
-        //   leading: Stack(children: [
-        //     const Icon(Icons.notifications),
-        //     if (notificationCount > 0)
-        //       Positioned(
-        //         right: 0,
-        //         top: 0,
-        //         child: Container(
-        //           padding: const EdgeInsets.all(2),
-        //           decoration: BoxDecoration(
-        //             color: Colors.red,
-        //             borderRadius: BorderRadius.circular(10),
-        //           ),
-        //           constraints: const BoxConstraints(
-        //             minWidth: 16,
-        //             minHeight: 16,
-        //           ),
-        //           child: Text(
-        //             '$notificationCount',
-        //             style: const TextStyle(
-        //               color: Colors.white,
-        //               fontSize: 10,
-        //             ),
-        //             textAlign: TextAlign.center,
-        //           ),
-        //         ),
-        //       ),
-        //   ]),
-        // ),
-        // ListTile(
-        //   leading: const Icon(Icons.notifications_active_outlined),
-        //   title: const Text('Notifications'),
-        //   onTap: () {
-        //     Navigator.pop(context);
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => const MyFavorites()));
-        //   },
-        // ),
         const Divider(height: 1),
         ListTile(
           leading: const Icon(Icons.settings_outlined),

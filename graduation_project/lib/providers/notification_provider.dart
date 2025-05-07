@@ -22,27 +22,7 @@ class NotificationProvider extends ChangeNotifier {
       debugPrint('Error fetching unread count: $e');
     }
   }
-
-  // Future<void> markNotificationAsRead(String token, int id) async {
-  //   try {
-  //     await _service.markAsRead(token, id);
-
-  //     // Optionally update local list
-  //     final index = _notifications
-  //         .indexWhere((n) => n.createdAt.millisecondsSinceEpoch == id);
-  //     if (index != -1) {
-  //       // No actual "read" status in model, but you could remove or refresh
-  //       _notifications.removeAt(index);
-  //       notifyListeners();
-  //     }
-
-  //     // Refresh unread count
-  //     fetchUnreadCount(token);
-  //   } catch (e) {
-  //     debugPrint('Error marking notification as read: $e');
-  //   }
-  // }
-
+  
   Future<void> markNotificationAsRead(String token, int id) async {
     try {
       await _service.markAsRead(token, id);
