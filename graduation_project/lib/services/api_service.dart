@@ -685,11 +685,9 @@ class ApiService {
     }
   }
 
-  Future<List<AppNotification>> getNotifications(String token) async {
-    final url = Uri.parse('https://shopyapi.runasp.net/api/Notification');
-
+  static Future<List<AppNotification>> fetchNotifications(String token) async {
     final response = await http.get(
-      url,
+      Uri.parse('https://shopyapi.runasp.net/api/Notification'),
       headers: {
         'accept': '*/*',
         'Authorization': 'Bearer $token',
@@ -697,12 +695,10 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
-      final List<dynamic> jsonList = json.decode(response.body);
-      return jsonList
-          .map((jsonItem) => AppNotification.fromJson(jsonItem))
-          .toList();
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((item) => AppNotification.fromJson(item)).toList();
     } else {
-      throw Exception('Failed to fetch notifications');
+      throw Exception('Failed to load notifications');
     }
   }
 

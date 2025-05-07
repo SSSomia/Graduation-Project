@@ -5,11 +5,14 @@ import 'package:graduation_project/services/api_service.dart';
 class NotificationProvider extends ChangeNotifier {
   final ApiService _service = ApiService();
 
-  int _unreadCount = 0;
   List<AppNotification> _notifications = [];
+  bool _isLoading = false;
+
+  List<AppNotification> get notifications => _notifications;
+  bool get isLoading => _isLoading;
+  int _unreadCount = 0;
 
   int get unreadCount => _unreadCount;
-  List<AppNotification> get notifications => _notifications;
 
   Future<void> fetchUnreadCount(String token) async {
     try {
@@ -43,7 +46,7 @@ class NotificationProvider extends ChangeNotifier {
   Future<void> markNotificationAsRead(String token, int id) async {
     try {
       await _service.markAsRead(token, id);
-      _notifications.removeWhere((n) => n.id == id);
+      //_notifications.removeWhere((n) => n.id == id);
       notifyListeners();
       fetchUnreadCount(token);
     } catch (e) {
@@ -52,16 +55,16 @@ class NotificationProvider extends ChangeNotifier {
   }
 
   Future<void> fetchNotifications(String token) async {
-    try {
-      _notifications = await _service.getNotifications(token);
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error fetching notifications: $e');
-    }
-  }
+    _isLoading = true;
+    notifyListeners();
 
-  void clearUnread() {
-    _unreadCount = 0;
+    try {
+      _notifications = await ApiService.fetchNotifications(token);
+    } catch (e) {
+      print("Error fetching notifications: $e");
+    }
+
+    _isLoading = false;
     notifyListeners();
   }
 }

@@ -23,19 +23,19 @@ class _MyDrawerState extends State<MyDrawer> {
   void initState() {
     super.initState();
     // Fetch profile after the widget is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final authProvider = Provider.of<LoginProvider>(context, listen: false);
       final profileProvider =
           Provider.of<ProfileProvider>(context, listen: false);
       profileProvider.fetchProfile(authProvider.token);
+      final notificationProvider = Provider.of<NotificationProvider>(context);
+      await notificationProvider.fetchUnreadCount(authProvider.token);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final notificationProvider = Provider.of<NotificationProvider>(context);
-    final count = notificationProvider.unreadCount;
-
+    int count = Provider.of<NotificationProvider>(context).unreadCount;
     return NavigationDrawer(
       backgroundColor: const Color.fromARGB(255, 247, 247, 247),
       children: <Widget>[
@@ -76,8 +76,10 @@ class _MyDrawerState extends State<MyDrawer> {
           title: const Text('Account'),
           onTap: () {
             Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const EditProfileData()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const EditProfileData()));
           },
         ),
         ListTile(
@@ -121,8 +123,10 @@ class _MyDrawerState extends State<MyDrawer> {
           title: const Text('Notifications'),
           onTap: () {
             Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const NotificationScreen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationScreen()));
 
             // Navigate to notifications page
           },
