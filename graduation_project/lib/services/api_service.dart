@@ -12,7 +12,6 @@ import 'package:graduation_project/models/seller_product.dart';
 import 'package:graduation_project/models/store_info_model.dart';
 import 'package:graduation_project/models/user_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 
 class ApiService {
   final String baseUrl = 'https://shopyapi.runasp.net/api/';
@@ -765,10 +764,12 @@ class ApiService {
 
     if (response.statusCode == 200) {
       List<dynamic> productList = json.decode(response.body);
+      print("true");
       return productList
           .map((product) => ProductModule.fromJson(product))
           .toList();
     } else {
+      print('not updated');
       throw Exception('Failed to fetch products: ${response.statusCode}');
     }
   }
@@ -811,10 +812,14 @@ class ApiService {
     // request.files.add(multipartFile);
 
     final response = await request.send();
+    final responseBody = await response.stream.bytesToString();
 
     if (response.statusCode == 200) {
+      print(' $responseBody');
+
       return 'Product updated successfully.';
     } else {
+      print('Error response: $responseBody');
       final errorBody = await response.stream.bytesToString();
       return 'Error ${response.statusCode}: $errorBody';
     }

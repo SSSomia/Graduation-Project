@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/models/product_module.dart';
 import 'package:graduation_project/models/seller_product.dart';
 import 'package:graduation_project/screens/product/seller_product_page.dart';
+import 'package:graduation_project/screens/product/update_product_screen.dart';
 import 'package:graduation_project/widgets/build_image.dart';
 
 class ProductItem extends StatelessWidget {
@@ -54,12 +55,12 @@ class ProductItem extends StatelessWidget {
         trailing: IconButton(
           icon: const Icon(Icons.mode_edit_outline_outlined),
           onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => EditProductScreen(product: product),
-            //   ),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UpdateProductScreen(product: product),
+              ),
+            );
           },
         ),
       ),

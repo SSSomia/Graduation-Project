@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
 import 'package:graduation_project/providers/product_provider.dart';
 import 'package:graduation_project/widgets/stock.dart';
-import 'package:graduation_project/widgets/add_to_cart_button.dart';
-import 'package:graduation_project/widgets/favorite_button.dart';
 import 'package:provider/provider.dart';
 
 class SellerProductPage extends StatefulWidget {
@@ -110,28 +107,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                       ],
                     ),
                   ),
-                  // Positioned(
-                  //     top: 10,
-                  //     right: 10,
-                  //     child: Container(
-                  //       decoration: const BoxDecoration(
-                  //         color: Colors.white,
-                  //         shape: BoxShape.circle,
-                  //         boxShadow: [
-                  //           BoxShadow(
-                  //             color: Colors.black26,
-                  //             blurRadius: 6,
-                  //             offset: Offset(2, 2),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       child: FavoriteButton(
-                  //         productid: widget.productid,
-                  //         name: product.name,
-                  //         image: product.imageUrls[0],
-                  //       ),
-                  //     ))
-                ]),
+                 ]),
                 const SizedBox(height: 25),
                 Text(
                   '${product.price}\$',
@@ -156,43 +132,6 @@ class _SellerProductPageState extends State<SellerProductPage> {
                   stockQuantity: product.stockQuantity.toString(),
                 ),
                 const SizedBox(height: 10),
-                // Center(
-                //   child: SizedBox(
-                //     height: 50,
-                //     width: 350,
-                //     child: AddToCartButton(
-                //       product: CartItem(
-                //           productId: product.productId,
-                //           productName: product.name,
-                //           price: product.price,
-                //           quantity: 1,
-                //           totalPrice: product.price,
-                //           imageUrl: product.imageUrls[0]),
-                //       border: 50,
-                //       backgroundButtonColor:
-                //           const Color.fromARGB(255, 222, 233, 233),
-                //       foreButtonColor: Colors.black,
-                //     ),
-                //   ),
-                // ),
-
-                // const SizedBox(height: 8),
-                // Center(
-                //   child: SizedBox(
-                //     height: 50,
-                //     width: 350,
-                //     child: FilledButton(
-                //       style: ButtonStyle(
-                //           backgroundColor: WidgetStateProperty.all<Color>(
-                //               const Color.fromARGB(255, 50, 116, 138))),
-                //       onPressed: () {
-                //         showAddressDialog(context, product.productId);
-                //         // Navigate to checkout or further actions
-                //       },
-                //       child: const Text('Buy Now'),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           );
