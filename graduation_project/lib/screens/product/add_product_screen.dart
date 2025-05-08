@@ -28,7 +28,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
-  final _categoryController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _stockController = TextEditingController();
   List<File> _images = [];
@@ -100,7 +99,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 controller: _nameController,
                 decoration: inputStyle.copyWith(
                   labelText: "Product Name",
-                  prefixIcon: const Icon(Icons.shopping_bag),
+                  prefixIcon: const Icon(Icons.abc_outlined),
                 ),
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Required' : null,
@@ -112,7 +111,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 controller: _priceController,
                 decoration: inputStyle.copyWith(
                   labelText: "Price",
-                  prefixIcon: const Icon(Icons.attach_money),
+                  prefixIcon: const Icon(Icons.attach_money_outlined),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) =>
@@ -129,7 +128,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 return DropdownButtonFormField<Category>(
                   decoration: inputStyle.copyWith(
                     labelText: "Category",
-                    prefixIcon: const Icon(Icons.category),
+                    prefixIcon: const Icon(Icons.category_outlined),
                   ),
                   value: selectedCategory,
                   isExpanded: true,
@@ -152,33 +151,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   },
                 );
               }),
-              //   return DropdownButton<Category>(
-              //     hint: const Text('Select a category'),
-              //     value: selectedCategory,
-              //     isExpanded: true,
-              //     items: provider.categories.map((cat) {
-              //       return DropdownMenuItem<Category>(
-              //         value: cat,
-              //         child: Text(cat
-              //             .name), // Assuming your Category model has a `name`
-              //       );
-              //     }).toList(),
-              //     onChanged: (Category? newCat) {
-              //       setState(() {
-              //         selectedCategory = newCat;
-              //       });
-              //     },
-              //   );
-              // }),
-              // TextFormField(
-              //   controller: _categoryController,
-              //   decoration: inputStyle.copyWith(
-              //     labelText: "Category",
-              //     prefixIcon: const Icon(Icons.category),
-              //   ),
-              //   validator: (value) =>
-              //       value == null || value.isEmpty ? 'Required' : null,
-              // ),
               const SizedBox(height: 16),
 
               // Description
@@ -186,7 +158,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 controller: _descriptionController,
                 decoration: inputStyle.copyWith(
                   labelText: "Description",
-                  prefixIcon: const Icon(Icons.description),
+                  prefixIcon: const Icon(Icons.description_outlined),
                 ),
                 maxLines: 3,
                 validator: (value) =>
@@ -199,7 +171,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 controller: _stockController,
                 decoration: inputStyle.copyWith(
                   labelText: "Stock Quantity",
-                  prefixIcon: const Icon(Icons.inventory),
+                  prefixIcon: const Icon(Icons.inventory_2_outlined),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) =>

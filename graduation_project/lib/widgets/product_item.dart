@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/models/product_module.dart';
+import 'package:graduation_project/models/seller_product.dart';
+import 'package:graduation_project/screens/product/seller_product_page.dart';
 import 'package:graduation_project/widgets/build_image.dart';
 
 class ProductItem extends StatelessWidget {
@@ -15,6 +17,14 @@ class ProductItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       elevation: 4,
       child: ListTile(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    SellerProductPage(productid: product.productId)),
+          );
+        },
         leading: CircleAvatar(
           radius: 60,
           backgroundColor: Colors.grey[200],

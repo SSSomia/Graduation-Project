@@ -12,6 +12,7 @@ import 'package:graduation_project/models/seller_product.dart';
 import 'package:graduation_project/models/store_info_model.dart';
 import 'package:graduation_project/models/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class ApiService {
   final String baseUrl = 'https://shopyapi.runasp.net/api/';
@@ -769,6 +770,53 @@ class ApiService {
           .toList();
     } else {
       throw Exception('Failed to fetch products: ${response.statusCode}');
+    }
+  }
+
+  Future<String?> updateProductSimple({
+    required int productId,
+    required String token,
+    required String name,
+    required String description,
+    required double price,
+    required int stockQuantity,
+    required int categoryId,
+    // required File imageFile,
+    required List<File> images,
+  }) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Products/$productId');
+
+    final request = http.MultipartRequest('PUT', url);
+
+    request.headers['Authorization'] = 'Bearer $token';
+    request.headers['accept'] = '*/*';
+
+    request.fields['Name'] = name;
+    request.fields['Description'] = description;
+    request.fields['Price'] = price.toString();
+    request.fields['StockQuantity'] = stockQuantity.toString();
+    request.fields['CategoryId'] = categoryId.toString();
+
+    // final multipartFile = await http.MultipartFile.fromPath(
+    //   'Images',
+    //   images.path,
+    //   contentType: MediaType('image', 'png'),
+    // );
+
+    for (var image in images) {
+      request.files
+          .add(await http.MultipartFile.fromPath('Images', image.path));
+    }
+    // request.files.add(multipartFile);
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      return 'Product updated successfully.';
+    } else {
+      final errorBody = await response.stream.bytesToString();
+      return 'Error ${response.statusCode}: $errorBody';
     }
   }
 }

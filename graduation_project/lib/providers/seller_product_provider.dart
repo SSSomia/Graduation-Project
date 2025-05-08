@@ -29,6 +29,39 @@ class SellerProductProvider with ChangeNotifier {
     }
   }
 
+  String? updateMessage;
+
+
+// ****************   not tested yet  *******
+  Future<void> updateProduct({
+    required int productId,
+    required String name,
+    required String description,
+    required double price,
+    required int stockQuantity,
+    required int categoryId,
+    required List<File> images,
+    required String token,
+  }) async {
+    isLoading = true;
+    notifyListeners();
+
+    final response = await _apiService.updateProductSimple(
+      productId: productId,
+      name: name,
+      description: description,
+      price: price,
+      stockQuantity: stockQuantity,
+      categoryId: categoryId,
+      token: token,
+      images: images,
+    );
+
+    updateMessage = response;
+    isLoading = false;
+    notifyListeners();
+  }
+
   List<ProductModule> _products = [];
 
   List<ProductModule> get products => _products;
