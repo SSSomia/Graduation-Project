@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
 import 'package:graduation_project/providers/product_provider.dart';
+import 'package:graduation_project/providers/seller_product_provider.dart';
 import 'package:graduation_project/widgets/stock.dart';
 import 'package:provider/provider.dart';
 
@@ -107,7 +108,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                       ],
                     ),
                   ),
-                 ]),
+                ]),
                 const SizedBox(height: 25),
                 Text(
                   '${product.price}\$',
@@ -131,7 +132,68 @@ class _SellerProductPageState extends State<SellerProductPage> {
                 Stock(
                   stockQuantity: product.stockQuantity.toString(),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 30),
+                Center(
+                  child: SizedBox(
+                    height: 50,
+                    width: 350,
+                    child: FilledButton(
+                      style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                              const Color.fromARGB(255, 205, 0, 0))),
+                      onPressed: () async {
+                        try {
+                          final authProvider = Provider.of<LoginProvider>(
+                              context,
+                              listen: false);
+                          final sellerProductProvider =
+                              Provider.of<SellerProductProvider>(context,
+                                  listen: false);
+
+                          await sellerProductProvider.deleteProduct(
+                              authProvider.token, widget.productid);
+                          await sellerProductProvider
+                              .fetchMyProducts(authProvider.token);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Deleted successfully')),
+                          );
+                          // Optionally, navigate back or refresh the UI
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Error: ${e.toString()}')),
+                          );
+                        }
+                        // Navigate to checkout or further actions
+                      },
+                      child: const Text('Delete'),
+                    ),
+                  ),
+                ),
+                // Center(
+                //   child: ElevatedButton(
+                //     onPressed: () async {
+                //       try {
+                //         final authProvider =
+                //             Provider.of<LoginProvider>(context, listen: false);
+                //         final sellerProductProvider =
+                //             Provider.of<SellerProductProvider>(context,
+                //                 listen: false);
+
+                //         await sellerProductProvider.deleteProduct(
+                //             authProvider.token, widget.productid);
+                //         // Optionally, navigate back or refresh the UI
+                //       } catch (e) {
+                //         ScaffoldMessenger.of(context).showSnackBar(
+                //           SnackBar(content: Text('Error: ${e.toString()}')),
+                //         );
+                //       }
+                //     },
+                //     child: productProvider.isLoading
+                //         ? CircularProgressIndicator()
+                //         : Text('Delete Product'),
+                //   ),
+                // ),
               ],
             ),
           );

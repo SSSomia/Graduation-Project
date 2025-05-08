@@ -824,4 +824,27 @@ class ApiService {
       return 'Error ${response.statusCode}: $errorBody';
     }
   }
+
+  static Future<Map<String, dynamic>> deleteProduct(
+      String token, int productId) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Products/seller/ $productId');
+
+    final response = await http.delete(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    print("Response status: ${response.statusCode}");
+    print("Response body: ${response.body}");
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to delete product: ${response.body}');
+    }
+  }
 }

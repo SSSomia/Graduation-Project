@@ -31,7 +31,6 @@ class SellerProductProvider with ChangeNotifier {
 
   String? updateMessage;
 
-
 // ****************   not tested yet  *******
   Future<void> updateProduct({
     required int productId,
@@ -75,6 +74,19 @@ class SellerProductProvider with ChangeNotifier {
     } catch (e) {
       // Handle error if necessary
       print("Error fetching products: $e");
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteProduct(String token, int productId) async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final result = await ApiService.deleteProduct(token, productId);
+    } catch (error) {
     } finally {
       isLoading = false;
       notifyListeners();
