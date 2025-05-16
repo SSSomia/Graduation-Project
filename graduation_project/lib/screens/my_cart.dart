@@ -203,6 +203,16 @@ class _MyCartState extends State<MyCart> {
                                 label: 'Phone Number',
                                 icon: Icons.phone,
                                 keyboardType: TextInputType.phone,
+                                validator: (value) {
+                                  final phoneRegExp =
+                                      RegExp(r'^(010|011|012|015)[0-9]{8}$');
+                                  if (value == null || value.trim().isEmpty) {
+                                    return 'Enter Phone Number';
+                                  } else if (!phoneRegExp.hasMatch(value)) {
+                                    return "Phone number isn't valid";
+                                  }
+                                  return null;
+                                },
                               ),
                             ],
                           ),
@@ -275,28 +285,55 @@ class _MyCartState extends State<MyCart> {
     required String label,
     required IconData icon,
     TextInputType keyboardType = TextInputType.text,
+    String? Function(String?)? validator, // <- Optional custom validator
   }) {
     return TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          prefixIcon: Icon(icon),
-          labelText: label,
-          filled: true,
-          fillColor: Colors.grey[100],
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        ),
-        validator: (value) {
-          final RegExp phoneRegExp = RegExp(r'^(010|011|012|015)[0-9]{8}$');
-
-          if (value == null || value.trim().isEmpty) {
-            return 'Enter $label';
-          } else if (!phoneRegExp.hasMatch(value)) {
-            return "Phone number isn't true";
-          } else
+      controller: controller,
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        prefixIcon: Icon(icon),
+        labelText: label,
+        filled: true,
+        fillColor: Colors.grey[100],
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      validator: validator ??
+          (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Enter $label';
+            }
             return null;
-        });
+          },
+    );
   }
+
+  // Widget _buildTextField({
+  //   required TextEditingController controller,
+  //   required String label,
+  //   required IconData icon,
+  //   TextInputType keyboardType = TextInputType.text,
+  // }) {
+  //   return TextFormField(
+  //       controller: controller,
+  //       keyboardType: keyboardType,
+  //       decoration: InputDecoration(
+  //         prefixIcon: Icon(icon),
+  //         labelText: label,
+  //         filled: true,
+  //         fillColor: Colors.grey[100],
+  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+  //       ),
+  //       validator: (value) {
+  //         final RegExp phoneRegExp = RegExp(r'^(010|011|012|015)[0-9]{8}$');
+
+  //         if (value == null || value.trim().isEmpty) {
+  //           return 'Enter $label';
+  //         } else if (!phoneRegExp.hasMatch(value)) {
+  //           return "Phone number isn't true";
+  //         } else
+  //           return null;
+  //       });
+  // }
 
   void _showConfirmDialog() {
     showDialog(

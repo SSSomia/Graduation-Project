@@ -7,7 +7,7 @@ import 'package:graduation_project/widgets/product_card.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                mainAxisSpacing: 30,
                 childAspectRatio: .67,
               ),
               itemCount: provider.products.length,
@@ -71,8 +71,7 @@ class _HomePageState extends State<HomePage> {
 class CustomScrollPhysics extends ScrollPhysics {
   final double speedFactor;
 
-  CustomScrollPhysics({ScrollPhysics? parent, this.speedFactor = 0.5})
-      : super(parent: parent);
+  const CustomScrollPhysics({super.parent, this.speedFactor = 1.0});
 
   @override
   CustomScrollPhysics applyTo(ScrollPhysics? ancestor) {
