@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/providerNotUse/copoun_provider_test.dart';
 import 'package:graduation_project/providers/cart_provider.dart';
 import 'package:graduation_project/providers/category_provider.dart';
 import 'package:graduation_project/providers/change_password_provider.dart';
@@ -48,6 +49,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => CategoryProductProvider()),
     ChangeNotifierProvider(create: (_) => NotificationProvider()),
     ChangeNotifierProvider(create: (_) => SellerProductProvider()),
+    // will be removed
+    ChangeNotifierProvider(create: (_) => CouponProvider()),
   ], child: const MyApp()));
 }
 
