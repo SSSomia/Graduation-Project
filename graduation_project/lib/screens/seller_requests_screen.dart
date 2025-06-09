@@ -86,68 +86,72 @@ class _SellerRequestsPageState extends State<SellerRequestsPage> {
       body: Column(
         children: [
           Expanded(
-            child: provider.pendingSellers.isEmpty
-                // ? const Center(child: CircularProgressIndicator())
-                ? Center(child: Text("No Pending Sellers!!"))
-                : ListView.builder(
-                    itemCount: requests.length,
-                    itemBuilder: (context, index) {
-                      final request = requests[index];
-                      return Card(
-                        margin: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          leading: const CircleAvatar(child: Icon(Icons.store)),
-                          title: Text(request.storeName),
-                          subtitle: Text(request.storeDescription),
-                          trailing: request.status == 'pending'
-                              ? Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.check,
-                                          color: Color.fromARGB(
-                                              255, 36, 146, 135)),
-                                      onPressed: () async {
-                                        final authProvider =
-                                            Provider.of<LoginProvider>(context,
-                                                listen: false);
-                                        await provider.approveSeller(
-                                            userId: request.userId,
-                                            token: authProvider.token);
-                                      },
+            child: provider.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : provider.pendingSellers.isEmpty
+                    ? Center(child: Text("No Pending Sellers!!"))
+                    : ListView.builder(
+                        itemCount: requests.length,
+                        itemBuilder: (context, index) {
+                          final request = requests[index];
+                          return Card(
+                            margin: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              leading:
+                                  const CircleAvatar(child: Icon(Icons.store)),
+                              title: Text(request.storeName),
+                              subtitle: Text(request.storeDescription),
+                              trailing: request.status == 'pending'
+                                  ? Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.check,
+                                              color: Color.fromARGB(
+                                                  255, 36, 146, 135)),
+                                          onPressed: () async {
+                                            final authProvider =
+                                                Provider.of<LoginProvider>(
+                                                    context,
+                                                    listen: false);
+                                            await provider.approveSeller(
+                                                userId: request.userId,
+                                                token: authProvider.token);
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.close,
+                                              color: Color.fromARGB(
+                                                  255, 146, 46, 39)),
+                                          onPressed: () async {
+                                            final authProvider =
+                                                Provider.of<LoginProvider>(
+                                                    context,
+                                                    listen: false);
+                                            await provider.rejectSeller(
+                                                sellerId: request.userId,
+                                                token: authProvider.token);
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  : Text(
+                                      request.status.toUpperCase(),
+                                      style: TextStyle(
+                                        color: request.status == "accepted"
+                                            ? const Color.fromARGB(
+                                                255, 35, 137, 146)
+                                            : const Color.fromARGB(
+                                                255, 116, 19, 12),
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                    IconButton(
-                                      icon: const Icon(Icons.close,
-                                          color:
-                                              Color.fromARGB(255, 146, 46, 39)),
-                                      onPressed: () async {
-                                        final authProvider =
-                                            Provider.of<LoginProvider>(context,
-                                                listen: false);
-                                        await provider.rejectSeller(
-                                            sellerId: request.userId,
-                                            token: authProvider.token);
-                                      },
-                                    ),
-                                  ],
-                                )
-                              : Text(
-                                  request.status.toUpperCase(),
-                                  style: TextStyle(
-                                    color: request.status == "accepted"
-                                        ? const Color.fromARGB(
-                                            255, 35, 137, 146)
-                                        : const Color.fromARGB(
-                                            255, 116, 19, 12),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                          onTap: () =>
-                              showSellerDetailsDialog(context, request),
-                        ),
-                      );
-                    },
-                  ),
+                              onTap: () =>
+                                  showSellerDetailsDialog(context, request),
+                            ),
+                          );
+                        },
+                      ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),

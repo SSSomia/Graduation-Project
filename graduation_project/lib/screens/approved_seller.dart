@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/models/pending_seller.dart';
 import 'package:graduation_project/providers/login_provider.dart';
@@ -75,26 +74,27 @@ class _ApprovedSellersState extends State<ApprovedSellers> {
       body: Column(
         children: [
           Expanded(
-            child: provider.approvedSeller.isEmpty
-                // ? const Center(child: CircularProgressIndicator())
-                ? const Center(child: Text("No Approved Sellers!!"))
-                : ListView.builder(
-                    itemCount: requests.length,
-                    itemBuilder: (context, index) {
-                      final request = requests[index];
-                      return Card(
-                        margin: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          leading: const CircleAvatar(child: Icon(Icons.store)),
-                          title: Text(request.storeName),
-                          subtitle: Text(request.storeDescription),
-                          
-                          onTap: () =>
-                              showSellerDetailsDialog(context, request),
-                        ),
-                      );
-                    },
-                  ),
+            child: provider.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : provider.approvedSeller.isEmpty
+                    ? const Center(child: Text("No Approved Sellers!!"))
+                    : ListView.builder(
+                        itemCount: requests.length,
+                        itemBuilder: (context, index) {
+                          final request = requests[index];
+                          return Card(
+                            margin: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              leading:
+                                  const CircleAvatar(child: Icon(Icons.store)),
+                              title: Text(request.storeName),
+                              subtitle: Text(request.storeDescription),
+                              onTap: () =>
+                                  showSellerDetailsDialog(context, request),
+                            ),
+                          );
+                        },
+                      ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),

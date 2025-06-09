@@ -5,6 +5,8 @@ import 'package:graduation_project/services/api_service.dart';
 
 class AdminProvider with ChangeNotifier {
   final ApiService _service = ApiService();
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   List<PendingSeller> _pendingSellers = [];
   List<PendingSeller> get pendingSellers => _pendingSellers;
@@ -13,11 +15,16 @@ class AdminProvider with ChangeNotifier {
   List<PendingSeller> get approvedSeller => _approvedSeller;
 
   Future<void> loadPendingSellers(String token) async {
+    _isLoading = true;
     _pendingSellers = await _service.fetchPendingSellers(token);
+    _isLoading = false;
     notifyListeners();
   }
+
   Future<void> loadApprovedSellers(String token) async {
+    _isLoading = true;
     _approvedSeller = await _service.getApprovedSellers(token);
+    _isLoading = false;
     notifyListeners();
   }
 

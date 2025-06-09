@@ -34,7 +34,7 @@ class OrderProvider with ChangeNotifier {
     required String city,
     required String government,
     required String phoneNumber,
-    required String token,
+    required String token, required String couponCode, required double finalPrice,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -62,7 +62,7 @@ class OrderProvider with ChangeNotifier {
     required String city,
     required String government,
     required String phoneNumber,
-    required String token,
+    required String token, required String couponCode, required double finalPrice,
   }) async {
     _isLoading = true;
     notifyListeners();

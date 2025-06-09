@@ -29,6 +29,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
+    String query = "";
+
     // final products = Provider.of<ProductList>(context).productMap;
     return Scaffold(
         body: Consumer<ProductsProvider>(builder: (context, provider, _) {
@@ -44,10 +47,61 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 15,
           ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: TextField(
+          //     controller: searchController,
+          //     decoration: InputDecoration(
+          //       hintText: "Search...",
+          //       prefixIcon: Icon(Icons.search),
+          //       border: OutlineInputBorder(),
+          //     ),
+          //     onChanged: (value) {
+          //       setState(() {
+          //         query = value;
+          //       });
+          //     },
+          //   ),
+          // ),
+          Padding(
+            padding: const EdgeInsets.only(right: 15, left: 15),
+            child: Container(
+            
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: TextField(
+                controller: searchController,
+                decoration: const InputDecoration(
+                  hintText: "Search...",
+                  prefixIcon: Icon(Icons.search, color: Colors.grey),
+                  border: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    query = value;
+                  });
+                },
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
           const CategoryLine(),
           Expanded(
             child: GridView.builder(
-              physics: CustomScrollPhysics(),
+              physics: const CustomScrollPhysics(),
               padding: const EdgeInsets.all(10),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

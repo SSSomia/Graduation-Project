@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import '../providerNotUse/copoun_provider_test.dart'; // <- keep your imports
 import '../modelNotUse/copoun_model_test.dart';
 
-class SellerCouponsPage extends StatelessWidget {
-  const SellerCouponsPage({super.key});
+class AdminCoupons extends StatelessWidget {
+  const AdminCoupons({super.key});
 
   @override
   Widget build(BuildContext context) {

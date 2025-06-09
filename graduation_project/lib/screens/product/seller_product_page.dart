@@ -316,7 +316,9 @@ class _SellerProductPageState extends State<SellerProductPage> {
                                         city: cityController.text,
                                         government: governmentController.text,
                                         phoneNumber: phoneController.text,
-                                        token: authProvider.token);
+                                        token: authProvider.token, 
+                                        // changes here in the api
+                                        couponCode: '', finalPrice: 0);
                                     print(result);
                                     Navigator.pop(context);
                                   }

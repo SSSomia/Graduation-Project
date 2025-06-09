@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/admin_coupons.dart';
 import 'package:graduation_project/screens/approved_seller.dart';
 import 'package:graduation_project/screens/seller_requests_screen.dart';
 
@@ -34,11 +35,16 @@ class _NavigationExampleState extends State<AdminManagementPage> {
             icon: Icon(Icons.list_alt_sharp),
             label: 'Approved Seller',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.card_giftcard),
+            label: 'Coupons',
+          ),
         ],
       ),
       body: <Widget>[
         SellerRequestsPage(),
         ApprovedSellers(),
+        AdminCoupons()
       ][currentPageIndex],
     );
   }
