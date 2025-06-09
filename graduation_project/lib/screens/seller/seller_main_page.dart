@@ -3,6 +3,8 @@ import 'package:graduation_project/screens/coupon_screen.dart';
 import 'package:graduation_project/screens/dashboard/analytics_screen.dart';
 import 'package:graduation_project/screens/orders/orders_screen.dart';
 import 'package:graduation_project/screens/seller/market_product_screen.dart';
+import 'package:graduation_project/screens/seller_orders.dart';
+import 'package:graduation_project/screens/seller_orders_screen.dart';
 
 class SellerMainPage extends StatelessWidget {
   const SellerMainPage({super.key});
@@ -17,7 +19,7 @@ class SellerMainPage extends StatelessWidget {
               "Orders",
               Icons.list,
               () => Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => OrdersScreen()))),
+                  context, MaterialPageRoute(builder: (_) => SellerOrders()))),
           _buildCard(
               "Products",
               Icons.shop_outlined,
