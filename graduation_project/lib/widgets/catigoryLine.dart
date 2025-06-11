@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/category_provider.dart';
-import 'package:graduation_project/screens/category_products.dart';
+import 'package:graduation_project/screens/customer/product/category_products.dart';
 import 'package:provider/provider.dart';
 
 class CategoryLine extends StatelessWidget {

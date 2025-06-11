@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providerNotUse/copoun_provider_test.dart'; // <- keep your imports
-import '../modelNotUse/copoun_model_test.dart';
+import '../../providerNotUse/copoun_provider_test.dart'; // <- keep your imports
+import '../../modelNotUse/copoun_model_test.dart';
 
 class AdminCoupons extends StatelessWidget {
   const AdminCoupons({super.key});

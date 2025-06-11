@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/screens/profile_page.dart';
-import 'package:graduation_project/widgets/myDrawer.dart';
-import 'package:graduation_project/screens/home_page.dart';
-import 'package:graduation_project/screens/my_cart.dart';
-import 'package:graduation_project/screens/orders/orders.dart';
+import 'package:graduation_project/screens/customer/profile/profile_page.dart';
+import 'package:graduation_project/screens/seller/seller/seller_main_page.dart';
 
-class MainHomePage extends StatefulWidget {
-  const MainHomePage({super.key});
-
+class SellerHomeScreen extends StatefulWidget {
   @override
-  State<MainHomePage> createState() => _NavigationExampleState();
+  State<SellerHomeScreen> createState() => _SellerHomeScreenState();
 }
 
-class _NavigationExampleState extends State<MainHomePage> {
+class _SellerHomeScreenState extends State<SellerHomeScreen> {
   int currentPageIndex = 1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +31,6 @@ class _NavigationExampleState extends State<MainHomePage> {
               bottomRight: Radius.circular(20)),
         ),
       ),
-      endDrawer: MyDrawer(),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -54,24 +47,15 @@ class _NavigationExampleState extends State<MainHomePage> {
             label: 'You',
           ),
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            icon: Icon(Icons.dashboard_outlined),
+            label: 'Dashboard',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.library_books_outlined),
-            label: 'Orders',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.shopping_bag_outlined),
-            label: 'My Cart',
-          ),
+         
         ],
       ),
       body: <Widget>[
-        const You(),
-        HomePage(),
-        const Orders(),
-        const MyCart(),
+         const You(),
+        const SellerMainPage(),
       ][currentPageIndex],
     );
   }

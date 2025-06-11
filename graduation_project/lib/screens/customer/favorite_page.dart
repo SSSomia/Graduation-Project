@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/favorite_provider.dart';
 import 'package:graduation_project/providers/login_provider.dart';
-import 'package:graduation_project/screens/product/productPage.dart';
+import 'package:graduation_project/screens/customer/product/productPage.dart';
 import 'package:provider/provider.dart';
 
 class MyFavorites extends StatefulWidget {

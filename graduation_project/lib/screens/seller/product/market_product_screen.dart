@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
-import 'package:graduation_project/screens/product/add_product_screen.dart';
+import 'package:graduation_project/screens/customer/product/add_product_screen.dart';
 import 'package:graduation_project/widgets/product_item.dart';
 import 'package:provider/provider.dart';
 

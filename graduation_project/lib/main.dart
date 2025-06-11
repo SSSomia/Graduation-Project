@@ -22,7 +22,6 @@ import 'package:graduation_project/providers/update_profile_data.dart';
 import 'package:graduation_project/providerNotUse/analytics_provider.dart';
 import 'package:graduation_project/providerNotUse/sales_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/semiAPIcall/get_request.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -30,7 +29,6 @@ void main() {
     ChangeNotifierProvider(create: (_) => ProductProvider()),
     ChangeNotifierProvider(create: (_) => SalesProvider()),
     ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
-    ChangeNotifierProvider(create: (_) => DataProvider()),
     ChangeNotifierProvider(create: (_) => UserProvider()),
     ChangeNotifierProvider(create: (_) => LoginProvider()),
     ChangeNotifierProvider(create: (_) => ForgetPasswrodProvider()),

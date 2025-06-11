@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
-import 'package:graduation_project/screens/orders/order_details.dart';
+import 'package:graduation_project/screens/customer/orders/order_details.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class SellerOrders extends StatefulWidget {
-  const SellerOrders({super.key});
+class Orders extends StatefulWidget {
+  const Orders({super.key});
 
   @override
-  State<SellerOrders> createState() => _SellerOrdersState();
+  State<Orders> createState() => _OrdersState();
 }
 
-class _SellerOrdersState extends State<SellerOrders> {
+class _OrdersState extends State<Orders> {
   @override
   void initState() {
     super.initState();

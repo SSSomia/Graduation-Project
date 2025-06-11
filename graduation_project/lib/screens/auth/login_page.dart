@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/function/getUserRoleFromTokenFunction.dart';
-import 'package:graduation_project/screens/admin_management_page.dart';
+import 'package:graduation_project/screens/admin/admin_management_page.dart';
 import 'package:graduation_project/screens/auth/forget_pawword.dart';
-import 'package:graduation_project/screens/mainPage.dart';
+import 'package:graduation_project/screens/customer/mainPage.dart';
 import 'package:graduation_project/screens/auth/signup_page.dart';
-import 'package:graduation_project/screens/seller/seller_home_screen.dart';
+import 'package:graduation_project/screens/seller/seller/seller_home_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {

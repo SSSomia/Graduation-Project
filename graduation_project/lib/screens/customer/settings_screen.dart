@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/screens/about.dart';
+import 'package:graduation_project/screens/customer/about.dart';
 import 'package:graduation_project/screens/auth/change_password_page.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/screens/edit_profile_data.dart';
+import 'package:graduation_project/screens/customer/profile/edit_profile_data.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

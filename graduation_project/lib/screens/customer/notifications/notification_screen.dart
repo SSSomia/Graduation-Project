@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/notification_provider.dart';
-import 'package:graduation_project/screens/notification_details_screen.dart';
+import 'package:graduation_project/screens/customer/notifications/notification_details_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

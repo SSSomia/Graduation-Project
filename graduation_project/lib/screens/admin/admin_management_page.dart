@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/screens/admin_coupons.dart';
-import 'package:graduation_project/screens/approved_seller.dart';
-import 'package:graduation_project/screens/seller_requests_screen.dart';
+import 'package:graduation_project/screens/admin/admin_coupons.dart';
+import 'package:graduation_project/screens/admin/approved_seller.dart';
+import 'package:graduation_project/screens/admin/seller_requests_screen.dart';
 
 class AdminManagementPage extends StatefulWidget {
   const AdminManagementPage({super.key});

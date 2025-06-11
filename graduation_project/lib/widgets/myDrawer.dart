@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/notification_provider.dart';
 import 'package:graduation_project/providers/profile_provider.dart';
-import 'package:graduation_project/screens/about.dart';
+import 'package:graduation_project/screens/customer/about.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/screens/contact_us.dart';
-import 'package:graduation_project/screens/edit_profile_data.dart';
-import 'package:graduation_project/screens/favorite_page.dart';
-import 'package:graduation_project/screens/notification_screen.dart';
-import 'package:graduation_project/screens/settings_screen.dart';
+import 'package:graduation_project/screens/customer/contact_us.dart';
+import 'package:graduation_project/screens/customer/profile/edit_profile_data.dart';
+import 'package:graduation_project/screens/customer/favorite_page.dart';
+import 'package:graduation_project/screens/customer/notifications/notification_screen.dart';
+import 'package:graduation_project/screens/customer/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyDrawer extends StatefulWidget {
