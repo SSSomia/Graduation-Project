@@ -36,8 +36,7 @@ class ApiService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(response.body);
     } else {
-      // Handle error responses
-      return null;
+      return {'message': response.body};
     }
   }
 
@@ -827,8 +826,8 @@ class ApiService {
 
   static Future<Map<String, dynamic>> deleteProduct(
       String token, int productId) async {
-    final url =
-        Uri.parse('https://shopyapi.runasp.net/api/Products/seller/ $productId');
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Products/seller/ $productId');
 
     final response = await http.delete(
       url,

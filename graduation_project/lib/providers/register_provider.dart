@@ -11,14 +11,16 @@ class UserProvider with ChangeNotifier {
   bool get isAuthenticated => _isAuthenticated;
   User? get user => _user;
 
-  Future<void> register({required User user}) async {
+  Future<String?> register({required User user}) async {
     final result = await ApiService().register(user: user);
 
     if (result != null && result.containsKey('token')) {
       _token = result['token'];
       _isAuthenticated = true;
       notifyListeners();
+      return null;
     } else {
+      return result?['message'] ?? 'Registration failed';
       // Handle registration failure
     }
   }

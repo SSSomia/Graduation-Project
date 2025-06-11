@@ -363,7 +363,8 @@ class _SignupPageState extends State<SignupPage> {
                                         if (_formKey.currentState!.validate()) {
                                           if (_selectedOption ==
                                               ECharacteres.user) {
-                                            await userProvider.register(
+                                            final result =
+                                                await userProvider.register(
                                               user: User(
                                                 FirstName: _conFirstName.text,
                                                 LastName: _conLastName.text,
@@ -373,23 +374,32 @@ class _SignupPageState extends State<SignupPage> {
                                                 Role: 0,
                                               ),
                                             );
-
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content: Text(
-                                                      'Sign Up successful!')),
-                                            );
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const LoginPage(),
-                                              ),
-                                            );
+                                            if (result == null) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'Sign Up successful!')),
+                                              );
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginPage(),
+                                                ),
+                                              );
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'Email is already exist!')),
+                                              );
+                                            }
                                             // Navigate to the next screen or show success message
                                           } else {
-                                            await userProvider.register(
+                                            final result =
+                                                await userProvider.register(
                                               user: User(
                                                 FirstName: _conFirstName.text,
                                                 LastName: _conLastName.text,
@@ -399,21 +409,53 @@ class _SignupPageState extends State<SignupPage> {
                                                 Role: 1,
                                               ),
                                             );
+                                            if (result == null) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'Sign Up successful!')),
+                                              );
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginPage(),
+                                                ),
+                                              );
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'Email is already exist!')),
+                                              );
+                                            }}
+                                          //   await userProvider.register(
+                                          //     user: User(
+                                          //       FirstName: _conFirstName.text,
+                                          //       LastName: _conLastName.text,
+                                          //       UserName: _conUserName.text,
+                                          //       Email: _conEmail.text,
+                                          //       Password: _conPassword.text,
+                                          //       Role: 1,
+                                          //     ),
+                                          //   );
 
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content: Text(
-                                                      'Sign Up successful!')),
-                                            );
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SellerMarketData(),
-                                              ),
-                                            );
-                                          }
+                                          //   ScaffoldMessenger.of(context)
+                                          //       .showSnackBar(
+                                          //     const SnackBar(
+                                          //         content: Text(
+                                          //             'Sign Up successful!')),
+                                          //   );
+                                          //   Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //       builder: (context) =>
+                                          //           SellerMarketData(),
+                                          //     ),
+                                          //   );
+                                          // }
                                         } else {}
                                         // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                                         // sharedPreferences.setString("userName", "")
