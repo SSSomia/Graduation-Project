@@ -11,8 +11,6 @@ class OrderDetailProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  get orderDetails => null;
-
   Future<void> loadOrderDetails(int orderId, String token) async {
     _isLoading = true;
     _error = null;
@@ -28,11 +26,42 @@ class OrderDetailProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+
+
 // class OrderDetailProvider with ChangeNotifier {
-//   OrderDetailsModel? _orderDetails;
+//   final _details;
+//   bool _isLoading = false;
+//   String? _error;
+
+//   get details => _details;
+//   bool get isLoading => _isLoading;
+//   String? get error => _error;
+
+//   get orderDetails => null;
+
+//   Future<void> loadOrderDetails(int orderId, String token) async {
+//     _isLoading = true;
+//     _error = null;
+//     notifyListeners();
+
+//     try {
+//       _details = await ApiService.fetchOrderDetails(orderId, token);
+//       print(details['orderDetails']);
+//     } catch (e) {
+//       _error = e.toString();
+//     }
+
+//     _isLoading = false;
+//     notifyListeners();
+//   }
+// }
+
+
+// class OrderDetailProvider with ChangeNotifier {
+//   OrderDetailsModel? _details;
 //   bool _isLoading = false;
 
-//   OrderDetailsModel? get orderDetails => _orderDetails;
+//   OrderDetailsModel? get orderDetails => _details;
 //   bool get isLoading => _isLoading;
 
 //   Future<void> loadOrderDetails(int orderId) async {
@@ -40,10 +69,10 @@ class OrderDetailProvider with ChangeNotifier {
 //     notifyListeners();
 
 //     try {
-//       _orderDetails = await ApiService.getOrderDetails(orderId); // Replace with your real API call
+//       _details = await ApiService.getOrderDetails(orderId); // Replace with your real API call
 //     } catch (e) {
 //       debugPrint("Failed to fetch order details: $e");
-//       _orderDetails = null;
+//       _details = null;
 //     }
 
 //     _isLoading = false;

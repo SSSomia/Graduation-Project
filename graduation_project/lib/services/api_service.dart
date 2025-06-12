@@ -409,22 +409,49 @@ class ApiService {
     }
   }
 
+  // static Future<List<OrderDetail>> fetchOrderDetails(
+  //     int orderId, String token) async {
+  //   final url = 'https://shopyapi.runasp.net/api/Order/order-details/$orderId';
+  //   final response = await http.get(
+  //     Uri.parse(url),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer $token',
+  //     },
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> data = jsonDecode(response.body);
+  //     return data.map((item) => OrderDetail.fromJson(item)).toList();
+  //   } else {
+  //     throw Exception('Failed to load order details');
+  //   }
+  // }
+
   static Future<List<OrderDetail>> fetchOrderDetails(
       int orderId, String token) async {
-    final url = 'https://shopyapi.runasp.net/api/Order/order-details/$orderId';
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Order/order-details/$orderId');
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      return data.map((item) => OrderDetail.fromJson(item)).toList();
-    } else {
-      throw Exception('Failed to load order details');
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'accept': '*/*',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final List<dynamic> details = data['orderDetails'];
+        return details.map((e) => OrderDetail.fromJson(e)).toList();
+      } else {
+        throw Exception('Failed to load order details: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching order details: $e');
+      rethrow;
     }
   }
 
@@ -723,7 +750,8 @@ class ApiService {
     required SellerProduct product,
     required List<File> images,
   }) async {
-    var request = http.MultipartRequest('POST', Uri.parse('https://shopyapi.runasp.net/api/Products/add-product'));
+    var request = http.MultipartRequest('POST',
+        Uri.parse('https://shopyapi.runasp.net/api/Products/add-product'));
 
     // Headers
     request.headers['Authorization'] = 'Bearer $token';
