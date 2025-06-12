@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
-import 'package:graduation_project/screens/customer/product/add_product_screen.dart';
+import 'package:graduation_project/screens/seller/product/add_product_screen.dart';
 import 'package:graduation_project/widgets/product_item.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +48,9 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
         if (provider.isLoading) {
           return const Center(child: CircularProgressIndicator());
         }
+        final authProvider = Provider.of<LoginProvider>(context, listen: false);
+        Provider.of<SellerProductProvider>(context, listen: false)
+            .fetchMyProducts(authProvider.token);
         final products = provider.products;
         return ListView.builder(
           itemCount: products.length,

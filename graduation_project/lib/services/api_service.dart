@@ -723,8 +723,7 @@ class ApiService {
     required SellerProduct product,
     required List<File> images,
   }) async {
-    var uri = Uri.parse('https://shopyapi.runasp.net/api/Products/add-product');
-    var request = http.MultipartRequest('POST', uri);
+    var request = http.MultipartRequest('POST', Uri.parse('https://shopyapi.runasp.net/api/Products/add-product'));
 
     // Headers
     request.headers['Authorization'] = 'Bearer $token';

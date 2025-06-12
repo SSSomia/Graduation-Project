@@ -32,14 +32,34 @@ class FavoriteProvider with ChangeNotifier {
       String token, int id, String name, String imageUrl) async {
     try {
       final newFavorite = await ApiService.addFavorite(token, id);
-      if (favorites.any((fav) => fav.id != id)) {
+      final existingIndex = _favorites.indexWhere((fav) => fav.id == id);
+
+      if (existingIndex == -1) {
+        // Not in list → add
         _favorites.add(Favorite(id: id, name: name, imageUrl: imageUrl));
       } else {
-        _favorites.removeWhere((fav) => fav.id == id);
+        // Already in list → remove
+        _favorites.removeAt(existingIndex);
       }
+
       notifyListeners();
     } catch (e) {
       print('Error adding favorite: $e');
     }
-}
   }
+
+//   Future<void> addFavorite(
+//       String token, int id, String name, String imageUrl) async {
+//     try {
+//       final newFavorite = await ApiService.addFavorite(token, id);
+//       if (favorites.any((fav) => fav.id != id)) {
+//         _favorites.add(Favorite(id: id, name: name, imageUrl: imageUrl));
+//       } else {
+//         _favorites.removeWhere((fav) => fav.id == id);
+//       }
+//       notifyListeners();
+//     } catch (e) {
+//       print('Error adding favorite: $e');
+//     }
+// }
+}

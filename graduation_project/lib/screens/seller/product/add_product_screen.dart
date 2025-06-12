@@ -70,13 +70,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result['message'])),
       );
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to add product: ${e.toString()}')),
       );
     }
-    Navigator.pop(context);
+    Provider.of<SellerProductProvider>(context, listen: false)
+        .fetchMyProducts(authProvider.token);
   }
 
   @override
