@@ -10,6 +10,8 @@ import 'package:graduation_project/models/order_model.dart';
 import 'package:graduation_project/models/pending_seller.dart';
 import 'package:graduation_project/models/product_module.dart';
 import 'package:graduation_project/models/product_review.dart';
+import 'package:graduation_project/models/seller_order.dart';
+import 'package:graduation_project/models/seller_order_product.dart';
 import 'package:graduation_project/models/seller_product.dart';
 import 'package:graduation_project/models/store_info_model.dart';
 import 'package:graduation_project/models/top_selling_prodcuts.dart';
@@ -947,7 +949,6 @@ class ApiService {
     }
   }
 
-  
   Future<List<Buyer>> fetchMyBuyers(String token) async {
     final url = Uri.parse('https://shopyapi.runasp.net/api/Store/my-buyers');
     final response = await http.get(
@@ -963,6 +964,77 @@ class ApiService {
       return data.map((json) => Buyer.fromJson(json)).toList();
     } else {
       throw Exception('Failed to fetch buyers');
+    }
+  }
+
+  Future<List<SellerOrder>> fetchOrdersByStatus({
+    required int statusCode,
+    required String token,
+  }) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/SellerOrders/orders/status/$statusCode?sortOldToNew=true');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List data = json.decode(response.body);
+      return data.map((json) => SellerOrder.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load orders');
+    }
+  }
+
+  Future<List<OrderProduct>> fetchOrderProducts({
+    required int orderId,
+    required String token,
+  }) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/SellerOrders/orders/$orderId/products');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body);
+      final List products = decoded['products'];
+      return products.map((e) => OrderProduct.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load order products');
+    }
+  }
+
+  Future<bool> updateSellerProductOrderStatus({
+    required int orderId,
+    required int newStatus,
+    required String token,
+  }) async {
+    final url = Uri.parse(
+      'https://shopyapi.runasp.net/api/SellerOrders/orders/$orderId/update-my-products?newStatus=$newStatus',
+    );
+
+    final response = await http.put(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to update order status');
     }
   }
 }

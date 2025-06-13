@@ -19,6 +19,8 @@ import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/providers/register_provider.dart';
 import 'package:graduation_project/providers/reset_password_provider.dart';
 import 'package:graduation_project/providers/review_provider.dart';
+import 'package:graduation_project/providers/seller_order_product_provider.dart';
+import 'package:graduation_project/providers/seller_order_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
 import 'package:graduation_project/providers/seller_top_selling_prodcuts.dart';
 import 'package:graduation_project/providers/store_info_provider.dart';
@@ -54,6 +56,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => SellerProductProvider()),
     ChangeNotifierProvider(create: (_) => TopSellingProvider()),
     ChangeNotifierProvider(create: (_) => ReviewProvider()),
+    ChangeNotifierProvider(create: (_) => SellerOrdersProvider()),
+    ChangeNotifierProvider(create: (_) => OrderProductsProvider()),
     ChangeNotifierProvider(create: (_) => BuyersProvider()),
     // will be removed
     ChangeNotifierProvider(create: (_) => CouponProvider()),
