@@ -85,8 +85,7 @@ class SellerProductProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      final result = await ApiService.deleteProduct(token, productId);
-    } catch (error) {
+      final result = await ApiService.deleteProduct(productId, token);
     } finally {
       isLoading = false;
       notifyListeners();

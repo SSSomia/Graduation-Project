@@ -189,6 +189,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Deleted successfully')),
                           );
+                            Navigator.pop(context);
                           // Optionally, navigate back or refresh the UI
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(

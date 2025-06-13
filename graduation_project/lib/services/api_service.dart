@@ -17,6 +17,8 @@ import 'package:graduation_project/models/store_info_model.dart';
 import 'package:graduation_project/models/top_selling_prodcuts.dart';
 import 'package:graduation_project/models/user_model.dart';
 import 'package:graduation_project/models/reviews_model.dart';
+import 'package:http_parser/http_parser.dart';
+
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -806,6 +808,49 @@ class ApiService {
     }
   }
 
+// Future<void> updateProduct({
+//   required int productId,
+//   required String token,
+//   required String name,
+//   required String description,
+//   required double price,
+//   required int stockQuantity,
+//   required int categoryId,
+//   required File imageFile, // from image_picker or File path
+// }) async {
+//   final uri = Uri.parse('https://shopyapi.runasp.net/api/Products/$productId');
+
+//   var request = http.MultipartRequest('PUT', uri);
+
+//   request.headers['Authorization'] = 'Bearer $token';
+//   request.headers['accept'] = '*/*';
+
+//   request.fields['Name'] = name;
+//   request.fields['Description'] = description;
+//   request.fields['Price'] = price.toString();
+//   request.fields['StockQuantity'] = stockQuantity.toString();
+//   request.fields['CategoryId'] = categoryId.toString();
+
+//   request.files.add(
+//     await http.MultipartFile.fromPath(
+//       'Images',
+//       imageFile.path,
+//       contentType: MediaType('image', lookupMimeType(imageFile.path) ?? 'jpeg'),
+//       filename: basename(imageFile.path),
+//     ),
+//   );
+
+//   final streamedResponse = await request.send();
+//   final response = await http.Response.fromStream(streamedResponse);
+
+//   if (response.statusCode == 200) {
+//     print('✅ Product updated successfully');
+//   } else {
+//     print('❌ Failed to update product: ${response.statusCode}');
+//     print('Response: ${response.body}');
+//   }
+// }
+
   Future<String?> updateProductSimple({
     required int productId,
     required String token,
@@ -837,11 +882,21 @@ class ApiService {
     //   contentType: MediaType('image', 'png'),
     // );
 
-    for (var image in images) {
-      request.files
-          .add(await http.MultipartFile.fromPath('Images', image.path));
-    }
+    // for (var image in images) {
+    //   request.files
+    //       .add(await http.MultipartFile.fromPath('Images', image.path));
+    // }
     // request.files.add(multipartFile);
+
+    if (images.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'Images',
+          images.first.path,
+          contentType: MediaType('image', 'png'),
+        ),
+      );
+    }
 
     final response = await request.send();
     final responseBody = await response.stream.bytesToString();
@@ -857,10 +912,9 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> deleteProduct(
-      String token, int productId) async {
-    final url = Uri.parse(
-        'https://shopyapi.runasp.net/api/Products/seller/ $productId');
+  static Future<String?> deleteProduct(int productId, String token) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Products/$productId');
 
     final response = await http.delete(
       url,
@@ -870,13 +924,13 @@ class ApiService {
       },
     );
 
-    print("Response status: ${response.statusCode}");
-    print("Response body: ${response.body}");
-
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      print('Product deleted successfully!');
+      return 'Product deleted successfully!';
     } else {
-      throw Exception('Failed to delete product: ${response.body}');
+      print(
+          'Failed to delete product: ${response.statusCode} ${response.body}');
+      return 'Error ${response.statusCode}: ${response.body}';
     }
   }
 
