@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/models/top_selling_prodcuts.dart';
 import 'package:graduation_project/providerNotUse/copoun_provider_test.dart';
+import 'package:graduation_project/providers/buyer_provider.dart';
 import 'package:graduation_project/providers/cart_provider.dart';
 import 'package:graduation_project/providers/category_provider.dart';
 import 'package:graduation_project/providers/change_password_provider.dart';
@@ -25,6 +26,7 @@ import 'package:graduation_project/providers/update_profile_data.dart';
 import 'package:graduation_project/providerNotUse/analytics_provider.dart';
 import 'package:graduation_project/providerNotUse/sales_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
+import 'package:graduation_project/screens/seller/my_buyers.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -52,6 +54,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => SellerProductProvider()),
     ChangeNotifierProvider(create: (_) => TopSellingProvider()),
     ChangeNotifierProvider(create: (_) => ReviewProvider()),
+    ChangeNotifierProvider(create: (_) => BuyersProvider()),
     // will be removed
     ChangeNotifierProvider(create: (_) => CouponProvider()),
   ], child: const MyApp()));

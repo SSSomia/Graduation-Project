@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:graduation_project/models/buyer.dart';
 import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/models/catigory_model.dart';
 import 'package:graduation_project/models/favorite_model.dart';
@@ -943,6 +944,25 @@ class ApiService {
       return []; // Return an empty list instead of throwing
     } else {
       throw Exception('Failed to load reviews');
+    }
+  }
+
+  
+  Future<List<Buyer>> fetchMyBuyers(String token) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Store/my-buyers');
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List data = json.decode(response.body);
+      return data.map((json) => Buyer.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to fetch buyers');
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:graduation_project/providers/orders_provider.dart';
 import 'package:graduation_project/providers/product_provider.dart';
 import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/providers/review_provider.dart';
+import 'package:graduation_project/screens/seller/product/review_page.dart';
 import 'package:graduation_project/widgets/product_reviews.dart';
 import 'package:graduation_project/widgets/review.dart';
 import 'package:graduation_project/widgets/stock.dart';
@@ -205,7 +206,27 @@ class _ProductPageState extends State<ProductPage> {
                   height: 20,
                 ),
                 ProductReviewsList(
-                    productId: productProvider.product!.productId),
+                    productId: productProvider.product!.productId,  reviewsNum: 3,),
+                Center(
+                  child: SizedBox(
+                    height: 50,
+                    width: 350,
+                    child: FilledButton(
+                      style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                              const Color.fromARGB(255, 50, 116, 138))),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReviewPage(productId: productProvider.product!.productId,),
+                          ),
+                        );
+                      },
+                      child: const Text('See More'),
+                    ),
+                  ),
+                ),
               ],
             ),
           ));

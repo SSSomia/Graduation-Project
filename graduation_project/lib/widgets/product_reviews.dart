@@ -65,8 +65,9 @@ import '../../providers/login_provider.dart'; // to get token
 
 class ProductReviewsList extends StatelessWidget {
   final int productId;
+  final int reviewsNum;
 
-  const ProductReviewsList({super.key, required this.productId});
+  const ProductReviewsList({super.key, required this.productId, required this.reviewsNum});
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,7 @@ class ProductReviewsList extends StatelessWidget {
                 : ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: reviewProvider.reviews.length,
+                    itemCount: reviewProvider.reviews.length > 3 && reviewsNum == 3 ? 3 : reviewProvider.reviews.length,
                     itemBuilder: (context, index) {
                       final ProductReview review =
                           reviewProvider.reviews[index];
