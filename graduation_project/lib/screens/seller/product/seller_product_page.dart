@@ -1,8 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
 import 'package:graduation_project/providers/product_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
+import 'package:graduation_project/screens/seller/product/update_product_screen.dart';
+import 'package:graduation_project/widgets/product_reviews.dart';
 import 'package:graduation_project/widgets/stock.dart';
 import 'package:provider/provider.dart';
 
@@ -49,11 +53,12 @@ class _SellerProductPageState extends State<SellerProductPage> {
           }
 
           final product = productProvider.product;
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          return SingleChildScrollView(
+  child: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
                 // Product Image Section
                 Stack(children: [
                   SizedBox(
@@ -140,6 +145,32 @@ class _SellerProductPageState extends State<SellerProductPage> {
                     child: FilledButton(
                       style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all<Color>(
+                              const Color.fromARGB(255, 42, 153, 151))),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                UpdateProductScreen(product: product),
+                          ),
+                        );
+
+                        // Navigate to checkout or further actions
+                      },
+                      child: const Text('Edit'),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: SizedBox(
+                    height: 50,
+                    width: 350,
+                    child: FilledButton(
+                      style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
                               const Color.fromARGB(255, 205, 0, 0))),
                       onPressed: () async {
                         try {
@@ -170,193 +201,12 @@ class _SellerProductPageState extends State<SellerProductPage> {
                     ),
                   ),
                 ),
-                // Center(
-                //   child: ElevatedButton(
-                //     onPressed: () async {
-                //       try {
-                //         final authProvider =
-                //             Provider.of<LoginProvider>(context, listen: false);
-                //         final sellerProductProvider =
-                //             Provider.of<SellerProductProvider>(context,
-                //                 listen: false);
-
-                //         await sellerProductProvider.deleteProduct(
-                //             authProvider.token, widget.productid);
-                //         // Optionally, navigate back or refresh the UI
-                //       } catch (e) {
-                //         ScaffoldMessenger.of(context).showSnackBar(
-                //           SnackBar(content: Text('Error: ${e.toString()}')),
-                //         );
-                //       }
-                //     },
-                //     child: productProvider.isLoading
-                //         ? CircularProgressIndicator()
-                //         : Text('Delete Product'),
-                //   ),
-                // ),
+                // ProductReviewsList(
+                //     productId: productProvider.product!.productId),
+       
               ],
             ),
-          );
+          ));
         }));
-  }
-
-  Future<void> showAddressDialog(BuildContext context, int productId) async {
-    final TextEditingController fullNameController = TextEditingController();
-    final TextEditingController governmentController = TextEditingController();
-    final TextEditingController cityController = TextEditingController();
-    final TextEditingController addressController = TextEditingController();
-    final TextEditingController phoneController = TextEditingController();
-
-    final _formKey = GlobalKey<FormState>();
-
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          elevation: 5,
-          insetPadding: const EdgeInsets.all(20),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.85,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          "Address Details",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 48, 150, 147),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              _buildTextField(
-                                controller: fullNameController,
-                                label: 'Full Name',
-                                icon: Icons.abc_outlined,
-                              ),
-                              const SizedBox(height: 12),
-                              _buildTextField(
-                                controller: governmentController,
-                                label: 'Government',
-                                icon: Icons.location_city,
-                              ),
-                              const SizedBox(height: 12),
-                              _buildTextField(
-                                controller: cityController,
-                                label: 'City',
-                                icon: Icons.location_on_outlined,
-                              ),
-                              const SizedBox(height: 12),
-                              _buildTextField(
-                                controller: addressController,
-                                label: 'Detailed Address',
-                                icon: Icons.home,
-                              ),
-                              const SizedBox(height: 12),
-                              _buildTextField(
-                                controller: phoneController,
-                                label: 'Phone Number',
-                                icon: Icons.phone,
-                                keyboardType: TextInputType.phone,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor:
-                                    const Color.fromARGB(255, 13, 26, 26),
-                              ),
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text("Cancel"),
-                            ),
-                            const SizedBox(width: 10),
-                            Consumer<OrderProvider>(
-                                builder: (context, order, child) {
-                              return ElevatedButton.icon(
-                                label: const Text(
-                                  "Buy Now",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 26, 123, 118),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 12),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                ),
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    final authProvider =
-                                        Provider.of<LoginProvider>(context,
-                                            listen: false);
-                                    final result = await order.placeOrder(
-                                        productId: productId,
-                                        quantity: 1,
-                                        fullName: fullNameController.text,
-                                        address: addressController.text,
-                                        city: cityController.text,
-                                        government: governmentController.text,
-                                        phoneNumber: phoneController.text,
-                                        token: authProvider.token, 
-                                        // changes here in the api
-                                        couponCode: '', finalPrice: 0);
-                                    print(result);
-                                    Navigator.pop(context);
-                                  }
-                                },
-                              );
-                            })
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon),
-        labelText: label,
-        filled: true,
-        fillColor: Colors.grey[100],
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      validator: (value) =>
-          value == null || value.trim().isEmpty ? 'Enter $label' : null,
-    );
   }
 }

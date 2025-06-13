@@ -3,6 +3,10 @@ import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
 import 'package:graduation_project/providers/product_provider.dart';
+import 'package:graduation_project/providers/profile_provider.dart';
+import 'package:graduation_project/providers/review_provider.dart';
+import 'package:graduation_project/widgets/product_reviews.dart';
+import 'package:graduation_project/widgets/review.dart';
 import 'package:graduation_project/widgets/stock.dart';
 import 'package:graduation_project/widgets/add_to_cart_button.dart';
 import 'package:graduation_project/widgets/favorite_button.dart';
@@ -25,6 +29,9 @@ class _ProductPageState extends State<ProductPage> {
       final authProvider = Provider.of<LoginProvider>(context, listen: false);
       Provider.of<ProductProvider>(context, listen: false)
           .fetchProductById(authProvider.token, widget.productid);
+      final provider = Provider.of<ReviewProvider>(context, listen: false);
+
+      provider.fetchReviews(widget.productid, authProvider.token);
     });
   }
 
@@ -51,7 +58,8 @@ class _ProductPageState extends State<ProductPage> {
           }
 
           final product = productProvider.product;
-          return Padding(
+          return SingleChildScrollView(
+              child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,10 +201,33 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                ProductReviewsList(
+                    productId: productProvider.product!.productId),
               ],
             ),
-          );
-        }));
+          ));
+        }),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: AddReviewWidget(productId: widget.productid),
+                ),
+              ),
+            );
+          },
+          backgroundColor: Colors.teal,
+          child: const Icon(Icons.rate_review_outlined),
+        ));
   }
 
   Future<void> showAddressDialog(BuildContext context, int productId) async {
@@ -370,7 +401,8 @@ class _ProductPageState extends State<ProductPage> {
                                           government: governmentController.text,
                                           phoneNumber: phoneController.text,
                                           token: authProvider.token,
-                                          /// changes here in the api 
+
+                                          /// changes here in the api
                                           couponCode:
                                               couponController.text.trim(),
                                           finalPrice: discountedPrice,

@@ -8,9 +8,12 @@ import 'package:graduation_project/models/order_details_model.dart';
 import 'package:graduation_project/models/order_model.dart';
 import 'package:graduation_project/models/pending_seller.dart';
 import 'package:graduation_project/models/product_module.dart';
+import 'package:graduation_project/models/product_review.dart';
 import 'package:graduation_project/models/seller_product.dart';
 import 'package:graduation_project/models/store_info_model.dart';
+import 'package:graduation_project/models/top_selling_prodcuts.dart';
 import 'package:graduation_project/models/user_model.dart';
+import 'package:graduation_project/models/reviews_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -871,6 +874,75 @@ class ApiService {
       return json.decode(response.body);
     } else {
       throw Exception('Failed to delete product: ${response.body}');
+    }
+  }
+
+  Future<List<TopSellingProduct>> fetchTopSellingProducts(String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/ProductStatistics/top-selling-products');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+      return jsonData.map((json) => TopSellingProduct.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load top-selling products');
+    }
+  }
+
+  Future<String?> addReview(Review review, String token) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Review/add-review');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(review.toJson()),
+      );
+
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+        return body['message'];
+      } else {
+        return 'Failed to add review: ${response.statusCode}';
+      }
+    } catch (e) {
+      return 'Error: $e';
+    }
+  }
+
+  Future<List<ProductReview>> getReviews(int productId, String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Review/all-reviews?productId=$productId');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'accept': '*/*',
+      },
+    );
+    print("Status: ${response.statusCode}");
+    print("Response: ${response.body}");
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((e) => ProductReview.fromJson(e)).toList();
+    } else if (response.statusCode == 404) {
+      // No reviews exist for this product
+      return []; // Return an empty list instead of throwing
+    } else {
+      throw Exception('Failed to load reviews');
     }
   }
 }
