@@ -5,6 +5,7 @@ import 'package:graduation_project/providers/buyer_provider.dart';
 import 'package:graduation_project/providers/cart_provider.dart';
 import 'package:graduation_project/providers/category_provider.dart';
 import 'package:graduation_project/providers/change_password_provider.dart';
+import 'package:graduation_project/providers/discount_seller_provider.dart';
 import 'package:graduation_project/providers/favorite_provider.dart';
 import 'package:graduation_project/providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/providers/get_products_of_category.dart';
@@ -19,6 +20,7 @@ import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/providers/register_provider.dart';
 import 'package:graduation_project/providers/reset_password_provider.dart';
 import 'package:graduation_project/providers/review_provider.dart';
+import 'package:graduation_project/providers/seller_discount_provider.dart';
 import 'package:graduation_project/providers/seller_order_product_provider.dart';
 import 'package:graduation_project/providers/seller_order_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
@@ -59,6 +61,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => SellerOrdersProvider()),
     ChangeNotifierProvider(create: (_) => OrderProductsProvider()),
     ChangeNotifierProvider(create: (_) => BuyersProvider()),
+    ChangeNotifierProvider(create: (_) => DiscountProvider()),
+    ChangeNotifierProvider(create: (_) => SellerDiscountProvider()),
     // will be removed
     ChangeNotifierProvider(create: (_) => CouponProvider()),
   ], child: const MyApp()));

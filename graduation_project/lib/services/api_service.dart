@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:graduation_project/models/all_seller_discount.dart';
 import 'package:graduation_project/models/buyer.dart';
 import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/models/catigory_model.dart';
+import 'package:graduation_project/models/dicount_seller_model.dart';
 import 'package:graduation_project/models/favorite_model.dart';
 import 'package:graduation_project/models/notification_model.dart';
 import 'package:graduation_project/models/order_details_model.dart';
@@ -808,49 +810,6 @@ class ApiService {
     }
   }
 
-// Future<void> updateProduct({
-//   required int productId,
-//   required String token,
-//   required String name,
-//   required String description,
-//   required double price,
-//   required int stockQuantity,
-//   required int categoryId,
-//   required File imageFile, // from image_picker or File path
-// }) async {
-//   final uri = Uri.parse('https://shopyapi.runasp.net/api/Products/$productId');
-
-//   var request = http.MultipartRequest('PUT', uri);
-
-//   request.headers['Authorization'] = 'Bearer $token';
-//   request.headers['accept'] = '*/*';
-
-//   request.fields['Name'] = name;
-//   request.fields['Description'] = description;
-//   request.fields['Price'] = price.toString();
-//   request.fields['StockQuantity'] = stockQuantity.toString();
-//   request.fields['CategoryId'] = categoryId.toString();
-
-//   request.files.add(
-//     await http.MultipartFile.fromPath(
-//       'Images',
-//       imageFile.path,
-//       contentType: MediaType('image', lookupMimeType(imageFile.path) ?? 'jpeg'),
-//       filename: basename(imageFile.path),
-//     ),
-//   );
-
-//   final streamedResponse = await request.send();
-//   final response = await http.Response.fromStream(streamedResponse);
-
-//   if (response.statusCode == 200) {
-//     print('✅ Product updated successfully');
-//   } else {
-//     print('❌ Failed to update product: ${response.statusCode}');
-//     print('Response: ${response.body}');
-//   }
-// }
-
   Future<String?> updateProductSimple({
     required int productId,
     required String token,
@@ -1091,4 +1050,83 @@ class ApiService {
       throw Exception('Failed to update order status');
     }
   }
+
+  Future<bool> sendDiscount({
+    required Discount discount,
+    required String token,
+  }) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/SellerDiscount/send-discount');
+
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+        "accept": "*/*"
+      },
+      body: jsonEncode( discount.toJson(), // ✅ Wrap in "dto"
+      ),
+    );
+    print(
+        "Sending coupon: code=${discount.couponCode}, expiry=${discount.expiryDate}, ${discount.userId}");
+
+    if (response.statusCode == 200) {
+      print("object");
+      return true;
+    } else {
+      print("Send discount failed: ${response.body}");
+      return false;
+    }
+  }
+
+  Future<List<SellerDiscount>> fetchSellerDiscounts(String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/SellerDiscount/my-discounts');
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print("Status Code: ${response.statusCode}");
+    print("Response Body: ${response.body}");
+
+    if (response.statusCode == 200) {
+      List<dynamic> body = json.decode(response.body);
+      return body.map((json) => SellerDiscount.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load seller discounts');
+    }
+  }
+
+
+
+static Future<bool> deleteSellerDiscount(String token, int discountId) async {
+  final url = Uri.parse(
+      'https://shopyapi.runasp.net/api/SellerDiscount/delete/$discountId');
+
+  try {
+    final response = await http.delete(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print('Discount deleted successfully.');
+      return true;
+    } else {
+      print('Failed to delete discount. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      return false;
+    }
+  } catch (e) {
+    print('Exception while deleting discount: $e');
+    return false;
+  }
+}
 }

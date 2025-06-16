@@ -1,0 +1,184 @@
+import 'package:flutter/material.dart';
+import 'package:graduation_project/providers/category_provider.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/products_provider.dart';
+import 'package:graduation_project/screens/customer/home_page.dart';
+import 'package:graduation_project/widgets/banner.dart';
+import 'package:graduation_project/widgets/product_card.dart';
+import 'package:provider/provider.dart';
+
+class ScrollAwareBanners extends StatefulWidget {
+  const ScrollAwareBanners({super.key});
+
+  @override
+  State<ScrollAwareBanners> createState() => _ScrollAwareBannersState();
+}
+
+class _ScrollAwareBannersState extends State<ScrollAwareBanners> {
+  final ScrollController _scrollController = ScrollController();
+  bool _showBanners = true;
+  double _lastOffset = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = Provider.of<LoginProvider>(context, listen: false);
+      Provider.of<ProductsProvider>(context, listen: false)
+          .fetchRandomProducts(authProvider.token);
+      Future.microtask(() =>
+          Provider.of<CategoryProvider>(context, listen: false)
+              .loadCategories());
+    });
+
+    _scrollController.addListener(() {
+      final offset = _scrollController.offset;
+
+      if (offset > _lastOffset && _showBanners) {
+        // User scrolled down
+        setState(() {
+          _showBanners = false;
+        });
+      } else if (offset < _lastOffset && !_showBanners) {
+        // User scrolled up
+        setState(() {
+          _showBanners = true;
+        });
+      }
+
+      _lastOffset = offset;
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
+    String query = "";
+    return Scaffold(
+      body: Stack(
+        children: [
+          ListView.builder(
+            controller: _scrollController,
+            padding: const EdgeInsets.only(top: 180), // height of banner space
+            itemCount: 20,
+            itemBuilder: (_, index) => ListTile(title: Text('Product #$index')),
+          ),
+          AnimatedOpacity(
+            opacity: _showBanners ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 300),
+            child: const PromoBannerList(),
+          ),
+          Consumer<ProductsProvider>(builder: (context, provider, _) {
+            if (provider.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (provider.error != null) {
+              return Center(child: Text('Error: ${provider.error}'));
+            } else if (provider.products.isEmpty) {
+              return const Center(child: Text('No products found.'));
+            }
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: TextField(
+                //     controller: searchController,
+                //     decoration: InputDecoration(
+                //       hintText: "Search...",
+                //       prefixIcon: Icon(Icons.search),
+                //       border: OutlineInputBorder(),
+                //     ),
+                //     onChanged: (value) {
+                //       setState(() {
+                //         query = value;
+                //       });
+                //     },
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15, left: 15),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 8,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: TextField(
+                      controller: searchController,
+                      decoration: const InputDecoration(
+                        hintText: "Search...",
+                        prefixIcon: Icon(Icons.search, color: Colors.grey),
+                        border: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          query = value;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                // PromoBannerList(),
+                // const CategoryLine(),
+                Expanded(
+                  child: GridView.builder(
+                    physics: const CustomScrollPhysics(),
+                    padding: const EdgeInsets.all(10),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 30,
+                      childAspectRatio: .67,
+                    ),
+                    itemCount: provider.products.length,
+                    itemBuilder: (context, index) {
+                      final product = provider.products[index];
+                      return ProductCard(product: product);
+                    },
+                  ),
+                ),
+              ],
+            );
+          })
+        ],
+      ),
+    );
+  }
+}
+
+class CustomScrollPhysics extends ScrollPhysics {
+  final double speedFactor;
+
+  const CustomScrollPhysics({super.parent, this.speedFactor = 1.0});
+
+  @override
+  CustomScrollPhysics applyTo(ScrollPhysics? ancestor) {
+    return CustomScrollPhysics(
+        parent: buildParent(ancestor), speedFactor: speedFactor);
+  }
+
+  @override
+  double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
+    return offset * speedFactor; // Adjust the scroll speed
+  }
+}

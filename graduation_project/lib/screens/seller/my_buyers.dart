@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/buyer_provider.dart';
 import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/screens/seller/addCoupon.dart';
+import 'package:graduation_project/screens/seller/coupon_screen.dart';
 import 'package:provider/provider.dart';
 
 class BuyersPage extends StatefulWidget {
@@ -21,7 +23,6 @@ class _BuyersPageState extends State<BuyersPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Buyers'),
@@ -48,6 +49,15 @@ class _BuyersPageState extends State<BuyersPage> {
                 ),
                 title: Text(buyer.userName),
                 subtitle: Text('Orders: ${buyer.ordersCount}'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          CreateCouponPage( buyerId: buyer.userId, buyerName: buyer.userName,),
+                    ),
+                  );
+                },
               );
             },
           );

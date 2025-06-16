@@ -60,4 +60,6 @@ flutter:
     - assets/images/logo/bag (1).png
     - assets/images/logo/shop.png
     - assets\images\logo\shop.png
+    - assets/images/logo/shop_512x512.png
+    - assets\images\logo\shop_512x512.png
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/category_provider.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/products_provider.dart';
+import 'package:graduation_project/widgets/banner.dart';
 import 'package:graduation_project/widgets/catigoryLine.dart';
 import 'package:graduation_project/widgets/product_card.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +67,6 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.only(right: 15, left: 15),
             child: Container(
-            
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -98,7 +98,8 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 15,
           ),
-          const CategoryLine(),
+          // PromoBannerList(),
+          // const CategoryLine(),
           Expanded(
             child: GridView.builder(
               physics: const CustomScrollPhysics(),

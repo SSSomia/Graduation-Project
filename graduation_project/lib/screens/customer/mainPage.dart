@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/customer/profile/profile_page.dart';
+import 'package:graduation_project/screens/customer/scroll_main_page.dart';
 import 'package:graduation_project/widgets/myDrawer.dart';
 import 'package:graduation_project/screens/customer/home_page.dart';
 import 'package:graduation_project/screens/customer/my_cart.dart';
 import 'package:graduation_project/screens/customer/orders/orders.dart';
+import 'package:graduation_project/widgets/scrolle_banner.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({super.key});
@@ -69,7 +71,7 @@ class _NavigationExampleState extends State<MainHomePage> {
       ),
       body: <Widget>[
         const You(),
-        HomePage(),
+        ScrollMainPage(),
         const Orders(),
         const MyCart(),
       ][currentPageIndex],

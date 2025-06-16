@@ -1,9 +1,9 @@
 flutter_native_splash:
   color: "#F4FFFE"
-  image: assets/images/logo/1024.png
+  image: assets/images/logo/shop_512x512.png
   android: true
   ios: true
 
   android_12:
     color: "#F4FFFE"
-    image: assets/images/logo/1024.png
+    image: assets/images/logo/shshop_512x512op.png
