@@ -10,6 +10,7 @@ import 'package:graduation_project/providers/favorite_provider.dart';
 import 'package:graduation_project/providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/providers/get_products_of_category.dart';
 import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/loyality_provider.dart';
 import 'package:graduation_project/providers/notification_provider.dart';
 import 'package:graduation_project/providers/order_details_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
@@ -32,6 +33,8 @@ import 'package:graduation_project/providers/update_profile_data.dart';
 import 'package:graduation_project/providerNotUse/analytics_provider.dart';
 import 'package:graduation_project/providerNotUse/sales_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
+import 'package:graduation_project/screens/onboarding/new_onboarding_screens.dart';
+import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -66,8 +69,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => SellerDiscountProvider()),
     ChangeNotifierProvider(create: (_) => PromoCodeProvider()),
     ChangeNotifierProvider(create: (_) => TrackingProvider()),
+    ChangeNotifierProvider(create: (_) => LoyaltyProvider()),
     // will be removed
-    ChangeNotifierProvider(create: (_) => CouponProvider()),
   ], child: const MyApp()));
 }
 
@@ -82,9 +85,9 @@ class MyApp extends StatelessWidget {
     //   theme: ThemeData(primarySwatch: Colors.blue),
     //   home: OnboardingScreen(),
     // );
-    return const MaterialApp(
+    return MaterialApp(
       // have to make it in the real app appear just once !!!!!
-      home: LoginPage(),
+      home: OnboardingScreen(),
     );
   }
 }

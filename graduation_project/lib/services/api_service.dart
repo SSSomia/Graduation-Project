@@ -6,6 +6,7 @@ import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/models/catigory_model.dart';
 import 'package:graduation_project/models/dicount_seller_model.dart';
 import 'package:graduation_project/models/favorite_model.dart';
+import 'package:graduation_project/models/loyality_status.dart';
 import 'package:graduation_project/models/notification_model.dart';
 import 'package:graduation_project/models/order_details_model.dart';
 import 'package:graduation_project/models/order_model.dart';
@@ -1195,8 +1196,9 @@ class ApiService {
     }
   }
 
-static Future<TrackingModel> fetchTracking(int orderId, String token) async {
-    final url = Uri.parse('https://shopyapi.runasp.net/api/Order/track-order/$orderId');
+  static Future<TrackingModel> fetchTracking(int orderId, String token) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Order/track-order/$orderId');
 
     final response = await http.get(
       url,
@@ -1212,5 +1214,30 @@ static Future<TrackingModel> fetchTracking(int orderId, String token) async {
     } else {
       throw Exception('Failed to fetch tracking data: ${response.statusCode}');
     }
+  }
+
+  static Future<LoyaltyStatusModel?> fetchLoyaltyStatus(String token) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Order/api/loyalty/status');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'accept': '*/*',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        return LoyaltyStatusModel.fromJson(json.decode(response.body));
+      } else {
+        print('Failed to load loyalty status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception in LoyaltyService: $e');
+    }
+
+    return null;
   }
 }
