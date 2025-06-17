@@ -17,6 +17,7 @@ import 'package:graduation_project/providers/pending_seller_provider.dart';
 import 'package:graduation_project/providers/product_provider.dart';
 import 'package:graduation_project/providers/products_provider.dart';
 import 'package:graduation_project/providers/profile_provider.dart';
+import 'package:graduation_project/providers/promo_code.dart';
 import 'package:graduation_project/providers/register_provider.dart';
 import 'package:graduation_project/providers/reset_password_provider.dart';
 import 'package:graduation_project/providers/review_provider.dart';
@@ -30,7 +31,6 @@ import 'package:graduation_project/providers/update_profile_data.dart';
 import 'package:graduation_project/providerNotUse/analytics_provider.dart';
 import 'package:graduation_project/providerNotUse/sales_provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/screens/seller/my_buyers.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -63,6 +63,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => BuyersProvider()),
     ChangeNotifierProvider(create: (_) => DiscountProvider()),
     ChangeNotifierProvider(create: (_) => SellerDiscountProvider()),
+    ChangeNotifierProvider(create: (_) => PromoCodeProvider()),
     // will be removed
     ChangeNotifierProvider(create: (_) => CouponProvider()),
   ], child: const MyApp()));

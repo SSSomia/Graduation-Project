@@ -17,10 +17,8 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   void initState() {
     super.initState();
 
-    // Delay the load call to avoid build phase errors
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final authProvider = Provider.of<LoginProvider>(context, listen: false);
-
       Provider.of<OrderDetailProvider>(context, listen: false)
           .loadOrderDetails(widget.orderId, authProvider.token);
     });
@@ -60,17 +58,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Quantity: ${detail.quantity}"),
-                                Text("Unit Price: \$${detail.unitPrice}"),
-                                Text("Subtotal: \$${detail.subtotal}"),
-                                if (detail.discountPercentage != null)
-                                  Text(
-                                      "Discount: ${detail.discountPercentage!.toStringAsFixed(0)}%"),
-                                if (detail.discountExpiryDate != null)
-                                  Text(
-                                    "Expires: ${detail.discountExpiryDate!.toLocal().toString().split(' ')[0]}",
-                                    style: const TextStyle(
-                                        fontSize: 12, color: Colors.red),
-                                  ),
+                                Text(
+                                    "Original Price: \$${detail.originalPrice.toStringAsFixed(2)}"),
+                                Text(
+                                    "Final Price: \$${detail.finalPrice.toStringAsFixed(2)}"),
+                                Text(
+                                    "Subtotal: \$${detail.subtotal.toStringAsFixed(2)}"),
                               ],
                             ),
                           ),

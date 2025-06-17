@@ -438,8 +438,7 @@ class ApiService {
   //   }
   // }
 
-  static Future<List<OrderDetail>> fetchOrderDetails(
-      int orderId, String token) async {
+  static Future<List<OrderDetail>> fetchOrderDetails(int orderId, String token) async {
     final url = Uri.parse(
         'https://shopyapi.runasp.net/api/Order/order-details/$orderId');
 
@@ -454,8 +453,8 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        final List<dynamic> details = data['orderDetails'];
-        return details.map((e) => OrderDetail.fromJson(e)).toList();
+        final List<dynamic> products = data['products']; // <- updated key
+        return products.map((e) => OrderDetail.fromJson(e)).toList();
       } else {
         throw Exception('Failed to load order details: ${response.statusCode}');
       }
@@ -1065,7 +1064,8 @@ class ApiService {
         "Authorization": "Bearer $token",
         "accept": "*/*"
       },
-      body: jsonEncode( discount.toJson(), // ✅ Wrap in "dto"
+      body: jsonEncode(
+        discount.toJson(), // ✅ Wrap in "dto"
       ),
     );
     print(
@@ -1101,32 +1101,77 @@ class ApiService {
     }
   }
 
+  static Future<bool> deleteSellerDiscount(String token, int discountId) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/SellerDiscount/delete/$discountId');
 
+    try {
+      final response = await http.delete(
+        url,
+        headers: {
+          'accept': '*/*',
+          'Authorization': 'Bearer $token',
+        },
+      );
 
-static Future<bool> deleteSellerDiscount(String token, int discountId) async {
-  final url = Uri.parse(
-      'https://shopyapi.runasp.net/api/SellerDiscount/delete/$discountId');
+      if (response.statusCode == 200) {
+        print('Discount deleted successfully.');
+        return true;
+      } else {
+        print('Failed to delete discount. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        return false;
+      }
+    } catch (e) {
+      print('Exception while deleting discount: $e');
+      return false;
+    }
+  }
 
-  try {
-    final response = await http.delete(
+  static Future<String> applyPromoCode({
+    required String promoCode,
+    required String token,
+  }) async {
+    final url = Uri.parse(
+      'https://shopyapi.runasp.net/api/Order/apply-promocode?promoCode=$promoCode',
+    );
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'accept': '*/*',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        print('************************');
+        return response.body;
+      } else {
+        print("false");
+        return 'Error: ${response.body}';
+      }
+    } catch (e) {
+      return 'Exception: $e';
+    }
+  }
+
+  Future<Map<String, dynamic>> getTrackOrder(int orderId, String token) async {
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Order/track-order/$orderId');
+    final response = await http.get(
       url,
       headers: {
-        'accept': '*/*',
         'Authorization': 'Bearer $token',
+        'accept': '*/*',
       },
     );
 
     if (response.statusCode == 200) {
-      print('Discount deleted successfully.');
-      return true;
+      return json.decode(response.body);
     } else {
-      print('Failed to delete discount. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      return false;
+      throw Exception('Failed to track order: ${response.body}');
     }
-  } catch (e) {
-    print('Exception while deleting discount: $e');
-    return false;
   }
-}
 }
