@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/order_details_provider.dart';
+import 'package:graduation_project/widgets/track_order_widget.dart';
 import 'package:provider/provider.dart';
 
 class OrderDetailsPage extends StatefulWidget {
@@ -27,6 +28,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<OrderDetailProvider>(context);
+    final authProvider = Provider.of<LoginProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -37,22 +39,34 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
           ? const Center(child: CircularProgressIndicator())
           : provider.error != null
               ? Center(child: Text(provider.error!))
-              : provider.details.isEmpty
-                  ? const Center(child: Text('No order details found'))
-                  : ListView.builder(
-                      itemCount: provider.details.length,
-                      itemBuilder: (context, index) {
-                        final detail = provider.details[index];
-                        return Card(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
+              : ListView(
+                  padding: const EdgeInsets.all(12),
+                  children: [
+                    // Row(
+                    //   children: [
+                    //     const Text("Order Status: ",
+                    //         style: TextStyle(
+                    //             fontSize: 16, fontWeight: FontWeight.bold)),
+                    //     Text(
+                    //       provider.status,
+                    //       style: TextStyle(
+                    //         fontSize: 16,
+                    //         color: provider.status == "Shipped"
+                    //             ? Colors.orange
+                    //             : Colors.green,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // const SizedBox(height: 10),
+
+                    // const Divider(),
+
+                    ...provider.details.map((detail) => Card(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
                           child: ListTile(
-                            leading: Image.network(
-                              detail.productImage,
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            ),
+                            leading: Image.network(detail.productImage,
+                                width: 50, height: 50),
                             title: Text(detail.productName),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,9 +81,32 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                               ],
                             ),
                           ),
-                        );
-                      },
+                        )),
+
+                    const SizedBox(height: 16),
+                    if (provider.status == "Shipped")
+                      ElevatedButton(
+                        onPressed: () async {
+                          await provider.confirmDelivery(
+                            widget.orderId,
+                            authProvider.token,
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green),
+                        child: const Text("Confirm Delivery"),
+                      ),
+
+                    /// Wrap this to avoid layout errors
+                    SizedBox(
+                      height: 200, // adjust based on what's inside
+                      child: TrackOrderPage(
+                        orderId: widget.orderId,
+                        token: authProvider.token,
+                      ),
                     ),
+                  ],
+                ),
     );
   }
 }

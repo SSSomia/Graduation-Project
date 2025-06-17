@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/models/track_order.dart';
-import '../services/api_service.dart';
+import 'package:graduation_project/services/api_service.dart';
 
-class TrackOrderProvider with ChangeNotifier {
-  TrackOrderModel? _trackOrder;
-  String? _error;
+class TrackingProvider with ChangeNotifier {
+  TrackingModel? trackingData;
+  bool isLoading = false;
+  String? errorMessage;
 
-  TrackOrderModel? get trackOrder => _trackOrder;
-  String? get error => _error;
+  Future<void> loadTracking(int orderId, String token) async {
+    isLoading = true;
+    notifyListeners();
 
-  Future<void> fetchTrackOrder(int orderId, String token) async {
     try {
-      _error = null;
-      final data = await ApiService().getTrackOrder(orderId, token);
-      _trackOrder = TrackOrderModel.fromJson(data);
+      trackingData = await ApiService.fetchTracking(orderId, token);
+      errorMessage = null;
     } catch (e) {
-      _error = e.toString();
+      errorMessage = e.toString();
     }
+
+    isLoading = false;
     notifyListeners();
   }
 }

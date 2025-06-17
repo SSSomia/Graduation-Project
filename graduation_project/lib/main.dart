@@ -27,6 +27,7 @@ import 'package:graduation_project/providers/seller_order_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
 import 'package:graduation_project/providers/seller_top_selling_prodcuts.dart';
 import 'package:graduation_project/providers/store_info_provider.dart';
+import 'package:graduation_project/providers/track_order_provider.dart';
 import 'package:graduation_project/providers/update_profile_data.dart';
 import 'package:graduation_project/providerNotUse/analytics_provider.dart';
 import 'package:graduation_project/providerNotUse/sales_provider.dart';
@@ -64,6 +65,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => DiscountProvider()),
     ChangeNotifierProvider(create: (_) => SellerDiscountProvider()),
     ChangeNotifierProvider(create: (_) => PromoCodeProvider()),
+    ChangeNotifierProvider(create: (_) => TrackingProvider()),
     // will be removed
     ChangeNotifierProvider(create: (_) => CouponProvider()),
   ], child: const MyApp()));

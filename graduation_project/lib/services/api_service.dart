@@ -17,6 +17,7 @@ import 'package:graduation_project/models/seller_order_product.dart';
 import 'package:graduation_project/models/seller_product.dart';
 import 'package:graduation_project/models/store_info_model.dart';
 import 'package:graduation_project/models/top_selling_prodcuts.dart';
+import 'package:graduation_project/models/track_order.dart';
 import 'package:graduation_project/models/user_model.dart';
 import 'package:graduation_project/models/reviews_model.dart';
 import 'package:http_parser/http_parser.dart';
@@ -419,6 +420,43 @@ class ApiService {
     }
   }
 
+  static Future<Map<String, dynamic>> fetchOrderDetails(
+      int orderId, String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Order/order-details/$orderId');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load order details: ${response.statusCode}');
+    }
+  }
+
+  static Future<void> confirmDelivery(int orderId, String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/Order/confirm-delivery/$orderId'); // Replace if different
+
+    final response = await http.post(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception("Failed to confirm delivery");
+    }
+  }
+
   // static Future<List<OrderDetail>> fetchOrderDetails(
   //     int orderId, String token) async {
   //   final url = 'https://shopyapi.runasp.net/api/Order/order-details/$orderId';
@@ -438,31 +476,31 @@ class ApiService {
   //   }
   // }
 
-  static Future<List<OrderDetail>> fetchOrderDetails(int orderId, String token) async {
-    final url = Uri.parse(
-        'https://shopyapi.runasp.net/api/Order/order-details/$orderId');
+  // static Future<List<OrderDetail>> fetchOrderDetails(int orderId, String token) async {
+  //   final url = Uri.parse(
+  //       'https://shopyapi.runasp.net/api/Order/order-details/$orderId');
 
-    try {
-      final response = await http.get(
-        url,
-        headers: {
-          'accept': '*/*',
-          'Authorization': 'Bearer $token',
-        },
-      );
+  //   try {
+  //     final response = await http.get(
+  //       url,
+  //       headers: {
+  //         'accept': '*/*',
+  //         'Authorization': 'Bearer $token',
+  //       },
+  //     );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        final List<dynamic> products = data['products']; // <- updated key
-        return products.map((e) => OrderDetail.fromJson(e)).toList();
-      } else {
-        throw Exception('Failed to load order details: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching order details: $e');
-      rethrow;
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       final Map<String, dynamic> data = json.decode(response.body);
+  //       final List<dynamic> products = data['products']; // <- updated key
+  //       return products.map((e) => OrderDetail.fromJson(e)).toList();
+  //     } else {
+  //       throw Exception('Failed to load order details: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching order details: $e');
+  //     rethrow;
+  //   }
+  // }
 
   static Future<Map<String, dynamic>> placeOrder({
     required int productId,
@@ -1157,21 +1195,22 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> getTrackOrder(int orderId, String token) async {
-    final url =
-        Uri.parse('https://shopyapi.runasp.net/api/Order/track-order/$orderId');
+static Future<TrackingModel> fetchTracking(int orderId, String token) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Order/track-order/$orderId');
+
     final response = await http.get(
       url,
       headers: {
-        'Authorization': 'Bearer $token',
         'accept': '*/*',
+        'Authorization': 'Bearer $token',
       },
     );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      final jsonData = json.decode(response.body);
+      return TrackingModel.fromJson(jsonData);
     } else {
-      throw Exception('Failed to track order: ${response.body}');
+      throw Exception('Failed to fetch tracking data: ${response.statusCode}');
     }
   }
 }
