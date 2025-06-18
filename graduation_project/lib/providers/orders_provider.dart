@@ -62,7 +62,7 @@ class OrderProvider with ChangeNotifier {
     required String city,
     required String government,
     required String phoneNumber,
-    required String token, required String couponCode, required double finalPrice,
+    required String token,
   }) async {
     _isLoading = true;
     notifyListeners();

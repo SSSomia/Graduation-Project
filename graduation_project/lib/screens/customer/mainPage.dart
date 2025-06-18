@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/customer/profile/profile_page.dart';
 import 'package:graduation_project/screens/customer/scroll_main_page.dart';
+import 'package:graduation_project/screens/customer/search_screen.dart';
 import 'package:graduation_project/widgets/myDrawer.dart';
 import 'package:graduation_project/screens/customer/home_page.dart';
 import 'package:graduation_project/screens/customer/my_cart.dart';
@@ -60,8 +61,8 @@ class _NavigationExampleState extends State<MainHomePage> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.library_books_outlined),
-            label: 'Orders',
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           NavigationDestination(
             icon: Icon(Icons.shopping_bag_outlined),
@@ -72,7 +73,7 @@ class _NavigationExampleState extends State<MainHomePage> {
       body: <Widget>[
         const You(),
         ScrollMainPage(),
-        const Orders(),
+        const SearchScreen(),
         const MyCart(),
       ][currentPageIndex],
     );

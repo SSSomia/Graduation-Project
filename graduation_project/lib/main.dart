@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/models/top_selling_prodcuts.dart';
-import 'package:graduation_project/providerNotUse/copoun_provider_test.dart';
 import 'package:graduation_project/providers/buyer_provider.dart';
 import 'package:graduation_project/providers/cart_provider.dart';
 import 'package:graduation_project/providers/category_provider.dart';
@@ -22,6 +20,7 @@ import 'package:graduation_project/providers/promo_code.dart';
 import 'package:graduation_project/providers/register_provider.dart';
 import 'package:graduation_project/providers/reset_password_provider.dart';
 import 'package:graduation_project/providers/review_provider.dart';
+import 'package:graduation_project/providers/search_provider.dart';
 import 'package:graduation_project/providers/seller_discount_provider.dart';
 import 'package:graduation_project/providers/seller_order_product_provider.dart';
 import 'package:graduation_project/providers/seller_order_provider.dart';
@@ -32,8 +31,6 @@ import 'package:graduation_project/providers/track_order_provider.dart';
 import 'package:graduation_project/providers/update_profile_data.dart';
 import 'package:graduation_project/providerNotUse/analytics_provider.dart';
 import 'package:graduation_project/providerNotUse/sales_provider.dart';
-import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/screens/onboarding/new_onboarding_screens.dart';
 import 'package:graduation_project/screens/onboarding/onboarding_screens.dart';
 import 'package:provider/provider.dart';
 
@@ -70,6 +67,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => PromoCodeProvider()),
     ChangeNotifierProvider(create: (_) => TrackingProvider()),
     ChangeNotifierProvider(create: (_) => LoyaltyProvider()),
+    ChangeNotifierProvider(create: (_) => SearchProvider()),
     // will be removed
   ], child: const MyApp()));
 }

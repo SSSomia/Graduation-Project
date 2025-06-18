@@ -38,6 +38,9 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    final token = Provider.of<LoginProvider>(context).token;
+    final reviewProvider = Provider.of<ReviewProvider>(context);
+
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 246, 246, 246),
         appBar: AppBar(
@@ -205,28 +208,36 @@ class _ProductPageState extends State<ProductPage> {
                 SizedBox(
                   height: 20,
                 ),
+
                 ProductReviewsList(
-                    productId: productProvider.product!.productId,  reviewsNum: 3,),
-                Center(
-                  child: SizedBox(
-                    height: 50,
-                    width: 350,
-                    child: FilledButton(
-                      style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all<Color>(
-                              const Color.fromARGB(255, 50, 116, 138))),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ReviewPage(productId: productProvider.product!.productId,),
-                          ),
-                        );
-                      },
-                      child: const Text('See More'),
-                    ),
-                  ),
+                  productId: productProvider.product!.productId,
+                  reviewsNum: 3,
                 ),
+                reviewProvider.reviews.isEmpty
+                    ? const Text("")
+                    : Center(
+                        child: SizedBox(
+                          height: 50,
+                          width: 350,
+                          child: FilledButton(
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                    const Color.fromARGB(255, 50, 116, 138))),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ReviewPage(
+                                    productId:
+                                        productProvider.product!.productId,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: const Text('See More'),
+                          ),
+                        ),
+                      ),
               ],
             ),
           ));

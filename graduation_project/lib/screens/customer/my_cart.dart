@@ -327,9 +327,6 @@ class _MyCartState extends State<MyCart> {
                                                 governmentController.text,
                                             phoneNumber: phoneController.text,
                                             token: authProvider.token,
-                                            couponCode:
-                                                couponController.text.trim(),
-                                            finalPrice: discountedPrice,
                                           );
                                           cartProvider.clearCartLocally();
                                           Navigator.pop(context);

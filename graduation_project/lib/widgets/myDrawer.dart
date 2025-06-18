@@ -5,6 +5,7 @@ import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/screens/customer/about.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 import 'package:graduation_project/screens/customer/contact_us.dart';
+import 'package:graduation_project/screens/customer/orders/orders.dart';
 import 'package:graduation_project/screens/customer/profile/edit_profile_data.dart';
 import 'package:graduation_project/screens/customer/favorite_page.dart';
 import 'package:graduation_project/screens/customer/notifications/notification_screen.dart';
@@ -89,6 +90,15 @@ class _MyDrawerState extends State<MyDrawer> {
             Navigator.pop(context);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const MyFavorites()));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.library_books_outlined),
+          title: const Text('Orders'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Orders()));
           },
         ),
         ListTile(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/promo_code.dart';
+import 'package:graduation_project/widgets/shipping_info_widget.dart';
 import 'package:provider/provider.dart';
 import '../providers/login_provider.dart';
 
@@ -15,8 +16,7 @@ class _PromoCodeDialogState extends State<PromoCodeDialog> {
   void _applyPromo() async {
     final promoCode = _controller.text.trim();
     if (promoCode.isEmpty) return;
-      FocusScope.of(context).unfocus(); // 🧠 Hide keyboard
-
+    FocusScope.of(context).unfocus(); // 🧠 Hide keyboard
 
     setState(() => _isLoading = true);
 
@@ -25,7 +25,12 @@ class _PromoCodeDialogState extends State<PromoCodeDialog> {
         .applyPromo(promoCode, token);
 
     setState(() => _isLoading = false);
-    Navigator.of(context).pop(); // close dialog
+    Navigator.of(context).pop();
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AddressDialog())); // close dialog
   }
 
   @override
