@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/customer/notifications/notification_screen.dart';
 import 'package:graduation_project/screens/seller/coupon_screen.dart';
 import 'package:graduation_project/screens/seller/dashboard/analytics_screen.dart';
 import 'package:graduation_project/screens/customer/orders/orders_screen.dart';
@@ -42,6 +43,11 @@ class SellerMainPage extends StatelessWidget {
               Icons.person,
               () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => BuyersPage()))),
+          _buildCard(
+              "Notifications",
+              Icons.notifications_active_outlined,
+              () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => NotificationScreen()))),
         ],
       ),
     );

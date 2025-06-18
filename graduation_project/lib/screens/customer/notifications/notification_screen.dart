@@ -18,7 +18,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final token = Provider.of<LoginProvider>(context, listen: false).token;
+      final notifProvider =
+          Provider.of<NotificationProvider>(context, listen: false);
+
+      await notifProvider.fetchNotifications(token);
+      // await notifProvider.fetchUnreadCount(token);
+    });
+    super.initState();
+   // _fetchData();
   }
 
   Future<void> _fetchData() async {
@@ -115,21 +124,32 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               Provider.of<LoginProvider>(context, listen: false)
                                   .token;
 
-                          await provider.markNotificationAsRead(
-                              token, notif.id);
+                          // Wait for the next frame before doing state-changing logic
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) async {
+                            await provider.markNotificationAsRead(
+                                token, notif.id);
 
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  NotificationDetailScreen(notification: notif),
-                            ),
-                          );
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => NotificationDetailScreen(
+                                    notification: notif),
+                              ),
+                            );
 
-                          await provider.fetchUnreadCount(token);
+                            await provider.fetchUnreadCount(token);
+                          });
                         },
                       ),
                       // child: ListTile(
+                    );
+                  },
+                ),
+    );
+  }
+}
+
                       //   contentPadding: const EdgeInsets.symmetric(
                       //     vertical: 10,
                       //     horizontal: 16,
@@ -177,9 +197,3 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       //     // await _fetchData();
                       //   },
                       // ),
-                    );
-                  },
-                ),
-    );
-  }
-}
