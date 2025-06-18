@@ -49,14 +49,15 @@ class _BuyersPageState extends State<BuyersPage> {
                 ),
                 title: Text(buyer.userName),
                 subtitle: Text('Orders: ${buyer.ordersCount}'),
-                onTap: () {
-                  Navigator.push(
+                onTap: () async{
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
                           CreateCouponPage( buyerId: buyer.userId, buyerName: buyer.userName,),
                     ),
                   );
+                  Navigator.pop(context);
                 },
               );
             },

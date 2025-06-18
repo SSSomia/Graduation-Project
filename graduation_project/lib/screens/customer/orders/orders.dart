@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
 import 'package:graduation_project/screens/customer/orders/order_details.dart';
+import 'package:graduation_project/widgets/myDrawer.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +43,26 @@ class _OrdersState extends State<Orders> {
     }
 
     return Scaffold(
+       appBar: AppBar(
+        title: const Text(
+          'Orders',
+          style: TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+       // leading: const Icon(Icons.shopping_bag_outlined),
+        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
+        elevation: 10,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
+        ),
+      ),
+      endDrawer: MyDrawer(),
       body: ListView.builder(
         itemCount: orders.length,
         padding: const EdgeInsets.all(16),

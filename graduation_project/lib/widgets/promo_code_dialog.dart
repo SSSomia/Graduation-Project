@@ -27,10 +27,14 @@ class _PromoCodeDialogState extends State<PromoCodeDialog> {
     setState(() => _isLoading = false);
     Navigator.of(context).pop();
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AddressDialog())); // close dialog
+    showDialog(
+      context: context,
+      builder: (context) => AddressDialog(),
+    );
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => AddressDialog())); // close dialog
   }
 
   @override

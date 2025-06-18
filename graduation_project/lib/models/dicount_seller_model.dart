@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Discount {
   final int userId;
   final String couponCode;
@@ -16,7 +18,7 @@ class Discount {
       "userId": userId,
       "couponCode": couponCode,
       "discountPercentage": discountPercentage,
-      "expiryDate": expiryDate.toIso8601String(),
+      "expiryDate":  DateFormat('yyyy-MM-dd').format(expiryDate),
     };
   }
 }
