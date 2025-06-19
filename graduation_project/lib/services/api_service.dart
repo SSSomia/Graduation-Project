@@ -4,6 +4,7 @@ import 'package:graduation_project/models/all_seller_discount.dart';
 import 'package:graduation_project/models/buyer.dart';
 import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/models/catigory_model.dart';
+import 'package:graduation_project/models/contact_model.dart';
 import 'package:graduation_project/models/dicount_seller_model.dart';
 import 'package:graduation_project/models/favorite_model.dart';
 import 'package:graduation_project/models/loyality_status.dart';
@@ -204,9 +205,7 @@ class ApiService {
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
 
-      // Map the JSON data to a List of ProductModule objects
       return jsonData.map((item) => ProductModule.fromJson(item)).toList();
-      // return json.decode(response.body);
     } else {
       throw Exception("Failed to load profile: ${response.statusCode}");
     }
@@ -1217,7 +1216,8 @@ class ApiService {
   }
 
   static Future<LoyaltyStatusModel?> fetchLoyaltyStatus(String token) async {
-    final url = Uri.parse('https://shopyapi.runasp.net/api/Order/api/loyalty/status');
+    final url =
+        Uri.parse('https://shopyapi.runasp.net/api/Order/api/loyalty/status');
 
     try {
       final response = await http.get(
@@ -1239,5 +1239,54 @@ class ApiService {
     }
 
     return null;
+  }
+
+  static Future<String?> sendContactMessage(
+      String token, String subject, String message) async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://shopyapi.runasp.net/api/Contact/send'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+          'accept': '*/*',
+        },
+        body: jsonEncode({
+          'subject': subject,
+          'message': message,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+        return body['message'] ?? 'Message sent successfully';
+      } else {
+        return 'Failed to send message. Status: ${response.statusCode}';
+      }
+    } catch (e) {
+      return 'Error sending message: $e';
+    }
+  }
+
+  static Future<ContactMessageDetail?> getMessageDetails(
+      String token, int id) async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://shopyapi.runasp.net/api/Contact/message-details/$id'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'accept': '*/*',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return ContactMessageDetail.fromJson(data);
+      } else {
+        throw Exception('Failed to load message details');
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 }

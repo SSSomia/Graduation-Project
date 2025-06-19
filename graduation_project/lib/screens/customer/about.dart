@@ -42,7 +42,7 @@ class AboutPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          'ShopEase',
+                          'Shoopy',
                           style: TextStyle(
                               fontSize: 26, fontWeight: FontWeight.bold),
                         ),
@@ -59,7 +59,7 @@ class AboutPage extends StatelessWidget {
                           child: const Padding(
                             padding: EdgeInsets.all(18.0),
                             child: Text(
-                              'ShopEase is your one-stop destination for online shopping.\n\n'
+                              'Shoopy is your one-stop destination for online shopping.\n\n'
                               'We bring the latest trends and products at unbeatable prices. '
                               'Enjoy fast delivery, secure payment, and excellent customer service.',
                               textAlign: TextAlign.center,
@@ -85,7 +85,7 @@ class AboutPage extends StatelessWidget {
                                     Icon(Icons.email_rounded,
                                         color: Colors.blue),
                                     SizedBox(width: 10),
-                                    Text('support@shopease.com'),
+                                    Text('support@shoopy.com'),
                                   ],
                                 ),
                                 const SizedBox(height: 12),
@@ -94,7 +94,7 @@ class AboutPage extends StatelessWidget {
                                     Icon(Icons.phone_rounded,
                                         color: Colors.green),
                                     SizedBox(width: 10),
-                                    Text('+1 800 123 4567'),
+                                    Text('01276497020'),
                                   ],
                                 ),
                               ],

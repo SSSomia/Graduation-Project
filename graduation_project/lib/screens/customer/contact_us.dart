@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/providers/contact_provider.dart';
+import 'package:graduation_project/providers/login_provider.dart';
+import 'package:provider/provider.dart';
 
 class ContactUsPage extends StatefulWidget {
   const ContactUsPage({super.key});
@@ -9,19 +12,26 @@ class ContactUsPage extends StatefulWidget {
 
 class _ContactUsPageState extends State<ContactUsPage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _messageController = TextEditingController();
 
-  void _sendMessage() {
-    if (_formKey.currentState!.validate()) {
+void _sendMessage() async {
+  if (_formKey.currentState!.validate()) {
+    final token = Provider.of<LoginProvider>(context, listen: false).token;
+    final contactProvider = Provider.of<ContactProvider>(context, listen: false);
+
+    final subject = _emailController.text.trim();
+    final message = _messageController.text.trim();
+
+    await contactProvider.sendMessage(token, subject, message);
+
+    if (context.mounted) {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           title: const Text("Thank You!"),
-          content: const Text("Your message has been successfully sent."),
+          content: Text(contactProvider.responseMessage ?? "Your message has been sent."),
           actions: [
             TextButton(
               child: const Text("Close"),
@@ -30,12 +40,13 @@ class _ContactUsPageState extends State<ContactUsPage> {
           ],
         ),
       );
-
-      _nameController.clear();
-      _emailController.clear();
-      _messageController.clear();
     }
+
+    _emailController.clear();
+    _messageController.clear();
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +60,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
         elevation: 0,
       ),
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -64,7 +77,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const Icon(Icons.headset_mic_rounded, size: 80, color: Color.fromARGB(255, 49, 156, 156)),
+              const Icon(Icons.headset_mic_rounded,
+                  size: 80, color: Color.fromARGB(255, 49, 156, 156)),
               const SizedBox(height: 10),
               const Text(
                 'We’d Love to Hear from You',
@@ -74,7 +88,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                 ),
               ),
               const Text(
-                'Fill out the form and we’ll get back to you ASAP.',
+                'Fill out the form and we’ll get back to you.',
                 style: TextStyle(color: Color.fromARGB(255, 117, 117, 117)),
                 textAlign: TextAlign.center,
               ),
@@ -92,35 +106,18 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        // Name Field
                         TextFormField(
-                          controller: _nameController,
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            labelText: 'Name',
-                            prefixIcon: const Icon(Icons.person),
+                            labelText: 'subject',
+                            prefixIcon: const Icon(Icons.subject_outlined),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           validator: (value) =>
-                              value!.isEmpty ? 'Please enter your name' : null,
-                        ),
-                        const SizedBox(height: 16),
-
-                        // Email Field
-                        TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: const Icon(Icons.email),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          validator: (value) => value!.isEmpty || !value.contains('@')
-                              ? 'Enter a valid email'
-                              : null,
+                              value!.isEmpty ? 'Enter the subject' : null,
                         ),
                         const SizedBox(height: 16),
 
@@ -136,8 +133,9 @@ class _ContactUsPageState extends State<ContactUsPage> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          validator: (value) =>
-                              value!.isEmpty ? 'Please enter your message' : null,
+                          validator: (value) => value!.isEmpty
+                              ? 'Please enter your message'
+                              : null,
                         ),
                         const SizedBox(height: 24),
 
@@ -146,11 +144,20 @@ class _ContactUsPageState extends State<ContactUsPage> {
                           width: double.infinity,
                           child: ElevatedButton.icon(
                             onPressed: _sendMessage,
-                            icon: const Icon(Icons.send_rounded, color: Color.fromARGB(255, 42, 130, 133),),
-                            label: const Text('Send Message' ,style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),),
+                            icon: const Icon(
+                              Icons.send_rounded,
+                              color: Color.fromARGB(255, 42, 130, 133),
+                            ),
+                            label: const Text(
+                              'Send Message',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 16),
-                              textStyle: const TextStyle(fontSize: 16, ),
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(14),
                               ),
@@ -181,7 +188,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     children: [
                       Icon(Icons.phone, size: 16, color: Colors.grey),
                       SizedBox(width: 6),
-                      Text('+1 800 123 4567'),
+                      Text('01276497020'),
                     ],
                   ),
                   SizedBox(height: 6),
@@ -190,7 +197,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     children: [
                       Icon(Icons.email, size: 16, color: Colors.grey),
                       SizedBox(width: 6),
-                      Text('support@shopease.com'),
+                      Text('support@shoopy.com'),
                     ],
                   ),
                 ],

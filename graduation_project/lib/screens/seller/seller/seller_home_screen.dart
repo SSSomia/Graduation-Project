@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/customer/profile/profile_page.dart';
 import 'package:graduation_project/screens/seller/seller/seller_main_page.dart';
+import 'package:graduation_project/widgets/seller_drawer.dart';
 
 class SellerHomeScreen extends StatefulWidget {
   @override
@@ -31,6 +32,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
               bottomRight: Radius.circular(20)),
         ),
       ),
+      endDrawer: SellerDrawer(),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {

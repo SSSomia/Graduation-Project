@@ -3,6 +3,8 @@ import 'package:graduation_project/providers/buyer_provider.dart';
 import 'package:graduation_project/providers/cart_provider.dart';
 import 'package:graduation_project/providers/category_provider.dart';
 import 'package:graduation_project/providers/change_password_provider.dart';
+import 'package:graduation_project/providers/contact_details_provider.dart';
+import 'package:graduation_project/providers/contact_provider.dart';
 import 'package:graduation_project/providers/discount_seller_provider.dart';
 import 'package:graduation_project/providers/favorite_provider.dart';
 import 'package:graduation_project/providers/forget_passwrod_provider.dart';
@@ -68,6 +70,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => TrackingProvider()),
     ChangeNotifierProvider(create: (_) => LoyaltyProvider()),
     ChangeNotifierProvider(create: (_) => SearchProvider()),
+    ChangeNotifierProvider(create: (_) => ContactProvider()),
+    ChangeNotifierProvider(create: (_) => ContactDetailProvider()),
     // will be removed
   ], child: const MyApp()));
 }

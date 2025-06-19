@@ -6,7 +6,6 @@ class ProductsProvider with ChangeNotifier {
   List<ProductModule> _products = [];
   bool _isLoading = false;
   String? _error;
-  late ProductModule _product;
 
   List<ProductModule> get products => _products;
   bool get isLoading => _isLoading;

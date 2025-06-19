@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/customer/contact_us.dart';
 import 'package:graduation_project/screens/customer/notifications/notification_screen.dart';
 import 'package:graduation_project/screens/seller/coupon_screen.dart';
 import 'package:graduation_project/screens/seller/dashboard/analytics_screen.dart';
-import 'package:graduation_project/screens/customer/orders/orders_screen.dart';
 import 'package:graduation_project/screens/seller/my_buyers.dart';
 import 'package:graduation_project/screens/seller/orders/seller_orders_page.dart';
 import 'package:graduation_project/screens/seller/product/market_product_screen.dart';
-import 'package:graduation_project/screens/seller/orders/seller_orders.dart';
-import 'package:graduation_project/screens/seller/orders/seller_orders_screen.dart';
 
 class SellerMainPage extends StatelessWidget {
   const SellerMainPage({super.key});
@@ -19,11 +17,6 @@ class SellerMainPage extends StatelessWidget {
         crossAxisCount: 2,
         children: [
           _buildCard(
-              "Orders",
-              Icons.list,
-              () => Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => SellerOrdersPage()))),
-          _buildCard(
               "Products",
               Icons.shop_outlined,
               () => Navigator.push(context,
@@ -33,21 +26,6 @@ class SellerMainPage extends StatelessWidget {
               Icons.analytics_outlined,
               () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => AnalyticsScreen()))),
-          _buildCard(
-              "Coupons",
-              Icons.analytics_outlined,
-              () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => SellerCouponsPage()))),
-          _buildCard(
-              "Buyer",
-              Icons.person,
-              () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => BuyersPage()))),
-          _buildCard(
-              "Notifications",
-              Icons.notifications_active_outlined,
-              () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => NotificationScreen()))),
         ],
       ),
     );

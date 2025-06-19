@@ -10,16 +10,18 @@ import 'package:graduation_project/screens/customer/profile/edit_profile_data.da
 import 'package:graduation_project/screens/customer/favorite_page.dart';
 import 'package:graduation_project/screens/customer/notifications/notification_screen.dart';
 import 'package:graduation_project/screens/customer/settings_screen.dart';
+import 'package:graduation_project/screens/seller/coupon_screen.dart';
+import 'package:graduation_project/screens/seller/orders/seller_orders_page.dart';
 import 'package:provider/provider.dart';
 
-class MyDrawer extends StatefulWidget {
-  const MyDrawer({super.key});
+class SellerDrawer extends StatefulWidget {
+  const SellerDrawer({super.key});
 
   @override
-  State<MyDrawer> createState() => _MyDrawerState();
+  State<SellerDrawer> createState() => _SellerDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer> {
+class _SellerDrawerState extends State<SellerDrawer> {
   @override
   void initState() {
     super.initState();
@@ -85,21 +87,25 @@ class _MyDrawerState extends State<MyDrawer> {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.favorite_outline_outlined),
-          title: const Text('Favorites'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const MyFavorites()));
-          },
-        ),
-        ListTile(
           leading: const Icon(Icons.library_books_outlined),
           title: const Text('Orders'),
           onTap: () {
             Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Orders()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SellerOrdersPage()));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.discount_outlined),
+          title: const Text('Coupons'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SellerCouponsPage()));
           },
         ),
         Consumer<NotificationProvider>(

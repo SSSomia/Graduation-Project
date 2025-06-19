@@ -11,7 +11,6 @@ class ProductProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  // Fetch product by ID
   Future<void> fetchProductById(String token, int productId) async {
     _isLoading = true;
     _error = null;
