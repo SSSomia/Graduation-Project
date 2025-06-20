@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/models/cart_model.dart';
+import 'package:graduation_project/models/product_module.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
 import 'package:graduation_project/providers/product_provider.dart';
@@ -219,7 +220,7 @@ class _ProductPageState extends State<ProductPage> {
                           backgroundColor: WidgetStateProperty.all<Color>(
                               const Color.fromARGB(255, 50, 116, 138))),
                       onPressed: () {
-                        showAddressDialog(context, product.productId);
+                        showAddressDialog(context, product);
                         // Navigate to checkout or further actions
                       },
                       child: const Text('Buy Now'),
@@ -283,7 +284,8 @@ class _ProductPageState extends State<ProductPage> {
         ));
   }
 
-  Future<void> showAddressDialog(BuildContext context, int productId) async {
+  Future<void> showAddressDialog(
+      BuildContext context, ProductModule product) async {
     final fullNameController = TextEditingController();
     final governmentController = TextEditingController();
     final cityController = TextEditingController();
@@ -295,8 +297,6 @@ class _ProductPageState extends State<ProductPage> {
 
     final double originalPrice = 500.0;
     double discountedPrice = originalPrice;
-
-
 
     await showDialog(
       context: context,
@@ -360,7 +360,10 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         child: Column(
                           children: [
-                            _priceRow("Price:", "$originalPrice EGP",),
+                            _priceRow(
+                              "Price:",
+                              "${product.price} EGP",
+                            ),
                           ],
                         ),
                       ),
@@ -399,7 +402,7 @@ class _ProductPageState extends State<ProductPage> {
                                         Provider.of<LoginProvider>(context,
                                             listen: false);
                                     final result = await order.placeOrder(
-                                      productId: productId,
+                                      productId: product.productId,
                                       quantity: 1,
                                       fullName: fullNameController.text,
                                       address: addressController.text,
@@ -407,17 +410,19 @@ class _ProductPageState extends State<ProductPage> {
                                       government: governmentController.text,
                                       phoneNumber: phoneController.text,
                                       token: authProvider.token,
-                                      couponCode: couponController.text.trim(),
-                                      finalPrice: discountedPrice,
                                     );
                                     print(result);
                                     Navigator.pop(context);
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => OrderSuccessScreen(
-                                        response: order.orderResponse,
-                                      ),
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text("Order placed successfully/")),
                                     );
+                                    // showDialog(
+                                    //   context: context,
+                                    //   builder: (context) => OrderSuccessScreen(
+                                    //     response: order.,
+                                    //   ),
+                                    // );
                                   }
                                 },
                               );
