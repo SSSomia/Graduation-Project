@@ -67,29 +67,101 @@ class _SearchScreenState extends State<SearchScreen> {
                 itemCount: searchProvider.results.length,
                 itemBuilder: (context, index) {
                   final product = searchProvider.results[index];
+
                   return Card(
                     margin:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    child: ListTile(
-                      leading: Image.network(
-                        product.image,
-                        width: 60,
-                        height: 60,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(product.name),
-                      subtitle: Text(product.description),
-                      trailing: Text("\$${product.price}"),
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 3,
+                    color: Colors.white,
+                    child: InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProductPage(
-                                  productid: product.productId)),
+                            builder: (context) =>
+                                ProductPage(productid: product.productId),
+                          ),
                         );
                       },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                product.image,
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product.name,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    product.description,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    "\$${product.price}",
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   );
+
+                  // return Card(
+                  //   margin:
+                  //       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  //   child: ListTile(
+                  //     leading: Image.network(
+                  //       product.image,
+                  //       width: 60,
+                  //       height: 60,
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //     title: Text(product.name),
+                  //     subtitle: Text(product.description),
+                  //     trailing: Text("\$${product.price}"),
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => ProductPage(
+                  //                 productid: product.productId)),
+                  //       );
+                  //     },
+                  //   ),
+                  // );
                 },
               ),
             ),

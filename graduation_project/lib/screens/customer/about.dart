@@ -42,7 +42,7 @@ class AboutPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          'Shoopy',
+                          'Shopy',
                           style: TextStyle(
                               fontSize: 26, fontWeight: FontWeight.bold),
                         ),
@@ -59,7 +59,7 @@ class AboutPage extends StatelessWidget {
                           child: const Padding(
                             padding: EdgeInsets.all(18.0),
                             child: Text(
-                              'Shoopy is your one-stop destination for online shopping.\n\n'
+                              'Shopy is your one-stop destination for online shopping.\n\n'
                               'We bring the latest trends and products at unbeatable prices. '
                               'Enjoy fast delivery, secure payment, and excellent customer service.',
                               textAlign: TextAlign.center,
@@ -75,22 +75,22 @@ class AboutPage extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 16),
                             child: Column(
                               children: [
                                 Row(
-                                  children: const [
+                                  children: [
                                     Icon(Icons.email_rounded,
                                         color: Colors.blue),
                                     SizedBox(width: 10),
-                                    Text('support@shoopy.com'),
+                                    Text('support@shopy.com'),
                                   ],
                                 ),
-                                const SizedBox(height: 12),
+                                SizedBox(height: 12),
                                 Row(
-                                  children: const [
+                                  children: [
                                     Icon(Icons.phone_rounded,
                                         color: Colors.green),
                                     SizedBox(width: 10),

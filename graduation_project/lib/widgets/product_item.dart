@@ -60,7 +60,7 @@ class ProductItem extends StatelessWidget {
                           style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 4),
                       Text("Category: ${product.categoryName}"),
-                      Text("Price: \$${product.price.toStringAsFixed(2)}"),
+                      Text("Price: ${product.price.toStringAsFixed(2)} EGP"),
                       Text("Stock: ${product.stockQuantity} available"),
                       Text("Description: ${product.description}",
                           maxLines: 2, overflow: TextOverflow.ellipsis),

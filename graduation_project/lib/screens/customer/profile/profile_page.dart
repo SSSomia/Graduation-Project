@@ -138,7 +138,7 @@ class _YouState extends State<You> {
                                 icon: const Icon(Icons.logout),
                                 label: const Text("Logout"),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.redAccent,
+                                  backgroundColor: const Color.fromARGB(255, 255, 23, 23),
                                   foregroundColor: Colors.white,
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 15),

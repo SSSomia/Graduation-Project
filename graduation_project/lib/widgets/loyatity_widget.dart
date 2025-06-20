@@ -98,7 +98,7 @@ class _LoyaltyBannerState extends State<LoyaltyBanner> {
                     const SizedBox(height: 8),
                     Text("Level: ${status.currentLevel}",
                         style: const TextStyle(color: Colors.white70)),
-                    Text("Total Spent: \$${status.totalSpent}",
+                    Text("Total Spent: ${status.totalSpent} EGP",
                         style: const TextStyle(color: Colors.white70)),
                     if (status.coupons.isNotEmpty) ...[
                       const SizedBox(height: 10),

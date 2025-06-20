@@ -85,7 +85,7 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        "\$${widget.product.price.toStringAsFixed(2)}",
+                        "${widget.product.price.toStringAsFixed(2)} EGP",
                         style: const TextStyle(
                           fontSize: 14,
                           color: Color.fromARGB(255, 90, 89, 89),

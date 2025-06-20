@@ -197,7 +197,7 @@ void _sendMessage() async {
                     children: [
                       Icon(Icons.email, size: 16, color: Colors.grey),
                       SizedBox(width: 6),
-                      Text('support@shoopy.com'),
+                      Text('support@shopy.com'),
                     ],
                   ),
                 ],
