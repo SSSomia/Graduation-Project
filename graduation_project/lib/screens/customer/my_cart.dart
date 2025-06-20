@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/cart_provider.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
+import 'package:graduation_project/screens/customer/orders/order_success_screen.dart';
 import 'package:graduation_project/screens/customer/product/productPage.dart';
 import 'package:graduation_project/widgets/promo_code_dialog.dart';
 import 'package:provider/provider.dart';
@@ -193,7 +194,9 @@ class _MyCartState extends State<MyCart> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      SizedBox(height: 25,),
+                                      SizedBox(
+                                        height: 25,
+                                      ),
                                       Text(
                                         '${item.totalPrice.toStringAsFixed(2)} EGP',
                                         style: const TextStyle(
@@ -566,6 +569,19 @@ class _MyCartState extends State<MyCart> {
                                             phoneNumber: phoneController.text,
                                             token: authProvider.token,
                                           );
+                                          if (!order.isLoading &&
+                                              order.orderResponse != null) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OrderSuccessScreen(
+                                                        response: order
+                                                            .orderResponse!),
+                                              ),
+                                            );
+                                          }
+
                                           cartProvider.clearCartLocally();
                                           Navigator.pop(context);
                                         }

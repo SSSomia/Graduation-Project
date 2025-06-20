@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:graduation_project/models/all_seller_discount.dart';
+import 'package:graduation_project/models/buy_from_cart_response.dart';
 import 'package:graduation_project/models/buyer.dart';
 import 'package:graduation_project/models/cart_model.dart';
 import 'package:graduation_project/models/catigory_model.dart';
@@ -561,62 +562,97 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> placeOrderFromCart({
+  static Future<BuyFromCartResponse?> placeOrderFromCart({
+    required String token,
     required String fullName,
     required String address,
     required String city,
     required String government,
     required String phoneNumber,
-    required String token,
   }) async {
     final url =
-        Uri.parse('https://shopyapi.runasp.net/api/Order/buy-from-cart');
+        Uri.parse("https://shopyapi.runasp.net/api/Order/buy-from-cart");
 
-    final body = {
-      "fullName": fullName,
-      "address": address,
-      "city": city,
-      "government": government,
-      "phoneNumber": phoneNumber,
-    };
+    final response = await http.post(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+      },
+      body: jsonEncode({
+        "fullName": fullName,
+        "address": address,
+        "city": city,
+        "government": government,
+        "phoneNumber": phoneNumber,
+      }),
+    );
 
-    try {
-      final response = await http.post(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode(body),
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        // print("object");
-        if (response.body.isNotEmpty) {
-          return json.decode(response.body);
-        } else {
-          return {
-            'success': true,
-            'message': 'Order placed, but no response body',
-          };
-        }
-      } else {
-        return {
-          'success': false,
-          'message': 'Order failed',
-          'error': response.body.isNotEmpty
-              ? json.decode(response.body)
-              : 'Empty error body',
-        };
-      }
-    } catch (e) {
-      return {
-        'success': false,
-        'message': 'Exception occurred',
-        'error': e.toString(),
-      };
+    if (response.statusCode == 200) {
+      return BuyFromCartResponse.fromJson(jsonDecode(response.body));
+    } else {
+      print("Order API Error: ${response.body}");
+      return null;
     }
   }
+
+  // static Future<Map<String, dynamic>> placeOrderFromCart({
+  //   required String fullName,
+  //   required String address,
+  //   required String city,
+  //   required String government,
+  //   required String phoneNumber,
+  //   required String token,
+  // }) async {
+  //   final url =
+  //       Uri.parse('https://shopyapi.runasp.net/api/Order/buy-from-cart');
+
+  //   final body = {
+  //     "fullName": fullName,
+  //     "address": address,
+  //     "city": city,
+  //     "government": government,
+  //     "phoneNumber": phoneNumber,
+  //   };
+
+  //   try {
+  //     final response = await http.post(
+  //       url,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer $token',
+  //       },
+  //       body: json.encode(body),
+  //     );
+
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       // print("object");
+  //       if (response.body.isNotEmpty) {
+  //         return json.decode(response.body);
+  //       } else {
+  //         return {
+  //           'success': true,
+  //           'message': 'Order placed, but no response body',
+  //         };
+  //       }
+  //     } else {
+  //       return {
+  //         'success': false,
+  //         'message': 'Order failed',
+  //         'error': response.body.isNotEmpty
+  //             ? json.decode(response.body)
+  //             : 'Empty error body',
+  //       };
+  //     }
+  //   } catch (e) {
+  //     return {
+  //       'success': false,
+  //       'message': 'Exception occurred',
+  //       'error': e.toString(),
+  //     };
+  //   }
+  // }
 
   static Future<String> submitStoreInfo(StoreModel store, String token) async {
     final url =
@@ -1166,7 +1202,7 @@ class ApiService {
     }
   }
 
-  static Future<String> applyPromoCode({
+  static Future<Map<String, dynamic>?> applyPromoCode({
     required String promoCode,
     required String token,
   }) async {
@@ -1182,16 +1218,14 @@ class ApiService {
           'Authorization': 'Bearer $token',
         },
       );
-      print(response.body);
       if (response.statusCode == 200) {
-        print('************************');
-        return response.body;
+        return jsonDecode( response.body);
       } else {
         print("false");
-        return 'Error: ${response.body}';
+        return null;
       }
     } catch (e) {
-      return 'Exception: $e';
+      return null;
     }
   }
 
@@ -1272,7 +1306,8 @@ class ApiService {
       String token, int id) async {
     try {
       final response = await http.get(
-        Uri.parse('https://shopyapi.runasp.net/api/Contact/message-details/$id'),
+        Uri.parse(
+            'https://shopyapi.runasp.net/api/Contact/message-details/$id'),
         headers: {
           'Authorization': 'Bearer $token',
           'accept': '*/*',

@@ -26,16 +26,53 @@ class _PromoCodeDialogState extends State<PromoCodeDialog> {
 
     setState(() => _isLoading = false);
     Navigator.of(context).pop();
+    if (Provider.of<PromoCodeProvider>(context, listen: false).result != null) {
+      showDialog(
+        context: context,
+        builder: (context) => AddressDialog(),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Promo Code Error"),
+            content: const Text("Invalid or expired promo code."),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
+  void _noPromoCode() async {
+    setState(() => _isLoading = true);
+
+    final token = Provider.of<LoginProvider>(context, listen: false).token;
+    final result = await Provider.of<PromoCodeProvider>(context, listen: false)
+        .applyPromo("", token);
+
+    setState(() => _isLoading = false);
+    Navigator.of(context).pop();
     showDialog(
       context: context,
       builder: (context) => AddressDialog(),
     );
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => AddressDialog())); // close dialog
   }
+
+  // showDialog(
+  //   context: context,
+  //   builder: (context) =>  AddressDialog(),
+  // );
+  // Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //         builder: (context) => AddressDialog())); // close dialog
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +92,22 @@ class _PromoCodeDialogState extends State<PromoCodeDialog> {
             child: CircularProgressIndicator(),
           )
         else ...[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: _applyPromo,
-            child: const Text('Apply'),
-          ),
+          Row(
+            children: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: _noPromoCode,
+                child: const Text('No Promo Code'),
+              ),
+              ElevatedButton(
+                onPressed: _applyPromo,
+                child: const Text('Apply'),
+              ),
+            ],
+          )
         ]
       ],
     );

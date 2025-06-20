@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/orders_provider.dart';
+import 'package:graduation_project/providers/promo_code.dart';
+import 'package:graduation_project/screens/customer/orders/order_success_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import '../providers/login_provider.dart';
@@ -25,13 +27,14 @@ class _AddressDialogState extends State<AddressDialog> {
   void initState() {
     super.initState();
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    discountedPrice = cartProvider.cart?.totalCartPrice ?? 0.0;
+    // discountedPrice = cartProvider.cart?.totalCartPrice ?? 0.0;
   }
 
   @override
   Widget build(BuildContext context) {
+    final promoCode = Provider.of<PromoCodeProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    final originalPrice = cartProvider.cart?.totalCartPrice ?? 0.0;
+    // final originalPrice = cartProvider.cart?.totalCartPrice ?? 0.0;
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -108,40 +111,20 @@ class _AddressDialogState extends State<AddressDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      "Original Price:",
+                      "Discount Percentage:",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
-                      "${originalPrice.toStringAsFixed(2)} EGP",
+                      promoCode.result != null
+                          ? "${promoCode.discountPercentage!} %"
+                          : '0 %',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
-                        decoration: TextDecoration.lineThrough,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Discounted Price:",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      "${discountedPrice?.toStringAsFixed(2)} EGP",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 26, 123, 118),
                       ),
                     ),
                   ],
@@ -152,8 +135,7 @@ class _AddressDialogState extends State<AddressDialog> {
                   children: [
                     TextButton(
                       style: TextButton.styleFrom(
-                        foregroundColor:
-                            const Color.fromARGB(255, 13, 26, 26),
+                        foregroundColor: const Color.fromARGB(255, 13, 26, 26),
                       ),
                       onPressed: () => Navigator.pop(context),
                       child: const Text("Cancel"),
@@ -190,6 +172,18 @@ class _AddressDialogState extends State<AddressDialog> {
                               );
                               cartProvider.clearCartLocally();
                               Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OrderSuccessScreen(
+                                        response: order.orderResponse)),
+                              );
+                              showDialog(
+                                context: context,
+                                builder: (context) => OrderSuccessScreen(
+                                  response: order.orderResponse,
+                                ),
+                              );
                             }
                           },
                           icon: const Icon(Icons.shopping_cart_checkout),
