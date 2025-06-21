@@ -56,7 +56,7 @@ class _MyCartState extends State<MyCart> {
                                     color: Color.fromARGB(255, 255, 255, 255)),
                               ),
                               backgroundColor:
-                                  const Color.fromARGB(255, 3, 88, 98),
+                                  const Color.fromARGB(255, 118, 18, 18),
                             ),
                             TextButton(
                               onPressed: cartProvider.cart!.cartItems.isEmpty

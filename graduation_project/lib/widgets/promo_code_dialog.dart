@@ -104,7 +104,8 @@ class _PromoCodeDialogState extends State<PromoCodeDialog> {
               ),
               ElevatedButton(
                 onPressed: _applyPromo,
-                child: const Text('Apply'),
+                child: const Text('Apply',style: TextStyle(color: Color.fromRGBO(128, 23, 23, 0.894),),),
+                
               ),
             ],
           )

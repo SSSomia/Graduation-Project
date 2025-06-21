@@ -26,7 +26,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       appBar: AppBar(
         title: const Text('Reset Password'),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 116, 180, 187),
+        backgroundColor: const Color.fromARGB(255, 255, 207, 207),
       ),
       backgroundColor: const Color(0xFFF5F6FA),
       body: Center(

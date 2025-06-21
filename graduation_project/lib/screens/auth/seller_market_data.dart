@@ -49,7 +49,7 @@ class _SellerMarketDataState extends State<SellerMarketData> {
     // final sellerProvider = Provider.of<SellersProvider>(context, listen: false);
     return SafeArea(
         child: Scaffold(
-            backgroundColor: const Color.fromARGB(255, 93, 146, 152),
+            backgroundColor: const Color.fromARGB(255, 255, 200, 200),
             body: Center(
                 child: SingleChildScrollView(
                     child: Column(
@@ -82,7 +82,7 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                             'STORE INFO',
                             style: TextStyle(
                                 fontSize: 45,
-                                color: Color.fromARGB(255, 0, 104, 115),
+                                color: Color.fromARGB(255, 185, 28, 28),
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
@@ -228,8 +228,7 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                                           }
                                         },
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 3, 88, 98),
+                                          backgroundColor: const Color.fromARGB(255, 185, 28, 28),
                                           foregroundColor: const Color.fromARGB(
                                               255,
                                               255,

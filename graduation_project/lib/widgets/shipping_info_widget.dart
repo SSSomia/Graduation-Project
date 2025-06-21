@@ -221,7 +221,7 @@ class _AddressDialogState extends State<AddressDialog> {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF1CA89E),
+                      color:  Color.fromARGB(255, 185, 28, 28)
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -256,7 +256,7 @@ class _AddressDialogState extends State<AddressDialog> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 12),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF1F5F6),
+                        color: const Color.fromARGB(255, 255, 219, 219),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(children: [
@@ -287,7 +287,7 @@ class _AddressDialogState extends State<AddressDialog> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF1CA89E),
+                                backgroundColor:const Color.fromARGB(255, 162, 27, 27),
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 12),
                                 shape: RoundedRectangleBorder(
@@ -381,7 +381,7 @@ Widget _buildTextField({
       prefixIcon: Icon(icon),
       labelText: label,
       filled: true,
-      fillColor: const Color(0xFFF7F9FA),
+      fillColor: const Color.fromARGB(255, 255, 241, 241),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -405,7 +405,7 @@ Widget _priceRow(String label, String value,
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: highlight ? const Color(0xFF1CA89E) : Colors.grey[800],
+          color: highlight ? const Color.fromARGB(255, 255, 241, 241): Colors.grey[800],
           decoration:
               strikeThrough ? TextDecoration.lineThrough : TextDecoration.none,
         ),

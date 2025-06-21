@@ -51,8 +51,8 @@ class _YouState extends State<You> {
                               decoration: const BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Color(0xFF0598B1),
-                                    Color(0xFF035B70)
+                                    Color.fromARGB(255, 205, 127, 127),
+                                    Color.fromARGB(255, 185, 28, 28)
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -138,7 +138,7 @@ class _YouState extends State<You> {
                                 icon: const Icon(Icons.logout),
                                 label: const Text("Logout"),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromARGB(255, 255, 23, 23),
+                                  backgroundColor: const Color.fromARGB(255, 185, 28, 28),
                                   foregroundColor: Colors.white,
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 15),

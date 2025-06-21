@@ -31,7 +31,7 @@ class _NavigationExampleState extends State<MainHomePage> {
           ),
         ),
         leading: const Icon(Icons.shopping_bag_outlined),
-        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        backgroundColor: const Color.fromARGB(255, 255, 250, 250),
         //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
         elevation: 10,
         shape: const RoundedRectangleBorder(
@@ -47,25 +47,25 @@ class _NavigationExampleState extends State<MainHomePage> {
             currentPageIndex = index;
           });
         },
-        backgroundColor: const Color.fromARGB(255, 82, 157, 165),
-        indicatorColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 175, 15, 15),
+        indicatorColor: const Color.fromARGB(255, 255, 227, 227),
         selectedIndex: currentPageIndex,
         animationDuration: Durations.extralong4,
         destinations: const <Widget>[
           NavigationDestination(
-            icon: Icon(Icons.person_outline_rounded),
+            icon: Icon(Icons.person_outline_rounded, color: Color.fromARGB(255, 0, 0, 0),),
             label: 'You',
           ),
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home_outlined, color: Color.fromARGB(255, 0, 0, 0),),
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0),),
             label: 'Search',
           ),
           NavigationDestination(
-            icon: Icon(Icons.shopping_bag_outlined),
+            icon: Icon(Icons.shopping_bag_outlined, color: Color.fromARGB(255, 0, 0, 0),),
             label: 'My Cart',
           ),
         ],

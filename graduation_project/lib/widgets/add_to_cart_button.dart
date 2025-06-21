@@ -62,7 +62,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: (cart.isCartItemExist(widget.product))
-                ? const Color.fromARGB(255, 122, 206, 203)
+                ? const Color.fromARGB(255, 200, 94, 94)
                 : widget.backgroundButtonColor,
             shadowColor: const Color.fromARGB(255, 80, 80, 80),
             foregroundColor: widget.foreButtonColor,

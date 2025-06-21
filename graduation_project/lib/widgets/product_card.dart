@@ -102,7 +102,7 @@ class _ProductCardState extends State<ProductCard> {
                             imageUrl: widget.product.imageUrls[0]),
                         border: 20,
                         backgroundButtonColor:
-                            const Color.fromARGB(255, 50, 116, 138),
+                            const Color.fromARGB(255, 185, 28, 28),
                         foreButtonColor: Colors.white,
                       ),
                     ],

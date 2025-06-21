@@ -61,7 +61,7 @@ class _MyDrawerState extends State<MyDrawer> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 57, 149, 159),
+              color: Color.fromARGB(255, 174, 35, 35),
             ),
             accountEmail: Text(
               user.email,

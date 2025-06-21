@@ -126,7 +126,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     "\$${product.price}",
                                     style: const TextStyle(
                                       fontSize: 15,
-                                      color: Colors.green,
+                                      color: Color.fromARGB(255, 185, 28, 28),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),

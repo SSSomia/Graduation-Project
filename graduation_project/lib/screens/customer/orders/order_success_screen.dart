@@ -102,7 +102,7 @@ class OrderSuccessScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Order Summary"),
-        backgroundColor: const Color.fromARGB(255, 205, 231, 227),
+        backgroundColor: const Color.fromARGB(255, 255, 241, 241),
       ),
       body: response == null
           ? const Center(child: Text("No order data available."))
@@ -115,14 +115,14 @@ class OrderSuccessScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Icon(Icons.check_circle_outline,
-                            size: 60, color: Color.fromARGB(255, 76, 175, 175)),
+                            size: 60, color:Color.fromARGB(255, 255, 167, 167)),
                         SizedBox(height: 8),
                         Text(
                           "Order Placed Successfully!",
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 64, 163, 163),
+                            color: Color.fromARGB(255, 185, 28, 28),
                           ),
                         ),
                       ],
@@ -181,7 +181,7 @@ class OrderSuccessScreen extends StatelessWidget {
                       icon: const Icon(Icons.home,color: Colors.white,),
                       label: const Text("Back to Home",style: TextStyle(color: Colors.white),),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 46, 145, 123),
+                        backgroundColor: const Color.fromARGB(255, 185, 28, 28),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 24, vertical: 12),
                         shape: RoundedRectangleBorder(

@@ -54,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 effect: const WormEffect(
                   dotHeight: 10,
                   dotWidth: 10,
-                  activeDotColor: Color.fromARGB(255, 30, 195, 195),
+                  activeDotColor: Color.fromARGB(255, 185, 28, 28),
                 ),
               ),
             ),
@@ -73,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       // Navigate to Login or Home Screen
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 56, 150, 144),
+                      backgroundColor: const Color.fromARGB(255, 185, 28, 28),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -92,12 +92,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: const Text(
                           "Skip",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 25, 123, 105)),
+                              color: Color.fromARGB(255, 185, 28, 28)),
                         ),
                       ),
                       FloatingActionButton(
                         backgroundColor:
-                            const Color.fromARGB(255, 121, 200, 192),
+                            const Color.fromARGB(255, 185, 28, 28),
                         onPressed: () {
                           _controller.nextPage(
                             duration: const Duration(milliseconds: 500),

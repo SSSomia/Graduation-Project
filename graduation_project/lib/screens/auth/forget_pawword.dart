@@ -23,7 +23,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       appBar: AppBar(
         title: const Text('Forgot Password'),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 116, 180, 187),
+        backgroundColor: const Color.fromARGB(255, 255, 214, 214),
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -32,7 +32,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.lock_reset_rounded,
-                  size: 80, color: Colors.teal),
+                  size: 80, color: Color.fromARGB(255, 185, 28, 28)),
               const SizedBox(height: 20),
               const Text(
                 'Enter your email address to reset your password.',

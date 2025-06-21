@@ -82,7 +82,7 @@ class _LoyaltyBannerState extends State<LoyaltyBanner> {
               elevation: 4,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
-              color: Colors.teal,
+              color: const Color.fromARGB(255, 151, 16, 16),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(

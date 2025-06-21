@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 93, 146, 152),
+        backgroundColor: const Color.fromARGB(255, 255, 201, 201),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         'LOGIN',
                         style: TextStyle(
                           fontSize: 50,
-                          color: Color.fromARGB(255, 0, 104, 115),
+                          color: Color.fromARGB(255, 185, 28, 28),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -230,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                               //     : _loginSeller,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    const Color.fromARGB(255, 3, 88, 98),
+                                    const Color.fromARGB(255, 185, 28, 28),
                                 foregroundColor: Colors.white,
                               ),
                               child: const Text(

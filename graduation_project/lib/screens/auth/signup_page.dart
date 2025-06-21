@@ -71,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            backgroundColor: const Color.fromARGB(255, 93, 146, 152),
+            backgroundColor: const Color.fromARGB(255, 255, 202, 202),
             body: Center(
                 child: SingleChildScrollView(
                     child: Column(
@@ -104,7 +104,7 @@ class _SignupPageState extends State<SignupPage> {
                             'SIGN UP',
                             style: TextStyle(
                                 fontSize: 50,
-                                color: Color.fromARGB(255, 0, 104, 115),
+                                color: Color.fromARGB(255, 185, 28, 28),
                                 fontWeight: FontWeight.bold),
                           ),
                           Row(
@@ -420,7 +420,7 @@ class _SignupPageState extends State<SignupPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                       SellerMarketData(),
+                                                      SellerMarketData(),
                                                 ),
                                               );
                                             } else {
@@ -430,7 +430,8 @@ class _SignupPageState extends State<SignupPage> {
                                                     content: Text(
                                                         'Email is already exist!')),
                                               );
-                                            }}
+                                            }
+                                          }
                                           //   await userProvider.register(
                                           //     user: User(
                                           //       FirstName: _conFirstName.text,
@@ -462,7 +463,7 @@ class _SignupPageState extends State<SignupPage> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: const Color.fromARGB(
-                                            255, 3, 88, 98),
+                                            255, 185, 28, 28),
                                         foregroundColor: const Color.fromARGB(
                                             255,
                                             255,
