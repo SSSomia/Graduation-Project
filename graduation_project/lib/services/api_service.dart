@@ -21,6 +21,7 @@ import 'package:graduation_project/models/product_review.dart';
 import 'package:graduation_project/models/seller_order.dart';
 import 'package:graduation_project/models/seller_order_product.dart';
 import 'package:graduation_project/models/seller_product.dart';
+import 'package:graduation_project/models/seller_profit_data.dart';
 import 'package:graduation_project/models/store_info_model.dart';
 import 'package:graduation_project/models/top_selling_prodcuts.dart';
 import 'package:graduation_project/models/track_order.dart';
@@ -1403,5 +1404,31 @@ class ApiService {
     if (response.statusCode != 200) {
       throw Exception('Failed to send reply');
     }
+  }
+
+  static Future<ProfitSummaryModel?> fetchProfitSummary(String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/SellerOrders/report/profit-summary');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'accept': '*/*',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        return ProfitSummaryModel.fromJson(jsonData);
+      } else {
+        print("Failed to fetch data: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error in API: $e");
+    }
+
+    return null;
   }
 }

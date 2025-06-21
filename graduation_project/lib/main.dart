@@ -28,6 +28,7 @@ import 'package:graduation_project/providers/seller_discount_provider.dart';
 import 'package:graduation_project/providers/seller_order_product_provider.dart';
 import 'package:graduation_project/providers/seller_order_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
+import 'package:graduation_project/providers/seller_profit_data_provider.dart';
 import 'package:graduation_project/providers/seller_top_selling_prodcuts.dart';
 import 'package:graduation_project/providers/store_info_provider.dart';
 import 'package:graduation_project/providers/track_order_provider.dart';
@@ -74,6 +75,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => ContactProvider()),
     ChangeNotifierProvider(create: (_) => ContactDetailProvider()),
     ChangeNotifierProvider(create: (_) => AdminMessageProvider()),
+    ChangeNotifierProvider(create: (_) => ProfitSummaryProvider()),
     // will be removed
   ], child: const MyApp()));
 }

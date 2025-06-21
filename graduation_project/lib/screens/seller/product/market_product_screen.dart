@@ -23,56 +23,57 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
 
   @override
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text(
-        'Products',
-        style: TextStyle(
-          color: Color.fromARGB(255, 0, 0, 0),
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Products',
+          style: TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        elevation: 10,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 244, 255, 254),
-      elevation: 10,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20)),
+      body: Consumer<SellerProductProvider>(
+        builder: (context, provider, child) {
+          if (provider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final products = provider.products;
+
+          if (products.isEmpty) {
+            return const Center(child: Text("No products available."));
+          }
+
+          return ListView.builder(
+            itemCount: products.length,
+            itemBuilder: (ctx, i) => ProductItem(product: products[i]),
+          );
+        },
       ),
-    ),
-    body: Consumer<SellerProductProvider>(
-      builder: (context, provider, child) {
-        if (provider.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        final products = provider.products;
-
-        if (products.isEmpty) {
-          return const Center(child: Text("No products available."));
-        }
-
-        return ListView.builder(
-          itemCount: products.length,
-          itemBuilder: (ctx, i) => ProductItem(product: products[i]),
-        );
-      },
-    ),
-    floatingActionButton: FloatingActionButton(
-      child: const Icon(Icons.add),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AddProductScreen()),
-        );
-      },
-    ),
-  );
-}
-
-
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.add),
+        label: const Text('New Product'),
+        backgroundColor: const Color.fromARGB(255, 62, 196, 174),
+        elevation: 4,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddProductScreen()),
+          );
+        },
+      ),
+    );
+  }
 
 // import 'package:flutter/material.dart';
 // import 'package:graduation_project/providers/login_provider.dart';
@@ -191,7 +192,7 @@ Widget build(BuildContext context) {
   //           MaterialPageRoute(builder: (context) => AddProductScreen()),
   //         );
   //       },
-    //   ),
-    // );
+  //   ),
+  // );
   // }
 }

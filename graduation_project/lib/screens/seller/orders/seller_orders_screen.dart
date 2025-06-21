@@ -13,7 +13,7 @@ class SellerOrdersScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        backgroundColor: const Color.fromARGB(255, 240, 240, 240),
         //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
         elevation: 10,
         shape: const RoundedRectangleBorder(

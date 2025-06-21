@@ -43,6 +43,7 @@ class _SellerOrdersPageState extends State<SellerOrdersPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Seller Orders'),
+        backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       ),
       body: Column(
         children: [

@@ -12,6 +12,7 @@ import 'package:graduation_project/screens/customer/notifications/notification_s
 import 'package:graduation_project/screens/customer/settings_screen.dart';
 import 'package:graduation_project/screens/seller/coupon_screen.dart';
 import 'package:graduation_project/screens/seller/orders/seller_orders_page.dart';
+import 'package:graduation_project/screens/seller/profit_summary_screen.dart';
 import 'package:provider/provider.dart';
 
 class SellerDrawer extends StatefulWidget {
@@ -106,6 +107,17 @@ class _SellerDrawerState extends State<SellerDrawer> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const SellerCouponsPage()));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.account_balance_wallet_outlined),
+          title: const Text('Profit'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ProfitSummaryScreen()));
           },
         ),
         Consumer<NotificationProvider>(
@@ -210,14 +222,7 @@ class _SellerDrawerState extends State<SellerDrawer> {
                 MaterialPageRoute(builder: (context) => const AboutPage()));
           },
         ),
-        ListTile(
-          leading: const Icon(Icons.contact_support_outlined),
-          title: const Text('Contact Us'),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ContactUsPage()));
-          },
-        ),
+    
         const Divider(height: 1),
         ListTile(
           leading: const Icon(Icons.logout_rounded),
