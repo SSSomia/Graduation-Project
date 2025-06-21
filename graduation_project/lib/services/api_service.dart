@@ -9,6 +9,7 @@ import 'package:graduation_project/models/contact_model.dart';
 import 'package:graduation_project/models/dicount_seller_model.dart';
 import 'package:graduation_project/models/favorite_model.dart';
 import 'package:graduation_project/models/loyality_status.dart';
+import 'package:graduation_project/models/message_model.dart';
 import 'package:graduation_project/models/notification_model.dart';
 import 'package:graduation_project/models/order_details_model.dart';
 import 'package:graduation_project/models/order_model.dart';
@@ -1322,6 +1323,23 @@ class ApiService {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  static Future<List<MessageModel>> fetchMyMessages(String token) async {
+    final response = await http.get(
+      Uri.parse('https://shopyapi.runasp.net/api/Contact/my-messages'),
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List data = json.decode(response.body);
+      return data.map((item) => MessageModel.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to fetch messages');
     }
   }
 }

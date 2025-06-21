@@ -420,7 +420,7 @@ class _SignupPageState extends State<SignupPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const LoginPage(),
+                                                       SellerMarketData(),
                                                 ),
                                               );
                                             } else {

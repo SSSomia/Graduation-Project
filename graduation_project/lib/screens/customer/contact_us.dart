@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/contact_provider.dart';
 import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/screens/customer/my_messages_screen.dart';
 import 'package:provider/provider.dart';
 
 class ContactUsPage extends StatefulWidget {
@@ -15,38 +16,40 @@ class _ContactUsPageState extends State<ContactUsPage> {
   final _emailController = TextEditingController();
   final _messageController = TextEditingController();
 
-void _sendMessage() async {
-  if (_formKey.currentState!.validate()) {
-    final token = Provider.of<LoginProvider>(context, listen: false).token;
-    final contactProvider = Provider.of<ContactProvider>(context, listen: false);
+  void _sendMessage() async {
+    if (_formKey.currentState!.validate()) {
+      final token = Provider.of<LoginProvider>(context, listen: false).token;
+      final contactProvider =
+          Provider.of<ContactProvider>(context, listen: false);
 
-    final subject = _emailController.text.trim();
-    final message = _messageController.text.trim();
+      final subject = _emailController.text.trim();
+      final message = _messageController.text.trim();
 
-    await contactProvider.sendMessage(token, subject, message);
+      await contactProvider.sendMessage(token, subject, message);
 
-    if (context.mounted) {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          title: const Text("Thank You!"),
-          content: Text(contactProvider.responseMessage ?? "Your message has been sent."),
-          actions: [
-            TextButton(
-              child: const Text("Close"),
-              onPressed: () => Navigator.pop(context),
-            )
-          ],
-        ),
-      );
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: const Text("Thank You!"),
+            content: Text(contactProvider.responseMessage ??
+                "Your message has been sent."),
+            actions: [
+              TextButton(
+                child: const Text("Close"),
+                onPressed: () => Navigator.pop(context),
+              )
+            ],
+          ),
+        );
+      }
+
+      _emailController.clear();
+      _messageController.clear();
     }
-
-    _emailController.clear();
-    _messageController.clear();
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +61,20 @@ void _sendMessage() async {
         title: const Text('Contact Us'),
         centerTitle: true,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(
+                Icons.message_outlined), // You can change to any icon
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyMessagesScreen()
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Container(
         width: double.infinity,

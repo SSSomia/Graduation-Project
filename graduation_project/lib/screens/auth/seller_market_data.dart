@@ -46,7 +46,7 @@ class _SellerMarketDataState extends State<SellerMarketData> {
 
   @override
   Widget build(BuildContext context) {
-   // final sellerProvider = Provider.of<SellersProvider>(context, listen: false);
+    // final sellerProvider = Provider.of<SellersProvider>(context, listen: false);
     return SafeArea(
         child: Scaffold(
             backgroundColor: const Color.fromARGB(255, 93, 146, 152),
@@ -206,6 +206,12 @@ class _SellerMarketDataState extends State<SellerMarketData> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         const LoginPage()));
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                  content: Text(
+                                                      'Sign up market data successfully.')),
+                                            );
                                             // sellerProvider.addSeller(
                                             //   Seller(
                                             //       person: widget.person,
