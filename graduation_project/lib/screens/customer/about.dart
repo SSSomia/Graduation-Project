@@ -5,7 +5,7 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = const Color.fromARGB(255, 107, 158, 157);
+    final colorScheme = const Color.fromARGB(255, 158, 107, 107);
 
     return Scaffold(
       appBar: AppBar(

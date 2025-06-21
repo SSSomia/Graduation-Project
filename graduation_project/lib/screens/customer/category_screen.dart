@@ -119,7 +119,7 @@ class CategoriesPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Categories'),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 245, 245, 245),
+        backgroundColor: const Color.fromARGB(255, 255, 246, 246),
       ),
       body: Consumer<CategoryProvider>(
         builder: (context, provider, child) {
@@ -155,7 +155,7 @@ class CategoriesPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     elevation: 4,
-                    color: Colors.teal.shade50,
+                    color: const Color.fromARGB(255, 254, 227, 227),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Column(
@@ -164,7 +164,7 @@ class CategoriesPage extends StatelessWidget {
                           Icon(
                             _getIconForCategory(category.name),
                             size: 40,
-                            color: Colors.teal,
+                            color: const Color.fromARGB(255, 150, 0, 0),
                           ),
                           const SizedBox(height: 12),
                           Text(

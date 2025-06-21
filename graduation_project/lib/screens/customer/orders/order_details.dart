@@ -33,7 +33,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Order Details'),
-          backgroundColor: const Color.fromARGB(255, 225, 246, 247),
+          backgroundColor: const Color.fromARGB(255, 247, 225, 225),
         ),
         body: provider.isLoading
             ? const Center(child: CircularProgressIndicator())

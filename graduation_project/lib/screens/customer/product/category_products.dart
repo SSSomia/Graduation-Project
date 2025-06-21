@@ -28,7 +28,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Category Products"),
-backgroundColor: const Color.fromARGB(255, 239, 239, 239),
+backgroundColor: const Color.fromARGB(255, 255, 247, 247),
         ),
         body:
             Consumer<CategoryProductProvider>(builder: (context, provider, _) {

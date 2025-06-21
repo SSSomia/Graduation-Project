@@ -31,7 +31,7 @@ class _MyMessagesScreenState extends State<MyMessagesScreen> {
       backgroundColor: const Color(0xFFF6F6F6),
       appBar: AppBar(
         title: const Text('My Messages', style: TextStyle(color: Colors.black)),
-        backgroundColor: const Color.fromARGB(255, 242, 242, 242),
+        backgroundColor: const Color.fromARGB(255, 255, 242, 242),
         elevation: 1,
         iconTheme: const IconThemeData(color: Colors.black),
       ),

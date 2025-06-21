@@ -54,7 +54,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const colorScheme = Color.fromARGB(255, 107, 158, 157);
+    const colorScheme = Color.fromARGB(255, 206, 167, 167);
 
     return Scaffold(
       appBar: AppBar(
@@ -95,7 +95,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
             children: [
               const SizedBox(height: 20),
               const Icon(Icons.headset_mic_rounded,
-                  size: 80, color: Color.fromARGB(255, 49, 156, 156)),
+                  size: 80, color: Color.fromARGB(255, 156, 49, 49)),
               const SizedBox(height: 10),
               const Text(
                 'We’d Love to Hear from You',
@@ -163,7 +163,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                             onPressed: _sendMessage,
                             icon: const Icon(
                               Icons.send_rounded,
-                              color: Color.fromARGB(255, 42, 130, 133),
+                              color: Color.fromARGB(255, 133, 42, 42),
                             ),
                             label: const Text(
                               'Send Message',

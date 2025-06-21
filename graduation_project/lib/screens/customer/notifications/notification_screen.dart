@@ -88,7 +88,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             notif.isRead ? Colors.grey[100] : Colors.white,
                         leading: Icon(
                           Icons.notifications,
-                          color: notif.isRead ? Colors.grey : Colors.blue,
+                          color: notif.isRead ? Colors.grey : const Color.fromARGB(255, 243, 33, 33),
                         ),
                         title: Text(
                           notif.title,
@@ -137,6 +137,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     notification: notif),
                               ),
                             );
+                            _fetchData();
 
                             await provider.fetchUnreadCount(token);
                           });

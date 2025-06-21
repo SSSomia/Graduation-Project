@@ -53,7 +53,7 @@ class _OrdersState extends State<Orders> {
           ),
         ),
        // leading: const Icon(Icons.shopping_bag_outlined),
-        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        backgroundColor: const Color.fromARGB(255, 255, 244, 244),
         //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
         elevation: 10,
         shape: const RoundedRectangleBorder(
@@ -62,7 +62,6 @@ class _OrdersState extends State<Orders> {
               bottomRight: Radius.circular(20)),
         ),
       ),
-      endDrawer: MyDrawer(),
       body: ListView.builder(
         itemCount: orders.length,
         padding: const EdgeInsets.all(16),
@@ -115,7 +114,7 @@ class _OrdersState extends State<Orders> {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent,
+                          color: Color.fromARGB(255, 132, 0, 0),
                         ),
                       ),
                     ],
@@ -139,7 +138,7 @@ class _OrdersState extends State<Orders> {
                         child: const Text(
                           "View Details",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 33, 115, 166)),
+                              color: Color.fromARGB(255, 136, 40, 40)),
                         ),
                       ),
                     ],

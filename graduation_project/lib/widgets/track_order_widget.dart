@@ -45,7 +45,7 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
           return Container(
             // color: const Color.fromARGB(255, 238, 238, 238),
             margin: EdgeInsets.all(10),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: const Color.fromARGB(255, 237, 243, 244)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: const Color.fromARGB(255, 242, 237, 237)),
             child: Column(
               children: [
                 Expanded(
@@ -57,7 +57,7 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
                         Row(
                           children: [
                             const Icon(Icons.local_shipping,
-                                color: Colors.teal),
+                                color: Color.fromARGB(255, 150, 0, 0)),
                             const SizedBox(width: 8),
                             Text(
                               "Current Status: ",
@@ -69,7 +69,7 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
                             ),
                             Chip(
                               label: Text(data.currentStatus),
-                              backgroundColor: Colors.teal.shade100,
+                              backgroundColor: const Color.fromARGB(255, 230, 189, 189),
                             )
                           ],
                         ),
@@ -89,7 +89,7 @@ class _TrackOrderPageState extends State<TrackOrderPage> {
                             final item = data.trackingHistory[index];
                             return ListTile(
                               leading: const Icon(Icons.check_circle_outline,
-                                  color: Colors.teal),
+                                  color: Color.fromARGB(255, 150, 0, 0)),
                               title: Text(item.status),
                               subtitle: Text("Updated at: ${item.changedAt}"),
                             );
