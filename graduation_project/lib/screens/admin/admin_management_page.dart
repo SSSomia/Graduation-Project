@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/modelNotUse/copoun_model_test.dart';
 import 'package:graduation_project/screens/admin/admin_coupons.dart';
+import 'package:graduation_project/screens/admin/admin_messages_screen.dart';
 import 'package:graduation_project/screens/admin/approved_seller.dart';
 import 'package:graduation_project/screens/admin/seller_requests_screen.dart';
+import 'package:graduation_project/screens/seller/addCoupon.dart';
 
 class AdminManagementPage extends StatefulWidget {
   const AdminManagementPage({super.key});
@@ -36,15 +39,15 @@ class _NavigationExampleState extends State<AdminManagementPage> {
             label: 'Approved Seller',
           ),
           NavigationDestination(
-            icon: Icon(Icons.card_giftcard),
-            label: 'Coupons',
+            icon: Icon(Icons.message_outlined),
+            label: 'Messages',
           ),
         ],
       ),
       body: <Widget>[
         SellerRequestsPage(),
         ApprovedSellers(),
-        AdminCoupons()
+        AdminMessagesScreen()
       ][currentPageIndex],
     );
   }

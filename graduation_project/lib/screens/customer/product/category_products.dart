@@ -28,6 +28,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Category Products"),
+backgroundColor: const Color.fromARGB(255, 239, 239, 239),
         ),
         body:
             Consumer<CategoryProductProvider>(builder: (context, provider, _) {
@@ -48,7 +49,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                    mainAxisSpacing: 30,
                     childAspectRatio: .67,
                   ),
                   itemCount: provider.products.length,

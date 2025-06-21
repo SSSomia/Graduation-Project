@@ -4,6 +4,7 @@ import 'package:graduation_project/providers/notification_provider.dart';
 import 'package:graduation_project/providers/profile_provider.dart';
 import 'package:graduation_project/screens/customer/about.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
+import 'package:graduation_project/screens/customer/category_screen.dart';
 import 'package:graduation_project/screens/customer/contact_us.dart';
 import 'package:graduation_project/screens/customer/orders/orders.dart';
 import 'package:graduation_project/screens/customer/profile/edit_profile_data.dart';
@@ -82,6 +83,17 @@ class _MyDrawerState extends State<MyDrawer> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const EditProfileData()));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.category_outlined),
+          title: const Text('Categories'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CategoriesPage()));
           },
         ),
         ListTile(

@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:graduation_project/models/admin_message_details.dart';
+import 'package:graduation_project/models/admin_message_model.dart';
 import 'package:graduation_project/models/all_seller_discount.dart';
 import 'package:graduation_project/models/buy_from_cart_response.dart';
 import 'package:graduation_project/models/buyer.dart';
@@ -1220,7 +1222,7 @@ class ApiService {
         },
       );
       if (response.statusCode == 200) {
-        return jsonDecode( response.body);
+        return jsonDecode(response.body);
       } else {
         print("false");
         return null;
@@ -1340,6 +1342,66 @@ class ApiService {
       return data.map((item) => MessageModel.fromJson(item)).toList();
     } else {
       throw Exception('Failed to fetch messages');
+    }
+  }
+
+  static Future<Map<String, List<AdminMessage>>> fetchAdminMessages(
+      String token) async {
+    final response = await http.get(
+      Uri.parse('https://shopyapi.runasp.net/api/Contact/admin/messages'),
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final unread = (data['unreadMessages'] as List)
+          .map((msg) => AdminMessage.fromJson(msg))
+          .toList();
+      final read = (data['readMessages'] as List)
+          .map((msg) => AdminMessage.fromJson(msg))
+          .toList();
+      return {'unread': unread, 'read': read};
+    } else {
+      throw Exception('Failed to fetch admin messages');
+    }
+  }
+
+  static Future<AdminMessageDetail> fetchAdminMessageDetail(
+      String token, int id) async {
+    final response = await http.get(
+      Uri.parse('https://shopyapi.runasp.net/api/Contact/admin/messages/$id'),
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return AdminMessageDetail.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load message detail');
+    }
+  }
+
+  static Future<void> sendAdminReply(
+      String token, int messageId, String reply) async {
+    final response = await http.post(
+      Uri.parse('https://shopyapi.runasp.net/api/Contact/admin/reply'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'messageId': messageId,
+        'adminReply': reply,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to send reply');
     }
   }
 }
