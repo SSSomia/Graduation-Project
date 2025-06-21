@@ -1,3 +1,4 @@
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -26,7 +27,6 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
   final _stockController = TextEditingController();
   List<File> _images = [];
   List<String> _existingImageUrls = [];
-
   Category? selectedCategory;
 
   @override
@@ -34,8 +34,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final categoryProvider =
-          Provider.of<CategoryProvider>(context, listen: false);
+      final categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
       categoryProvider.loadCategories().then((_) {
         final product = widget.product;
 
@@ -83,7 +82,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
       await provider.fetchMyProducts(authProvider.token);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("updated successfully")),
+        const SnackBar(content: Text("Updated successfully")),
       );
       Navigator.pop(context);
     } catch (e) {
@@ -95,44 +94,38 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final inputStyle = InputDecoration(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-    );
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Update Product")),
+      backgroundColor: const Color(0xFFF4F6F8),
+      appBar: AppBar(
+        title: const Text("Update Product"),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: inputStyle.copyWith(
-                    labelText: "Product Name",
-                    prefixIcon: const Icon(Icons.abc_outlined)),
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Required' : null,
-              ),
+              _buildLabel("Product Name"),
+              _buildTextField(_nameController, "Product Name", Icons.abc_outlined),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _priceController,
-                decoration: inputStyle.copyWith(
-                    labelText: "Price",
-                    prefixIcon: const Icon(Icons.attach_money_outlined)),
-                keyboardType: TextInputType.number,
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Required' : null,
-              ),
+
+              _buildLabel("Price"),
+              _buildTextField(_priceController, "Price", Icons.attach_money_outlined,
+                  keyboardType: TextInputType.number),
               const SizedBox(height: 16),
+
+              _buildLabel("Category"),
               Consumer<CategoryProvider>(
                 builder: (context, provider, child) {
                   return DropdownButtonFormField<Category>(
-                    decoration: inputStyle.copyWith(
-                        labelText: "Category",
-                        prefixIcon: const Icon(Icons.category_outlined)),
+                    decoration: _inputStyle().copyWith(
+                      prefixIcon: const Icon(Icons.category_outlined),
+                    ),
                     value: selectedCategory,
                     isExpanded: true,
                     items: provider.categories.map((cat) {
@@ -141,122 +134,69 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                         child: Text(cat.name),
                       );
                     }).toList(),
-                    onChanged: (cat) {
-                      setState(() {
-                        selectedCategory = cat;
-                      });
-                    },
+                    onChanged: (cat) => setState(() => selectedCategory = cat),
                     validator: (value) =>
-                        value == null ? 'Select a category' : null,
+                        value == null ? 'Please select a category' : null,
                   );
                 },
               ),
               const SizedBox(height: 16),
+
+              _buildLabel("Description"),
               TextFormField(
                 controller: _descriptionController,
-                decoration: inputStyle.copyWith(
-                    labelText: "Description",
-                    prefixIcon: const Icon(Icons.description_outlined)),
+                decoration: _inputStyle().copyWith(
+                  prefixIcon: const Icon(Icons.description_outlined),
+                ),
                 maxLines: 3,
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _stockController,
-                decoration: inputStyle.copyWith(
-                    labelText: "Stock Quantity",
-                    prefixIcon: const Icon(Icons.inventory_2_outlined)),
-                keyboardType: TextInputType.number,
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Required' : null,
-              ),
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Update Images (optional)",
-                    style: Theme.of(context).textTheme.titleMedium),
-              ),
-              const SizedBox(height: 10),
 
-              if (_existingImageUrls.isNotEmpty || _images.isNotEmpty)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (_existingImageUrls.isNotEmpty) ...[
-                      const Text("Current Images:"),
-                      const SizedBox(height: 8),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _existingImageUrls.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
-                        ),
-                        itemBuilder: (context, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(_existingImageUrls[index],
-                              fit: BoxFit.cover),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-                    if (_images.isNotEmpty) ...[
-                      const Text("New Images (will be uploaded):"),
-                      const SizedBox(height: 8),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _images.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
-                        ),
-                        itemBuilder: (context, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.file(_images[index], fit: BoxFit.cover),
-                        ),
-                      ),
-                    ],
-                  ],
-                )
+              _buildLabel("Stock Quantity"),
+              _buildTextField(_stockController, "Stock Quantity",
+                  Icons.inventory_2_outlined,
+                  keyboardType: TextInputType.number),
+              const SizedBox(height: 24),
+
+              _buildLabel("Current Images"),
+              if (_existingImageUrls.isNotEmpty)
+                _buildNetworkImageGrid(_existingImageUrls)
               else
-                const Text("No images available"),
+                const Text("No images available", style: TextStyle(color: Colors.grey)),
 
-              // if (_images.isNotEmpty)
-              //   GridView.builder(
-              //     shrinkWrap: true,
-              //     itemCount: _images.length,
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 3,
-              //       crossAxisSpacing: 8,
-              //       mainAxisSpacing: 8,
-              //     ),
-              //     itemBuilder: (context, index) => ClipRRect(
-              //       borderRadius: BorderRadius.circular(8),
-              //       child: Image.file(_images[index], fit: BoxFit.cover),
-              //     ),
-              //   )
-              // else
-              //   const Text("No new images selected"),
+              const SizedBox(height: 24),
+              _buildLabel("New Images (optional)"),
+              if (_images.isNotEmpty) _buildFileImageGrid(_images),
+
               const SizedBox(height: 16),
               OutlinedButton.icon(
                 onPressed: _pickImages,
                 icon: const Icon(Icons.photo_library),
                 label: const Text("Pick New Images"),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 30),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: _updateProduct,
-                  icon: const Icon(Icons.update),
-                  label: const Text("Update Product"),
+                  icon: const Icon(Icons.check, color: Colors.white),
+                  label: const Text("Update Product",
+                      style: TextStyle(color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: Colors.red[700],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    textStyle: const TextStyle(fontSize: 16),
+                  ),
                 ),
               ),
             ],
@@ -265,4 +205,96 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
       ),
     );
   }
+
+  // Input decoration
+  InputDecoration _inputStyle() {
+    return InputDecoration(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      contentPadding:
+          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      filled: true,
+      fillColor: Colors.white,
+    );
+  }
+
+  Widget _buildLabel(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Text(text,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String hint,
+      IconData icon, {TextInputType? keyboardType}) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      decoration: _inputStyle().copyWith(
+        labelText: hint,
+        prefixIcon: Icon(icon),
+      ),
+      validator: (value) =>
+          value == null || value.isEmpty ? 'Required' : null,
+    );
+  }
+
+  Widget _buildNetworkImageGrid(List<String> urls) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: urls.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+      ),
+      itemBuilder: (context, index) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.network(urls[index], fit: BoxFit.cover),
+        );
+      },
+    );
+  }
+
+  Widget _buildFileImageGrid(List<File> files) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: files.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+      ),
+      itemBuilder: (context, index) {
+        return Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.file(files[index], fit: BoxFit.cover),
+            ),
+            Positioned(
+              top: 2,
+              right: 2,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _images.removeAt(index);
+                  });
+                },
+                child: const CircleAvatar(
+                  radius: 12,
+                  backgroundColor: Colors.black54,
+                  child: Icon(Icons.close, size: 16, color: Colors.white),
+                ),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
 }
+

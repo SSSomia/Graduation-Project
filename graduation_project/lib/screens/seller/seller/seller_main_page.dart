@@ -180,7 +180,7 @@ class SellerMainPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 40, color: Colors.teal),
+              Icon(icon, size: 40, color: const Color.fromARGB(255, 150, 0, 0)),
               const SizedBox(height: 10),
               Text(
                 title,

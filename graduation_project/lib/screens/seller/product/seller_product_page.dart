@@ -35,7 +35,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 246, 246, 246),
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 228, 246, 254),
+          backgroundColor: const Color.fromARGB(255, 255, 246, 246),
           title: const Text("Product Details"),
         ),
         body: Consumer<ProductProvider>(
@@ -103,7 +103,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: _currentIndex == index
-                                      ? Colors.teal
+                                      ? const Color.fromARGB(255, 158, 43, 43)
                                       : Colors.grey,
                                 ),
                               ),
@@ -145,7 +145,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                     child: FilledButton(
                       style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all<Color>(
-                              const Color.fromARGB(255, 42, 153, 151))),
+                              const Color.fromARGB(255, 137, 22, 22))),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -171,7 +171,7 @@ class _SellerProductPageState extends State<SellerProductPage> {
                     child: FilledButton(
                       style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all<Color>(
-                              const Color.fromARGB(255, 205, 0, 0))),
+                              const Color.fromARGB(255, 221, 0, 0))),
                       onPressed: () async {
                         try {
                           final authProvider = Provider.of<LoginProvider>(

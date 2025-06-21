@@ -23,7 +23,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
           ),
         ),
         leading: const Icon(Icons.shopping_bag_outlined),
-        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        backgroundColor: const Color.fromARGB(255, 255, 250, 250),
         //  shadowColor: const Color.fromARGB(255, 252, 252, 252),
         elevation: 10,
         shape: const RoundedRectangleBorder(
@@ -39,7 +39,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
             currentPageIndex = index;
           });
         },
-        backgroundColor: const Color.fromARGB(255, 82, 157, 165),
+        backgroundColor:  const Color.fromARGB(255, 173, 26, 26),
         indicatorColor: const Color.fromARGB(255, 255, 255, 255),
         selectedIndex: currentPageIndex,
         animationDuration: Durations.extralong4,

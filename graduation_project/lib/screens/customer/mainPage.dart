@@ -47,7 +47,7 @@ class _NavigationExampleState extends State<MainHomePage> {
             currentPageIndex = index;
           });
         },
-        backgroundColor: const Color.fromARGB(255, 177, 37, 37),
+        backgroundColor: const Color.fromARGB(255, 173, 26, 26),
         indicatorColor: const Color.fromARGB(255, 255, 227, 227),
         selectedIndex: currentPageIndex,
         animationDuration: Durations.extralong4,
