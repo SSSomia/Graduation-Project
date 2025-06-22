@@ -11,7 +11,7 @@ class ProfitSummaryProvider with ChangeNotifier {
 
   Future<void> loadProfitSummary(String token) async {
     _isLoading = true;
-    notifyListeners();
+    // notifyListeners();
 
     final data = await ApiService.fetchProfitSummary(token);
     _profitSummary = data;

@@ -14,7 +14,7 @@ class TopSellingProvider with ChangeNotifier {
   Future<void> loadTopSellingProducts(String token) async {
     _isLoading = true;
     _error = null;
-    notifyListeners();
+    // notifyListeners();
 
     try {
       _products = await ApiService().fetchTopSellingProducts(token);

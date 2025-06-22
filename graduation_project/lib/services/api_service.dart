@@ -983,6 +983,7 @@ class ApiService {
     );
 
     if (response.statusCode == 200) {
+      print("true");
       final List<dynamic> jsonData = json.decode(response.body);
       return jsonData.map((json) => TopSellingProduct.fromJson(json)).toList();
     } else {
@@ -1424,6 +1425,7 @@ class ApiService {
         return ProfitSummaryModel.fromJson(jsonData);
       } else {
         print("Failed to fetch data: ${response.statusCode}");
+        print("Response body: ${response.body}");
       }
     } catch (e) {
       print("Error in API: $e");

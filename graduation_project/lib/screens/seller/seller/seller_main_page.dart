@@ -1,11 +1,28 @@
-
 import 'package:flutter/material.dart';
+import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/seller_top_selling_prodcuts.dart';
 import 'package:graduation_project/screens/seller/product/market_product_screen.dart';
 import 'package:provider/provider.dart';
 
-class SellerMainPage extends StatelessWidget {
+class SellerMainPage extends StatefulWidget {
   const SellerMainPage({super.key});
+
+  @override
+  State<SellerMainPage> createState() => _SellerMainPageState();
+}
+
+class _SellerMainPageState extends State<SellerMainPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = Provider.of<LoginProvider>(context, listen: false);
+
+      // Load sellers on init
+      Provider.of<TopSellingProvider>(context, listen: false)
+          .loadTopSellingProducts(authProvider.token);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +75,7 @@ class SellerMainPage extends StatelessWidget {
                     return Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(60, 146, 255, 251),
+                        color: const Color.fromARGB(59, 255, 146, 146),
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
@@ -82,7 +99,7 @@ class SellerMainPage extends StatelessWidget {
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: provider.products.length,
+                            itemCount: 3,
                             itemBuilder: (context, index) {
                               final product = provider.products[index];
 
@@ -140,7 +157,7 @@ class SellerMainPage extends StatelessWidget {
                                       ),
                                       CircleAvatar(
                                         radius: 14,
-                                        backgroundColor: Colors.teal[400],
+                                        backgroundColor: const Color.fromARGB(255, 166, 38, 38),
                                         child: Text(
                                           '#${index + 1}',
                                           style: const TextStyle(

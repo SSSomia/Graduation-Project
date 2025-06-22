@@ -33,8 +33,8 @@ class _ProfitSummaryScreenState extends State<ProfitSummaryScreen> {
       body: provider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : provider.profitSummary == null
-              ? Center(
-                  child: const Text("Load Profit Summary"),
+              ? const Center(
+                  child: Text("Load Profit Summary"),
                 )
               : Padding(
                   padding: const EdgeInsets.all(16.0),
