@@ -29,7 +29,7 @@ class _ProfitSummaryScreenState extends State<ProfitSummaryScreen> {
     final provider = Provider.of<ProfitSummaryProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Profit Summary"), backgroundColor: const Color.fromARGB(255, 239, 239, 239),),
+      appBar: AppBar(title: const Text("Profit Summary"), backgroundColor: const Color.fromARGB(255, 255, 241, 241),),
       body: provider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : provider.profitSummary == null

@@ -172,7 +172,7 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                                const Color.fromARGB(255, 39, 132, 129),
+                                const Color.fromARGB(255, 185, 25, 25),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             textStyle: const TextStyle(fontSize: 16),
                             shape: RoundedRectangleBorder(

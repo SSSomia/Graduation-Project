@@ -35,7 +35,7 @@ class _BuyersPageState extends State<BuyersPage> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: const Color.fromARGB(255, 250, 245, 245),
       body: Consumer<BuyersProvider>(
         builder: (context, provider, child) {
           if (provider.isLoading) {
@@ -71,13 +71,13 @@ class _BuyersPageState extends State<BuyersPage> {
                     children: [
                       CircleAvatar(
                         radius: 24,
-                        backgroundColor: const Color.fromARGB(255, 215, 232, 230),
+                        backgroundColor: const Color.fromARGB(255, 232, 215, 215),
                         child: Text(
                           buyer.userName[0].toUpperCase(),
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color:const Color.fromARGB(255, 31, 120, 133)
+                            color:Color.fromARGB(255, 133, 31, 31)
                           ),
                         ),
                       ),
@@ -117,11 +117,11 @@ class _BuyersPageState extends State<BuyersPage> {
                               context); // if you still want to go back after add
                         },
                         icon: const Icon(Icons.add,
-                            color:  Color.fromARGB(255, 31, 120, 133)),
+                            color:  Color.fromARGB(255, 133, 31, 31)),
                         label: const Text('Add Coupon'),
                         style: TextButton.styleFrom(
                           foregroundColor:
-                              const Color.fromARGB(255, 31, 120, 133),
+                              const Color.fromARGB(255, 133, 31, 31),
                         ),
                       ),
                     ],
