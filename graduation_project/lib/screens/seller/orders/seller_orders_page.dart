@@ -43,7 +43,7 @@ class _SellerOrdersPageState extends State<SellerOrdersPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Seller Orders'),
-        backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+        backgroundColor: const Color.fromARGB(255, 255, 238, 238),
       ),
       body: Column(
         children: [
@@ -99,7 +99,7 @@ class _SellerOrdersPageState extends State<SellerOrdersPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        OrderProductsPage(orderId: order.orderId),
+                                        OrderProductsPage(orderId: order.orderId, status: order.status),
                                   ),
                                 );
                                 if (shouldRefresh == true) {

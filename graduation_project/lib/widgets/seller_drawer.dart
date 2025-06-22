@@ -63,7 +63,7 @@ class _SellerDrawerState extends State<SellerDrawer> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 57, 149, 159),
+              color: Color.fromARGB(255, 167, 25, 25),
             ),
             accountEmail: Text(
               user.email,
