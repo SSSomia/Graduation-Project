@@ -29,7 +29,7 @@ class _AdminMessagesScreenState extends State<AdminMessagesScreen> {
     final provider = Provider.of<AdminMessageProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Admin Messages')),
+      appBar: AppBar(title: const Text('Messages'), backgroundColor: const  Color.fromARGB(255, 255, 250, 250),),
       body: provider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : provider.error != null

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/models/pending_seller.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/pending_seller_provider.dart';
+import 'package:graduation_project/widgets/adminDrawer.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 
@@ -65,6 +66,7 @@ class _SellerRequestsPageState extends State<SellerRequestsPage> {
     final requests = provider.pendingSellers;
 
     return Scaffold(
+      endDrawer: Admindrawer(),
       appBar: AppBar(
         title: const Text(
           'Seller Requests',
@@ -75,7 +77,7 @@ class _SellerRequestsPageState extends State<SellerRequestsPage> {
           ),
         ),
         leading: const Icon(Icons.shopping_bag_outlined),
-        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        backgroundColor: const Color.fromARGB(255, 255, 250, 250),
         elevation: 10,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -153,30 +155,30 @@ class _SellerRequestsPageState extends State<SellerRequestsPage> {
                         },
                       ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                  (route) => false,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 204, 45, 45),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              child: const Text(
-                'Logout',
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+          //   child: ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.pushAndRemoveUntil(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => const LoginPage()),
+          //         (route) => false,
+          //       );
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: const Color.fromARGB(255, 204, 45, 45),
+          //       padding:
+          //           const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //     ),
+          //     child: const Text(
+          //       'Logout',
+          //       style: TextStyle(fontSize: 18, color: Colors.white),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

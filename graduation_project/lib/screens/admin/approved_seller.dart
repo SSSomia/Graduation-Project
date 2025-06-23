@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/models/pending_seller.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/pending_seller_provider.dart';
+import 'package:graduation_project/widgets/adminDrawer.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
 
@@ -33,7 +34,7 @@ class _ApprovedSellersState extends State<ApprovedSellers> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const CircleAvatar(
-                  radius: 40, child: Icon(Icons.store, size: 40)),
+                  radius: 40,child: Icon(Icons.store,size: 40, color: Color.fromARGB(255, 158, 23, 23),),backgroundColor: Color.fromARGB(255, 255, 229, 227),),
               const SizedBox(height: 10),
               Text("Name: ${request.firstName} ${request.lastName}",
                   style: const TextStyle(fontSize: 16)),
@@ -53,17 +54,15 @@ class _ApprovedSellersState extends State<ApprovedSellers> {
     final requests = provider.approvedSeller;
 
     return Scaffold(
+            // endDrawer: Admindrawer(),
+
       appBar: AppBar(
         title: const Text(
           'Approved Sellers',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-          ),
+         
         ),
-        leading: const Icon(Icons.shopping_bag_outlined),
-        backgroundColor: const Color.fromARGB(255, 244, 255, 254),
+        // leading: const Icon(Icons.shopping_bag_outlined),
+        backgroundColor: const Color.fromARGB(255, 255, 250, 250),
         elevation: 10,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -86,7 +85,7 @@ class _ApprovedSellersState extends State<ApprovedSellers> {
                             margin: const EdgeInsets.all(8.0),
                             child: ListTile(
                               leading:
-                                  const CircleAvatar(child: Icon(Icons.store)),
+                                  const CircleAvatar(child: Icon(Icons.store, color: Color.fromARGB(255, 158, 23, 23),),backgroundColor: Color.fromARGB(255, 255, 229, 227),),
                               title: Text(request.storeName),
                               subtitle: Text(request.storeDescription),
                               onTap: () =>
@@ -96,30 +95,30 @@ class _ApprovedSellersState extends State<ApprovedSellers> {
                         },
                       ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                  (route) => false,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 204, 45, 45),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              child: const Text(
-                'Logout',
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+          //   child: ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.pushAndRemoveUntil(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => const LoginPage()),
+          //         (route) => false,
+          //       );
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: const Color.fromARGB(255, 204, 45, 45),
+          //       padding:
+          //           const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //     ),
+          //     child: const Text(
+          //       'Logout',
+          //       style: TextStyle(fontSize: 18, color: Colors.white),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

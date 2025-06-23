@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:graduation_project/models/admin_message_details.dart';
 import 'package:graduation_project/models/admin_message_model.dart';
+import 'package:graduation_project/models/admin_order_model_details.dart';
 import 'package:graduation_project/models/all_seller_discount.dart';
 import 'package:graduation_project/models/buy_from_cart_response.dart';
 import 'package:graduation_project/models/buyer.dart';
@@ -1432,5 +1433,30 @@ class ApiService {
     }
 
     return null;
+  }
+
+  static Future<List<AdminOrderDetailsModel>> fetchAdminOrders(
+      String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/AdminDashBorde/orders/overview/details');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print("true");
+      final List<dynamic> jsonData = json.decode(response.body);
+      return jsonData
+          .map((orderJson) => AdminOrderDetailsModel.fromJson(orderJson))
+          .toList();
+    } else {
+      print("false");
+      throw Exception('Failed to fetch admin order details');
+    }
   }
 }

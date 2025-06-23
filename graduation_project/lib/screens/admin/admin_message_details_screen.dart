@@ -123,7 +123,7 @@ class _AdminMessageDetailScreenState extends State<AdminMessageDetailScreen> {
                               icon: const Icon(Icons.send, color: Colors.white,),
                               label: const Text("Send Reply", style: TextStyle(color: Colors.white),),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromARGB(255, 35, 135, 135),
+                                backgroundColor: const Color.fromARGB(255, 135, 35, 35),
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 24, vertical: 12),
                               ),

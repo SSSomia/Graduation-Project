@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/admin_message_provider.dart';
+import 'package:graduation_project/providers/admin_order_details_provider.dart';
 import 'package:graduation_project/providers/buyer_provider.dart';
 import 'package:graduation_project/providers/cart_provider.dart';
 import 'package:graduation_project/providers/category_provider.dart';
@@ -76,6 +77,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => ContactDetailProvider()),
     ChangeNotifierProvider(create: (_) => AdminMessageProvider()),
     ChangeNotifierProvider(create: (_) => ProfitSummaryProvider()),
+    ChangeNotifierProvider(create: (_) => AdminOrderDetailsProvider()),
     // will be removed
   ], child: const MyApp()));
 }
