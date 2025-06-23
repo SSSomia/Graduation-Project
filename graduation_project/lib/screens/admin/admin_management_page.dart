@@ -36,14 +36,14 @@ class _NavigationExampleState extends State<AdminManagementPage> {
             icon: Icon(Icons.pending_actions_outlined),
             label: 'Pending Sellers',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.list_alt_sharp),
-            label: 'Approved Seller',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.message_outlined),
-            label: 'Messages',
-          ),
+          // NavigationDestination(
+          //   icon: Icon(Icons.list_alt_sharp),
+          //   label: 'Approved Seller',
+          // ),
+          // NavigationDestination(
+          //   icon: Icon(Icons.message_outlined),
+          //   label: 'Messages',
+          // ),
           NavigationDestination(
             icon: Icon(Icons.list_outlined),
             label: 'Orders',
@@ -52,8 +52,8 @@ class _NavigationExampleState extends State<AdminManagementPage> {
       ),
       body: <Widget>[
         SellerRequestsPage(),
-        ApprovedSellers(),
-        AdminMessagesScreen(),
+        // ApprovedSellers(),
+        // AdminMessagesScreen(),
         AdminOrderDetailsScreen()
       ][currentPageIndex],
     );

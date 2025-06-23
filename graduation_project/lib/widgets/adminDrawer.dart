@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/notification_provider.dart';
 import 'package:graduation_project/providers/profile_provider.dart';
-import 'package:graduation_project/screens/customer/about.dart';
+import 'package:graduation_project/screens/admin/admin_messages_screen.dart';
+import 'package:graduation_project/screens/admin/approved_seller.dart';
+import 'package:graduation_project/screens/admin/first_order_dicount_screen.dart';
+import 'package:graduation_project/screens/admin/loyality_level_screen.dart';
+import 'package:graduation_project/screens/admin/shipping_screen.dart';
 import 'package:graduation_project/screens/auth/login_page.dart';
-import 'package:graduation_project/screens/customer/category_screen.dart';
-import 'package:graduation_project/screens/customer/contact_us.dart';
 import 'package:graduation_project/screens/customer/orders/orders.dart';
-import 'package:graduation_project/screens/customer/profile/edit_profile_data.dart';
-import 'package:graduation_project/screens/customer/favorite_page.dart';
-import 'package:graduation_project/screens/customer/notifications/notification_screen.dart';
-import 'package:graduation_project/screens/customer/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 class Admindrawer extends StatefulWidget {
@@ -60,174 +58,57 @@ class _AdmindrawerState extends State<Admindrawer> {
             color: Colors.white,
           ),
         ),
-        // ListTile(
-        //   leading: const Icon(Icons.account_circle_outlined),
-        //   title: const Text('Account'),
-        //   onTap: () {
-        //     Navigator.pop(context);
-        //     Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //             builder: (context) => const EditProfileData()));
-        //   },
-        // ),
-        // ListTile(
-        //   leading: const Icon(Icons.category_outlined),
-        //   title: const Text('Categories'),
-        //   onTap: () {
-        //     Navigator.pop(context);
-        //     Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //             builder: (context) => const CategoriesPage()));
-        //   },
-        // ),
         ListTile(
-          leading: const Icon(Icons.favorite_outline_outlined),
-          title: const Text('Pending Sellers'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const MyFavorites()));
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.library_books_outlined),
+          leading: const Icon(Icons.pending_actions_outlined),
           title: const Text('Approved Sellers'),
           onTap: () {
             Navigator.pop(context);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Orders()));
+                MaterialPageRoute(builder: (context) => ApprovedSellers()));
           },
         ),
         ListTile(
-          leading: const Icon(Icons.library_books_outlined),
+          leading: const Icon(Icons.message_outlined),
           title: const Text('Messages'),
           onTap: () {
             Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Orders()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AdminMessagesScreen()));
           },
         ),
-        ListTile(
-          leading: const Icon(Icons.library_books_outlined),
-          title: const Text('Orders Overview'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Orders()));
-          },
-        ),
-        // Consumer<NotificationProvider>(
-        //   builder: (context, notificationProvider, _) {
-        //     int count = notificationProvider.unreadCount;
-        //     return ListTile(
-        //       leading: Stack(
-        //         clipBehavior: Clip.none,
-        //         children: [
-        //           const Icon(Icons.notifications_outlined, size: 28),
-        //           if (count > 0)
-        //             Positioned(
-        //               top: -4,
-        //               right: -6,
-        //               child: Container(
-        //                 padding: const EdgeInsets.symmetric(
-        //                     horizontal: 6, vertical: 2),
-        //                 decoration: BoxDecoration(
-        //                   color: Colors.redAccent,
-        //                   borderRadius: BorderRadius.circular(12),
-        //                   border: Border.all(color: Colors.white, width: 1),
-        //                 ),
-        //                 child: Text(
-        //                   '$count',
-        //                   style: const TextStyle(
-        //                     color: Colors.white,
-        //                     fontSize: 11,
-        //                     fontWeight: FontWeight.bold,
-        //                   ),
-        //                 ),
-        //               ),
-        //             ),
-        //         ],
-        //       ),
-        //       title: const Text('Notifications'),
-        //       onTap: () {
-        //         Navigator.pop(context);
-        //         Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //               builder: (context) => const NotificationScreen()),
-        //         );
-        //       },
-        //     );
-        //   },
-        // ),
-
-        // ListTile(
-        //   leading: Stack(
-        //     clipBehavior: Clip.none,
-        //     children: [
-        //       const Icon(Icons.notifications_outlined, size: 28),
-        //       if (count > 0)
-        //         Positioned(
-        //           top: -4,
-        //           right: -6,
-        //           child: Container(
-        //             padding:
-        //                 const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        //             decoration: BoxDecoration(
-        //               color: Colors.redAccent,
-        //               borderRadius: BorderRadius.circular(12),
-        //               border: Border.all(color: Colors.white, width: 1),
-        //             ),
-        //             child: Text(
-        //               '$count',
-        //               style: const TextStyle(
-        //                 color: Colors.white,
-        //                 fontSize: 11,
-        //                 fontWeight: FontWeight.bold,
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //     ],
-        //   ),
-        //   title: const Text('Notifications'),
-        //   onTap: () {
-        //     Navigator.pop(context);
-        //     Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //             builder: (context) => const NotificationScreen()));
-
-        //     // Navigate to notifications page
-        //   },
-        // ),
         const Divider(height: 1),
         ListTile(
-          leading: const Icon(Icons.settings_outlined),
-          title: const Text('Settings'),
+          leading: const Icon(Icons.discount_outlined),
+          title: const Text('Loyality Dicounts'),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const SettingsPage()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const LoyaltyLevelsScreen()));
           },
         ),
-        // ListTile(
-        //   leading: const Icon(Icons.info_outline_rounded),
-        //   title: const Text('About Us'),
-        //   onTap: () {
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => const AboutPage()));
-        //   },
-        // ),
-        // ListTile(
-        //   leading: const Icon(Icons.contact_support_outlined),
-        //   title: const Text('Contact Us'),
-        //   onTap: () {
-        //     Navigator.push(context,
-        //         MaterialPageRoute(builder: (context) => const ContactUsPage()));
-        //   },
-        // ),
+        ListTile(
+          leading: const Icon(Icons.local_shipping_outlined),
+          title: const Text('Shipping Cost'),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ShippingScreen()));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.discount_rounded),
+          title: const Text('First Order Dicount'),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const DiscountSettingsScreen()));
+          },
+        ),
         const Divider(height: 1),
         ListTile(
           leading: const Icon(Icons.logout_rounded),

@@ -11,10 +11,13 @@ import 'package:graduation_project/models/catigory_model.dart';
 import 'package:graduation_project/models/contact_model.dart';
 import 'package:graduation_project/models/dicount_seller_model.dart';
 import 'package:graduation_project/models/favorite_model.dart';
+import 'package:graduation_project/models/frist_order_discount.dart';
+import 'package:graduation_project/models/loyality_level_model.dart';
 import 'package:graduation_project/models/loyality_status.dart';
 import 'package:graduation_project/models/message_model.dart';
 import 'package:graduation_project/models/notification_model.dart';
 import 'package:graduation_project/models/order_details_model.dart';
+import 'package:graduation_project/models/order_fee_model.dart';
 import 'package:graduation_project/models/order_model.dart';
 import 'package:graduation_project/models/pending_seller.dart';
 import 'package:graduation_project/models/product_module.dart';
@@ -23,6 +26,7 @@ import 'package:graduation_project/models/seller_order.dart';
 import 'package:graduation_project/models/seller_order_product.dart';
 import 'package:graduation_project/models/seller_product.dart';
 import 'package:graduation_project/models/seller_profit_data.dart';
+import 'package:graduation_project/models/shipping_model.dart';
 import 'package:graduation_project/models/store_info_model.dart';
 import 'package:graduation_project/models/top_selling_prodcuts.dart';
 import 'package:graduation_project/models/track_order.dart';
@@ -1457,6 +1461,124 @@ class ApiService {
     } else {
       print("false");
       throw Exception('Failed to fetch admin order details');
+    }
+  }
+
+  static Future<OrderFeesModel> fetchOrderFees(
+      int orderId, String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/AdminDashBorde/order-fees/$orderId');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      return OrderFeesModel.fromJson(jsonData['data']);
+    } else {
+      throw Exception('Failed to load order fees');
+    }
+  }
+
+  static Future<List<LoyaltyLevel>> fetchLoyaltyLevels(String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/AdminDiscount/admin/loyalty-levels');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> decoded = jsonDecode(response.body);
+      return decoded.map((json) => LoyaltyLevel.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to fetch loyalty levels');
+    }
+  }
+
+  static Future<Shipping> getShipping(String token) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Shipping');
+
+    final response = await http.get(url, headers: {
+      'accept': '*/*',
+      'Authorization': 'Bearer $token',
+    });
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return Shipping.fromJson(data);
+    } else {
+      throw Exception('Failed to fetch shipping info');
+    }
+  }
+
+  static Future<Shipping> updateShipping(String token, double newCost) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/Shipping');
+
+    final response = await http.put(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: newCost.toString(), // API accepts raw number as body
+    );
+
+    if (response.statusCode == 200) {
+      return Shipping.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to update shipping');
+    }
+  }
+
+  static Future<DiscountSettings> getSettings(String token) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/discount-settings');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return DiscountSettings.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load discount settings');
+    }
+  }
+
+  static Future<String> updateSettings(String token, double newPercentage) async {
+    final url = Uri.parse('https://shopyapi.runasp.net/api/discount-settings');
+
+    final response = await http.put(
+      url,
+      headers: {
+        'accept': '*/*',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        "id": 1,
+        "firstOrderDiscountPercentage": newPercentage,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)['message'];
+    } else {
+      throw Exception('Failed to update discount setting');
     }
   }
 }

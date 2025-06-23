@@ -9,9 +9,11 @@ import 'package:graduation_project/providers/contact_details_provider.dart';
 import 'package:graduation_project/providers/contact_provider.dart';
 import 'package:graduation_project/providers/discount_seller_provider.dart';
 import 'package:graduation_project/providers/favorite_provider.dart';
+import 'package:graduation_project/providers/first_order_dicount.dart';
 import 'package:graduation_project/providers/forget_passwrod_provider.dart';
 import 'package:graduation_project/providers/get_products_of_category.dart';
 import 'package:graduation_project/providers/login_provider.dart';
+import 'package:graduation_project/providers/loyality_level_provider.dart';
 import 'package:graduation_project/providers/loyality_provider.dart';
 import 'package:graduation_project/providers/notification_provider.dart';
 import 'package:graduation_project/providers/order_details_provider.dart';
@@ -31,6 +33,7 @@ import 'package:graduation_project/providers/seller_order_provider.dart';
 import 'package:graduation_project/providers/seller_product_provider.dart';
 import 'package:graduation_project/providers/seller_profit_data_provider.dart';
 import 'package:graduation_project/providers/seller_top_selling_prodcuts.dart';
+import 'package:graduation_project/providers/shipping_provider.dart';
 import 'package:graduation_project/providers/store_info_provider.dart';
 import 'package:graduation_project/providers/track_order_provider.dart';
 import 'package:graduation_project/providers/update_profile_data.dart';
@@ -78,6 +81,9 @@ void main() {
     ChangeNotifierProvider(create: (_) => AdminMessageProvider()),
     ChangeNotifierProvider(create: (_) => ProfitSummaryProvider()),
     ChangeNotifierProvider(create: (_) => AdminOrderDetailsProvider()),
+    ChangeNotifierProvider(create: (_) => LoyaltyLevelProvider()),
+    ChangeNotifierProvider(create: (_) => ShippingProvider()),
+    ChangeNotifierProvider(create: (_) => DiscountSettingsProvider()),
     // will be removed
   ], child: const MyApp()));
 }
