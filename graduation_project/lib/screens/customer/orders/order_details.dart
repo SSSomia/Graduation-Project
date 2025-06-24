@@ -151,6 +151,13 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                                     onPressed: () async {
                                       await provider.confirmDelivery(
                                           widget.orderId, authProvider.token);
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "The order has been confirmed.")),
+                                      );
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.green,

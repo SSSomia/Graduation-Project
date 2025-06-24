@@ -26,7 +26,6 @@ class _LoginPageState extends State<LoginPage> {
   );
   final TextEditingController _conEmail = TextEditingController();
 
-
   String? _errorMessage;
   String? _emailError;
   String? _passwordError;
@@ -57,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 201, 201),
+        backgroundColor: const Color.fromARGB(255, 246, 224, 224),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

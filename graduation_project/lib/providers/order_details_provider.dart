@@ -35,14 +35,16 @@ class OrderDetailProvider with ChangeNotifier {
   }
 
   Future<void> confirmDelivery(int orderId, String token) async {
+    _isLoading = true;
+    notifyListeners();
     try {
       await ApiService.confirmDelivery(orderId, token);
       _status = "Delivered";
-      notifyListeners();
     } catch (e) {
       _error = e.toString();
-      notifyListeners();
     }
+    _isLoading = false;
+    notifyListeners();
   }
 }
 

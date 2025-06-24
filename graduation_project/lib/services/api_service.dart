@@ -453,7 +453,7 @@ class ApiService {
 
   static Future<void> confirmDelivery(int orderId, String token) async {
     final url = Uri.parse(
-        'https://shopyapi.runasp.net/api/Order/confirm-delivery/$orderId'); // Replace if different
+        'https://shopyapi.runasp.net/api/Order/confirm-delivery?orderId=$orderId'); // Replace if different
 
     final response = await http.post(
       url,
