@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/notification_provider.dart';
 import 'package:graduation_project/providers/profile_provider.dart';
+import 'package:graduation_project/screens/admin/admin_earnings_screen.dart';
 import 'package:graduation_project/screens/admin/admin_messages_screen.dart';
 import 'package:graduation_project/screens/admin/approved_seller.dart';
 import 'package:graduation_project/screens/admin/first_order_dicount_screen.dart';
@@ -76,6 +77,17 @@ class _AdmindrawerState extends State<Admindrawer> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const AdminMessagesScreen()));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.money_outlined),
+          title: const Text('Platform earnings'),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AdminPlatformEarningsScreen()));
           },
         ),
         const Divider(height: 1),

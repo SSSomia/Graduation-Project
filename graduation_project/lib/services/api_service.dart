@@ -20,6 +20,7 @@ import 'package:graduation_project/models/order_details_model.dart';
 import 'package:graduation_project/models/order_fee_model.dart';
 import 'package:graduation_project/models/order_model.dart';
 import 'package:graduation_project/models/pending_seller.dart';
+import 'package:graduation_project/models/plateform_earnings_model.dart';
 import 'package:graduation_project/models/product_module.dart';
 import 'package:graduation_project/models/product_review.dart';
 import 'package:graduation_project/models/seller_order.dart';
@@ -1559,7 +1560,8 @@ class ApiService {
     }
   }
 
-  static Future<String> updateSettings(String token, double newPercentage) async {
+  static Future<String> updateSettings(
+      String token, double newPercentage) async {
     final url = Uri.parse('https://shopyapi.runasp.net/api/discount-settings');
 
     final response = await http.put(
@@ -1579,6 +1581,23 @@ class ApiService {
       return jsonDecode(response.body)['message'];
     } else {
       throw Exception('Failed to update discount setting');
+    }
+  }
+
+  static Future<List<PlatformEarningsReport>> fetchReports(String token) async {
+    final url = Uri.parse(
+        'https://shopyapi.runasp.net/api/discount-settings/admin/platform-earnings-report');
+
+    final response = await http.get(url, headers: {
+      'Authorization': 'Bearer $token',
+      'accept': '*/*',
+    });
+
+    if (response.statusCode == 200) {
+      final List data = json.decode(response.body);
+      return data.map((e) => PlatformEarningsReport.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load platform earnings report');
     }
   }
 }
