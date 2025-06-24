@@ -13,6 +13,7 @@ import 'package:graduation_project/models/dicount_seller_model.dart';
 import 'package:graduation_project/models/favorite_model.dart';
 import 'package:graduation_project/models/frist_order_discount.dart';
 import 'package:graduation_project/models/loyality_level_model.dart';
+import 'package:graduation_project/models/loyality_level_model_update.dart';
 import 'package:graduation_project/models/loyality_status.dart';
 import 'package:graduation_project/models/message_model.dart';
 import 'package:graduation_project/models/notification_model.dart';
@@ -1599,5 +1600,77 @@ class ApiService {
     } else {
       throw Exception('Failed to load platform earnings report');
     }
+  }
+
+//   static Future<bool> updateLoyaltyLevels(
+//       String token, LoyaltyLevelUpdate level) async {
+//     final response = await http.post(
+//       Uri.parse(
+//           'https://shopyapi.runasp.net/api/AdminDiscount/admin/loyalty-levels'),
+//       headers: {
+//         'Authorization': 'Bearer $token',
+//         'Content-Type': 'application/json',
+//         'accept': '*/*',
+//       },
+//       body: jsonEncode(level.toJson()),
+//     );
+// if (response.statusCode == 200)
+// {
+//   print("true");
+
+// }
+// else
+// {
+//   print(response.body);
+// }
+//     return response.statusCode == 200;
+//   }
+  // static Future<bool> updateLoyaltyLevels(
+  //     String token, LoyaltyLevelUpdateRequest request) async {
+  //   print("Sending JSON: ${jsonEncode(request.toJson())}");
+
+  //   final response = await http.post(
+  //     Uri.parse(
+  //         'https://shopyapi.runasp.net/api/AdminDiscount/admin/loyalty-levels'),
+  //     headers: {
+  //       'Authorization': 'Bearer $token',
+  //       'Content-Type': 'application/json',
+  //       'accept': '*/*',
+  //     },
+  //     body: jsonEncode(request.toJson()),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     print("Update successful");
+  //   } else {
+  //     print("Update failed: ${response.body}");
+  //   }
+
+  //   return response.statusCode == 200;
+  // }
+
+  static Future<bool> updateLoyaltyLevels(
+      String token, LoyaltyLevelUpdateRequest request) async {
+    final body = jsonEncode(request.levels.map((e) => e.toJson()).toList());
+    print("Sending JSON: $body"); // For debug
+
+    final response = await http.post(
+      Uri.parse(
+          'https://shopyapi.runasp.net/api/AdminDiscount/admin/loyalty-levels'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+        'accept': '*/*',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      print("Update successful");
+    } else {
+      print("Update failed: ${response.body}");
+    }
+
+    return response.statusCode == 200;
   }
 }
