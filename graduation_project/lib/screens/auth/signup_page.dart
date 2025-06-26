@@ -319,6 +319,7 @@ class _SignupPageState extends State<SignupPage> {
                                   children: [
                                     Radio<ECharacteres>(
                                       value: ECharacteres.user,
+                                      activeColor: Colors.white,
                                       groupValue: _selectedOption,
                                       onChanged: (value) {
                                         setState(() {

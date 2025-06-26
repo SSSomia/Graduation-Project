@@ -214,7 +214,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     children: [
                       Icon(Icons.email, size: 16, color: Colors.grey),
                       SizedBox(width: 6),
-                      Text('support@shopy.com'),
+                      Text('support@sparkup.com'),
                     ],
                   ),
                 ],

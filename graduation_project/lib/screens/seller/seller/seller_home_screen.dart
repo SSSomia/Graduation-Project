@@ -15,7 +15,7 @@ class _SellerHomeScreenState extends State<SellerHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Shoopy',
+          'Spark Up',
           style: TextStyle(
             color: Color.fromARGB(255, 0, 0, 0),
             fontSize: 25,

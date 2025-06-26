@@ -162,16 +162,20 @@ class _AdminOrderDetailsScreenState extends State<AdminOrderDetailsScreen> {
                                   horizontal: 10, vertical: 5),
                               decoration: BoxDecoration(
                                 color: order.status == 'Shipped'
-                                    ? Colors.green.withOpacity(0.1)
-                                    : Colors.orange.withOpacity(0.1),
+                                    ? const Color.fromARGB(255, 226, 82, 82)
+                                        .withOpacity(0.1)
+                                    : const Color.fromARGB(255, 243, 176, 176)
+                                        .withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
                                 order.status,
                                 style: TextStyle(
                                   color: order.status == 'Shipped'
-                                      ? Colors.green
-                                      : Colors.orange,
+                                      ? const Color.fromARGB(255, 226, 82, 82)
+                                          .withOpacity(0.1)
+                                      : const Color.fromARGB(255, 243, 176, 176)
+                                          .withOpacity(0.1),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -328,17 +332,14 @@ class _AdminOrderDetailsScreenState extends State<AdminOrderDetailsScreen> {
                                 ),
                               ),
                             ),
-
                         ],
                       ),
                     );
                   },
                 ),
               );
-
             },
           );
-
         },
       ),
     );
@@ -360,7 +361,9 @@ Widget _buildFeeRow(String label, double value, {bool isBold = false}) {
             style: TextStyle(
               fontSize: 14,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: isBold ? const Color.fromARGB(255, 183, 58, 58) : Colors.black,
+              color: isBold
+                  ? const Color.fromARGB(255, 183, 58, 58)
+                  : Colors.black,
             )),
       ],
     ),

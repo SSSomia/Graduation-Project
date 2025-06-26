@@ -42,7 +42,7 @@ class AboutPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          'Shopy',
+                          'Spark Up',
                           style: TextStyle(
                               fontSize: 26, fontWeight: FontWeight.bold),
                         ),
@@ -59,7 +59,7 @@ class AboutPage extends StatelessWidget {
                           child: const Padding(
                             padding: EdgeInsets.all(18.0),
                             child: Text(
-                              'Shopy is your one-stop destination for online shopping.\n\n'
+                              'Spark Up is your one-stop destination for online shopping.\n\n'
                               'We bring the latest trends and products at unbeatable prices. '
                               'Enjoy fast delivery, secure payment, and excellent customer service.',
                               textAlign: TextAlign.center,
@@ -85,7 +85,7 @@ class AboutPage extends StatelessWidget {
                                     Icon(Icons.email_rounded,
                                         color: Colors.blue),
                                     SizedBox(width: 10),
-                                    Text('support@shopy.com'),
+                                    Text('support@sparkup.com'),
                                   ],
                                 ),
                                 SizedBox(height: 12),

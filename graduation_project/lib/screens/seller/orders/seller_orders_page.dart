@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/seller_order_provider.dart';
@@ -56,7 +55,8 @@ class _SellerOrdersPageState extends State<SellerOrdersPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
               items: statusMap.keys.map((String status) {
                 return DropdownMenuItem<String>(
@@ -83,11 +83,13 @@ class _SellerOrdersPageState extends State<SellerOrdersPage> {
                         itemCount: provider.orders.length,
                         itemBuilder: (context, index) {
                           final order = provider.orders[index];
-                          final formattedDate =
-                              DateFormat.yMMMd().add_jm().format(DateTime.parse(order.date));
+                          final formattedDate = DateFormat.yMMMd()
+                              .add_jm()
+                              .format(DateTime.parse(order.date));
 
                           return Card(
-                            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -98,13 +100,18 @@ class _SellerOrdersPageState extends State<SellerOrdersPage> {
                                 final shouldRefresh = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        OrderProductsPage(orderId: order.orderId, status: order.status),
+                                    builder: (context) => OrderProductsPage(
+                                        orderId: order.orderId,
+                                        status: order.status),
                                   ),
                                 );
                                 if (shouldRefresh == true) {
-                                  final loginProvider = Provider.of<LoginProvider>(context, listen: false);
-                                  final orderProvider = Provider.of<SellerOrdersProvider>(context, listen: false);
+                                  final loginProvider =
+                                      Provider.of<LoginProvider>(context,
+                                          listen: false);
+                                  final orderProvider =
+                                      Provider.of<SellerOrdersProvider>(context,
+                                          listen: false);
                                   await orderProvider.loadOrders(
                                     loginProvider.token,
                                     statusMap[selectedStatus]!,
@@ -141,14 +148,16 @@ class _SellerOrdersPageState extends State<SellerOrdersPage> {
                                   ),
                                   const SizedBox(height: 4),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 4),
                                     decoration: BoxDecoration(
                                       color: _statusColor(order.status),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Text(
                                       order.status,
-                                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 12),
                                     ),
                                   ),
                                 ],
@@ -168,9 +177,9 @@ class _SellerOrdersPageState extends State<SellerOrdersPage> {
       case 'pending':
         return Colors.orange;
       case 'shipped':
-        return Colors.blue;
+        return const Color.fromARGB(255, 226, 82, 82).withOpacity(0.1);
       case 'delivered':
-        return Colors.green;
+        return const Color.fromARGB(255, 243, 176, 176).withOpacity(0.1);
       case 'canceled':
         return Colors.red;
       default:
