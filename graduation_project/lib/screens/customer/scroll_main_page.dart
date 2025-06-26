@@ -132,6 +132,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:graduation_project/providers/loyality_provider.dart';
 import 'package:graduation_project/widgets/loyatity_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:graduation_project/providers/category_provider.dart';
@@ -184,6 +185,9 @@ class ScrollMainPageState extends State<ScrollMainPage> {
       Provider.of<ProductsProvider>(context, listen: false)
           .fetchRandomProducts(authProvider.token);
       Provider.of<CategoryProvider>(context, listen: false).loadCategories();
+      final loyaltyProvider =
+          Provider.of<LoyaltyProvider>(context, listen: false);
+      loyaltyProvider.loadLoyaltyStatus(authProvider.token);
     });
   }
 

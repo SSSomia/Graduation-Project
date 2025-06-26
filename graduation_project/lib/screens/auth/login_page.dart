@@ -252,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                                     builder: (context) => SignupPage()),
                               );
                             },
-                            child: const Text('Sign up'),
+                            child: const Text('Sign up', style: TextStyle(color: Color.fromARGB(255, 209, 33, 33)),),
                           ),
                         ],
                       ),
@@ -265,7 +265,7 @@ class _LoginPageState extends State<LoginPage> {
                                     const ForgotPasswordPage()),
                           );
                         },
-                        child: const Text('Forget Password'),
+                        child: const Text('Forget Password' ,style: TextStyle(color: Color.fromARGB(255, 209, 33, 33)),),
                       ),
                     ],
                   ),

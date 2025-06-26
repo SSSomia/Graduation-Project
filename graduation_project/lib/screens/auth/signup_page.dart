@@ -319,7 +319,8 @@ class _SignupPageState extends State<SignupPage> {
                                   children: [
                                     Radio<ECharacteres>(
                                       value: ECharacteres.user,
-                                      activeColor: Colors.white,
+                                      activeColor: const Color.fromARGB(
+                                          255, 125, 22, 22),
                                       groupValue: _selectedOption,
                                       onChanged: (value) {
                                         setState(() {
@@ -336,6 +337,8 @@ class _SignupPageState extends State<SignupPage> {
                                     Radio<ECharacteres>(
                                       value: ECharacteres.seller,
                                       groupValue: _selectedOption,
+                                      activeColor: const Color.fromARGB(
+                                          255, 125, 22, 22),
                                       onChanged: (value) {
                                         setState(() {
                                           _selectedOption = value;
@@ -496,7 +499,7 @@ class _SignupPageState extends State<SignupPage> {
                                               const LoginPage()),
                                     );
                                   },
-                                  child: const Text('Login'))
+                                  child: const Text('Login', style: TextStyle(color: Color.fromARGB(255, 209, 33, 33)),))
                             ],
                           )
                         ],
