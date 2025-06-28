@@ -68,7 +68,7 @@ class _SellerMainPageState extends State<SellerMainPage> {
                   if (provider.isLoading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (provider.error != null) {
-                    return Text('Error: ${provider.error}');
+                    return Text('Faild to load top selling products!');
                   } else if (provider.products.isEmpty) {
                     return const Text('No top selling products found.');
                   } else {

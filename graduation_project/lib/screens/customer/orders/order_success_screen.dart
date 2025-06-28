@@ -139,7 +139,6 @@ class OrderSuccessScreen extends StatelessWidget {
                       response!.firstOrderDiscountAmount),
                   _buildAmountRow("Final Price", response!.totalFinalPrice),
                   _buildAmountRow("Shipping Fee", response!.shippingFee),
-                  _buildAmountRow("Platform Fee", response!.platformFee),
                   const Divider(height: 24),
                   _buildAmountRow(
                       "Total With Shipping", response!.totalWithShipping,
