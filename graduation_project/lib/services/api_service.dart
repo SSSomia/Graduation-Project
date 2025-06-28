@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:graduation_project/models/admin_message_details.dart';
 import 'package:graduation_project/models/admin_message_model.dart';
 import 'package:graduation_project/models/admin_order_model_details.dart';
+import 'package:graduation_project/models/ai_search_model.dart';
 import 'package:graduation_project/models/all_seller_discount.dart';
 import 'package:graduation_project/models/buy_from_cart_response.dart';
 import 'package:graduation_project/models/buyer.dart';
@@ -1672,5 +1673,24 @@ class ApiService {
     }
 
     return response.statusCode == 200;
+  }
+
+  
+  static Future<List<SearchResult>> searchProducts(String query, int top) async {
+    final url = Uri.parse('https://shielded-shore-89078-1e229438f36b.herokuapp.com/search');
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'word': query, 'top': top}),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final results = data['results'] as List;
+      return results.map((e) => SearchResult.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to fetch search results');
+    }
   }
 }

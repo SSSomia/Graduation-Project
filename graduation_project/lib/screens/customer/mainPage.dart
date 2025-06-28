@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/providers/login_provider.dart';
 import 'package:graduation_project/providers/products_provider.dart';
+import 'package:graduation_project/screens/customer/ai_search_screen.dart';
 import 'package:graduation_project/screens/customer/profile/profile_page.dart';
 import 'package:graduation_project/screens/customer/scroll_main_page.dart';
 import 'package:graduation_project/screens/customer/search_screen.dart';
@@ -20,7 +21,7 @@ class MainHomePage extends StatefulWidget {
 
 class _NavigationExampleState extends State<MainHomePage> {
   int currentPageIndex = 1;
-final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +108,8 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
       body: <Widget>[
         const You(),
         ScrollMainPage(),
-        const SearchScreen(),
+        AiSearchScreen(),
+        // const SearchScreen(),
         const MyCart(),
       ][currentPageIndex],
     );

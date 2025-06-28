@@ -140,7 +140,7 @@ class _AddReviewWidgetState extends State<AddReviewWidget> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF1CA89E),
+                  color: Color.fromARGB(255, 164, 26, 26),
                 ),
               ),
               const SizedBox(height: 20),
@@ -200,13 +200,13 @@ class _AddReviewWidgetState extends State<AddReviewWidget> {
                             color: Colors.white,
                           ),
                         )
-                      : const Icon(Icons.send_outlined),
+                      : const Icon(Icons.send_outlined, color: Colors.white),
                   label: Text(
                     reviewProvider.isLoading ? 'Submitting...' : 'Submit Review',
                     style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1CA89E),
+                    backgroundColor: const Color.fromARGB(255, 168, 28, 28),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

@@ -162,9 +162,9 @@ class _AdminOrderDetailsScreenState extends State<AdminOrderDetailsScreen> {
                                   horizontal: 10, vertical: 5),
                               decoration: BoxDecoration(
                                 color: order.status == 'Shipped'
-                                    ? const Color.fromARGB(255, 226, 82, 82)
+                                    ? const Color.fromARGB(255, 255, 0, 0)
                                         .withOpacity(0.1)
-                                    : const Color.fromARGB(255, 243, 176, 176)
+                                    : const Color.fromARGB(255, 255, 0, 0)
                                         .withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -172,10 +172,8 @@ class _AdminOrderDetailsScreenState extends State<AdminOrderDetailsScreen> {
                                 order.status,
                                 style: TextStyle(
                                   color: order.status == 'Shipped'
-                                      ? const Color.fromARGB(255, 226, 82, 82)
-                                          .withOpacity(0.1)
-                                      : const Color.fromARGB(255, 243, 176, 176)
-                                          .withOpacity(0.1),
+                                      ? const Color.fromARGB(255, 141, 25, 25)
+                                      : const Color.fromARGB(255, 159, 0, 0),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
