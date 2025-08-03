@@ -89,6 +89,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:graduation_project/models/buy_from_cart_response.dart';
+import 'package:graduation_project/screens/customer/scroll_main_page.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
   final BuyFromCartResponse? response;
@@ -115,7 +116,8 @@ class OrderSuccessScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Icon(Icons.check_circle_outline,
-                            size: 60, color:Color.fromARGB(255, 255, 167, 167)),
+                            size: 60,
+                            color: Color.fromARGB(255, 255, 167, 167)),
                         SizedBox(height: 8),
                         Text(
                           "Order Placed Successfully!",
@@ -175,10 +177,19 @@ class OrderSuccessScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Center(
                     child: ElevatedButton.icon(
-                      onPressed: () => Navigator.of(context)
-                          .popUntil((route) => route.isFirst),
-                      icon: const Icon(Icons.home,color: Colors.white,),
-                      label: const Text("Back to Home",style: TextStyle(color: Colors.white),),
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ScrollMainPage()),
+                      ),
+                      icon: const Icon(
+                        Icons.home,
+                        color: Colors.white,
+                      ),
+                      label: const Text(
+                        "Back to Home",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 185, 28, 28),
                         padding: const EdgeInsets.symmetric(

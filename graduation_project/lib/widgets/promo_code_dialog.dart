@@ -93,6 +93,7 @@ class _PromoCodeDialogState extends State<PromoCodeDialog> {
           )
         else ...[
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
@@ -102,13 +103,19 @@ class _PromoCodeDialogState extends State<PromoCodeDialog> {
                 onPressed: _noPromoCode,
                 child: const Text('No Promo Code'),
               ),
-              ElevatedButton(
-                onPressed: _applyPromo,
-                child: const Text('Apply',style: TextStyle(color: Color.fromRGBO(128, 23, 23, 0.894),),),
-                
-              ),
             ],
-          )
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: _applyPromo,
+              child: const Text(
+                'Apply',
+                style: TextStyle(
+                  color: Color.fromRGBO(128, 23, 23, 0.894),
+                ),
+              ),
+            ),
+          ),
         ]
       ],
     );

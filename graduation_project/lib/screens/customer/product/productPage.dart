@@ -44,7 +44,7 @@ class _ProductPageState extends State<ProductPage> {
     final reviewProvider = Provider.of<ReviewProvider>(context);
 
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 246, 246, 246),
+        backgroundColor: const Color.fromARGB(255, 255, 239, 239),
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 244, 244),
           title: const Text("Product Details"),

@@ -28,7 +28,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 255, 207, 207),
       ),
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: const Color.fromARGB(255, 255, 241, 241),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
@@ -171,10 +171,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
+                              backgroundColor: const Color.fromARGB(255, 154, 24, 24),
                             ),
                             child: const Text(
                               "Reset Password",
-                              style: TextStyle(fontSize: 16),
+                              style: TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           );
                         })),

@@ -378,7 +378,15 @@ class _SignupPageState extends State<SignupPage> {
                                                 Role: 0,
                                               ),
                                             );
-                                            if (result == null) {
+                                            if (result ==
+                                                "Email is already in use.") {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'Email is already exist!')),
+                                              );
+                                            } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 const SnackBar(
@@ -391,13 +399,6 @@ class _SignupPageState extends State<SignupPage> {
                                                   builder: (context) =>
                                                       const LoginPage(),
                                                 ),
-                                              );
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                    content: Text(
-                                                        'Email is already exist!')),
                                               );
                                             }
                                             // Navigate to the next screen or show success message
@@ -499,7 +500,12 @@ class _SignupPageState extends State<SignupPage> {
                                               const LoginPage()),
                                     );
                                   },
-                                  child: const Text('Login', style: TextStyle(color: Color.fromARGB(255, 209, 33, 33)),))
+                                  child: const Text(
+                                    'Login',
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 209, 33, 33)),
+                                  ))
                             ],
                           )
                         ],
